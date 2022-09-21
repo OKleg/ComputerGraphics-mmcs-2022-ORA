@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -74,21 +74,45 @@ namespace KrolOleg_CG_2_1
                         UInt32 newPixel1 = 0xFF000000 | ((UInt32)gr1 << 16 | (UInt32)gr1 << 8 | (UInt32)gr1);
                         UInt32 newPixel2 = 0xFF000000 | ((UInt32)gr2 << 16 | (UInt32)gr2 << 8 | (UInt32)gr2);
                         UInt32 newPixel3 = 0xFF000000 | ((UInt32)Math.Abs(grr) << 16 | (UInt32)Math.Abs(grr) << 8 | (UInt32)Math.Abs(grr));
+                        //int conv1 = Convert.ToInt32(newPixel1);
+
+                        float Rnew1 = (float)((newPixel1 & 0x00FF0000) >> 16);
+                        float Gnew1 = (float)((newPixel1 & 0x0000FF00) >> 8);
+                        float Bnew1 = (float)((newPixel1 & 0x000000FF));
+
+                        int value1 = ((int)(Rnew1 + Gnew1 + Bnew1)) / 3;
+
+                        float Rnew2 = (float)((newPixel2 & 0x00FF0000) >> 16);
+                        float Gnew2 = (float)((newPixel2 & 0x0000FF00) >> 8);
+                        float Bnew2 = (float)((newPixel2 & 0x000000FF));
+
+                        int value2 = ((int)(Rnew2 + Gnew2 + Bnew2)) / 3;
+
+                        /*
                         if (h1.ContainsKey((int)newPixel1))  {
                             h1[(int)newPixel1]++;
                         }
                         else
                         {
                             h1[(int)newPixel1] = 0;
-                        }
+                        }*/
 
-                        if (h2.ContainsKey((int)newPixel2))
+                        if (h1.ContainsKey(value1))
                         {
-                            h2[(int)newPixel2]++;
+                            h1[value1]++;
                         }
                         else
                         {
-                            h2[(int)newPixel2] = 0;
+                            h1[value1] = 0;
+                        }
+
+                        if (h2.ContainsKey(value2))
+                        {
+                            h2[value2]++;
+                        }
+                        else
+                        {
+                            h2[value2] = 0;
                         }
                         
                         output1.SetPixel(i, j, Color.FromArgb((int)newPixel1));
