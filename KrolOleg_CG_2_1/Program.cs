@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace KrolOleg_CG_2_1
+namespace CG_lab_2_1
 {
     static class Program
     {
