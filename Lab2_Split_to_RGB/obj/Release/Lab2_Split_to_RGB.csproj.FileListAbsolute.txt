@@ -1,0 +1,11 @@
+E:\CompGraphics\Lab2_Split_to_RGB\bin\Release\Lab2_Split_to_RGB.exe.config
+E:\CompGraphics\Lab2_Split_to_RGB\bin\Release\Lab2_Split_to_RGB.exe
+E:\CompGraphics\Lab2_Split_to_RGB\bin\Release\Lab2_Split_to_RGB.pdb
+E:\CompGraphics\Lab2_Split_to_RGB\obj\Release\Lab2_Split_to_RGB.csproj.AssemblyReference.cache
+E:\CompGraphics\Lab2_Split_to_RGB\obj\Release\Lab2_Split_to_RGB.csproj.SuggestedBindingRedirects.cache
+E:\CompGraphics\Lab2_Split_to_RGB\obj\Release\Lab2_Split_to_RGB.Properties.Resources.resources
+E:\CompGraphics\Lab2_Split_to_RGB\obj\Release\Lab2_Split_to_RGB.csproj.GenerateResource.cache
+E:\CompGraphics\Lab2_Split_to_RGB\obj\Release\Lab2_Split_to_RGB.csproj.CoreCompileInputs.cache
+E:\CompGraphics\Lab2_Split_to_RGB\obj\Release\Lab2_Split_to_RGB.exe
+E:\CompGraphics\Lab2_Split_to_RGB\obj\Release\Lab2_Split_to_RGB.pdb
+E:\CompGraphics\Lab2_Split_to_RGB\obj\Release\Lab2_Split_to_RGB.Form1.resources
