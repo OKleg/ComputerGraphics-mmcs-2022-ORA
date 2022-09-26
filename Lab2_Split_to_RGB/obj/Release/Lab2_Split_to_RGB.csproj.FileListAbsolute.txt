@@ -8,3 +8,4 @@ E:\CompGraphics\Lab2_Split_to_RGB\obj\Release\Lab2_Split_to_RGB.csproj.GenerateR
 E:\CompGraphics\Lab2_Split_to_RGB\obj\Release\Lab2_Split_to_RGB.csproj.CoreCompileInputs.cache
 E:\CompGraphics\Lab2_Split_to_RGB\obj\Release\Lab2_Split_to_RGB.exe
 E:\CompGraphics\Lab2_Split_to_RGB\obj\Release\Lab2_Split_to_RGB.pdb
+E:\CompGraphics\Lab2_Split_to_RGB\obj\Release\Lab2_Split_to_RGB.Form1.resources
