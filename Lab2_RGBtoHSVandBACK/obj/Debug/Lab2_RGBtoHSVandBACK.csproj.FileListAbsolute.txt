@@ -1,0 +1,10 @@
+C:\Users\rodio\Documents\GitHub\ComputerGraphics-mmcs-2022-ORA\Lab2_RGBtoHSVandBACK\bin\Debug\Lab2_RGBtoHSVandBACK.exe.config
+C:\Users\rodio\Documents\GitHub\ComputerGraphics-mmcs-2022-ORA\Lab2_RGBtoHSVandBACK\bin\Debug\Lab2_RGBtoHSVandBACK.exe
+C:\Users\rodio\Documents\GitHub\ComputerGraphics-mmcs-2022-ORA\Lab2_RGBtoHSVandBACK\bin\Debug\Lab2_RGBtoHSVandBACK.pdb
+C:\Users\rodio\Documents\GitHub\ComputerGraphics-mmcs-2022-ORA\Lab2_RGBtoHSVandBACK\obj\Debug\Lab2_RGBtoHSVandBACK.csproj.AssemblyReference.cache
+C:\Users\rodio\Documents\GitHub\ComputerGraphics-mmcs-2022-ORA\Lab2_RGBtoHSVandBACK\obj\Debug\Lab2_RGBtoHSVandBACK.Form1.resources
+C:\Users\rodio\Documents\GitHub\ComputerGraphics-mmcs-2022-ORA\Lab2_RGBtoHSVandBACK\obj\Debug\Lab2_RGBtoHSVandBACK.Properties.Resources.resources
+C:\Users\rodio\Documents\GitHub\ComputerGraphics-mmcs-2022-ORA\Lab2_RGBtoHSVandBACK\obj\Debug\Lab2_RGBtoHSVandBACK.csproj.GenerateResource.cache
+C:\Users\rodio\Documents\GitHub\ComputerGraphics-mmcs-2022-ORA\Lab2_RGBtoHSVandBACK\obj\Debug\Lab2_RGBtoHSVandBACK.csproj.CoreCompileInputs.cache
+C:\Users\rodio\Documents\GitHub\ComputerGraphics-mmcs-2022-ORA\Lab2_RGBtoHSVandBACK\obj\Debug\Lab2_RGBtoHSVandBACK.exe
+C:\Users\rodio\Documents\GitHub\ComputerGraphics-mmcs-2022-ORA\Lab2_RGBtoHSVandBACK\obj\Debug\Lab2_RGBtoHSVandBACK.pdb

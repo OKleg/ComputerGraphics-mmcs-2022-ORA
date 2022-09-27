@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.3.32825.248
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32602.291
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CG_lab_2_1", "KrolOleg_CG_2_1\CG_lab_2_1.csproj", "{311DE2F6-8F98-424C-908E-3955FBC71288}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab2_Split_to_RGB", "Lab2_Split_to_RGB\Lab2_Split_to_RGB.csproj", "{2DF06619-9872-45F7-B1E6-E5BC2341F6BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab2_RGBtoHSVandBACK", "Lab2_RGBtoHSVandBACK\Lab2_RGBtoHSVandBACK.csproj", "{E8F12830-EF4B-497A-99DC-97F15921F172}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{2DF06619-9872-45F7-B1E6-E5BC2341F6BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DF06619-9872-45F7-B1E6-E5BC2341F6BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DF06619-9872-45F7-B1E6-E5BC2341F6BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8F12830-EF4B-497A-99DC-97F15921F172}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8F12830-EF4B-497A-99DC-97F15921F172}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8F12830-EF4B-497A-99DC-97F15921F172}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8F12830-EF4B-497A-99DC-97F15921F172}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
