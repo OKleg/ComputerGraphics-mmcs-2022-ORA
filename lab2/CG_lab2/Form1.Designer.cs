@@ -29,18 +29,19 @@ namespace CG_lab2
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea19 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend19 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series19 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea20 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend20 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series20 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea21 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend21 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series21 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lab2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.grayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rGBToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,7 +68,6 @@ namespace CG_lab2
             this.groupBoxHSV = new System.Windows.Forms.GroupBox();
             this.buttonOrig = new System.Windows.Forms.Button();
             this.buttonHSV = new System.Windows.Forms.Button();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -104,9 +104,16 @@ namespace CG_lab2
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // lab2ToolStripMenuItem
             // 
@@ -136,7 +143,7 @@ namespace CG_lab2
             // 
             this.hVCToolStripMenuItem1.Name = "hVCToolStripMenuItem1";
             this.hVCToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.hVCToolStripMenuItem1.Text = "HVC";
+            this.hVCToolStripMenuItem1.Text = "HSV";
             this.hVCToolStripMenuItem1.Click += new System.EventHandler(this.hVCToolStripMenuItem1_Click);
             // 
             // lab3ToolStripMenuItem
@@ -191,17 +198,17 @@ namespace CG_lab2
             // 
             // chart1
             // 
-            chartArea19.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea19);
-            legend19.Name = "Legend1";
-            this.chart1.Legends.Add(legend19);
+            chartArea4.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.chart1.Legends.Add(legend4);
             this.chart1.Location = new System.Drawing.Point(319, 341);
             this.chart1.Name = "chart1";
-            series19.ChartArea = "ChartArea1";
-            series19.Font = new System.Drawing.Font("Stencil", 12F);
-            series19.Legend = "Legend1";
-            series19.Name = "Series1";
-            this.chart1.Series.Add(series19);
+            series4.ChartArea = "ChartArea1";
+            series4.Font = new System.Drawing.Font("Stencil", 12F);
+            series4.Legend = "Legend1";
+            series4.Name = "Series1";
+            this.chart1.Series.Add(series4);
             this.chart1.Size = new System.Drawing.Size(300, 275);
             this.chart1.TabIndex = 5;
             this.chart1.Text = "chart1";
@@ -209,17 +216,17 @@ namespace CG_lab2
             // 
             // chart2
             // 
-            chartArea20.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea20);
-            legend20.Name = "Legend1";
-            this.chart2.Legends.Add(legend20);
+            chartArea5.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea5);
+            legend5.Name = "Legend1";
+            this.chart2.Legends.Add(legend5);
             this.chart2.Location = new System.Drawing.Point(625, 341);
             this.chart2.Name = "chart2";
-            series20.ChartArea = "ChartArea1";
-            series20.Font = new System.Drawing.Font("Stencil", 12F);
-            series20.Legend = "Legend1";
-            series20.Name = "Series1";
-            this.chart2.Series.Add(series20);
+            series5.ChartArea = "ChartArea1";
+            series5.Font = new System.Drawing.Font("Stencil", 12F);
+            series5.Legend = "Legend1";
+            series5.Name = "Series1";
+            this.chart2.Series.Add(series5);
             this.chart2.Size = new System.Drawing.Size(300, 275);
             this.chart2.TabIndex = 6;
             this.chart2.Text = "chart2";
@@ -227,17 +234,17 @@ namespace CG_lab2
             // 
             // chart3
             // 
-            chartArea21.Name = "ChartArea1";
-            this.chart3.ChartAreas.Add(chartArea21);
-            legend21.Name = "Legend1";
-            this.chart3.Legends.Add(legend21);
+            chartArea6.Name = "ChartArea1";
+            this.chart3.ChartAreas.Add(chartArea6);
+            legend6.Name = "Legend1";
+            this.chart3.Legends.Add(legend6);
             this.chart3.Location = new System.Drawing.Point(931, 341);
             this.chart3.Name = "chart3";
-            series21.ChartArea = "ChartArea1";
-            series21.Font = new System.Drawing.Font("Stencil", 12F);
-            series21.Legend = "Legend1";
-            series21.Name = "Series1";
-            this.chart3.Series.Add(series21);
+            series6.ChartArea = "ChartArea1";
+            series6.Font = new System.Drawing.Font("Stencil", 12F);
+            series6.Legend = "Legend1";
+            series6.Name = "Series1";
+            this.chart3.Series.Add(series6);
             this.chart3.Size = new System.Drawing.Size(300, 275);
             this.chart3.TabIndex = 7;
             this.chart3.Text = "chart3";
@@ -296,7 +303,6 @@ namespace CG_lab2
             this.label5.Size = new System.Drawing.Size(21, 19);
             this.label5.TabIndex = 15;
             this.label5.Text = "H";
-            this.label5.Visible = false;
             // 
             // label6
             // 
@@ -307,7 +313,6 @@ namespace CG_lab2
             this.label6.Size = new System.Drawing.Size(19, 19);
             this.label6.TabIndex = 16;
             this.label6.Text = "V";
-            this.label6.Visible = false;
             // 
             // label7
             // 
@@ -318,7 +323,6 @@ namespace CG_lab2
             this.label7.Size = new System.Drawing.Size(18, 19);
             this.label7.TabIndex = 17;
             this.label7.Text = "C";
-            this.label7.Visible = false;
             // 
             // hScrollBar1
             // 
@@ -387,13 +391,6 @@ namespace CG_lab2
             this.buttonHSV.Text = "HSV";
             this.buttonHSV.UseVisualStyleBackColor = true;
             this.buttonHSV.Click += new System.EventHandler(this.buttonHSV_Click);
-            // 
-            // saveToolStripMenuItem
-            // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.saveToolStripMenuItem.Text = "Save HVC";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // Form1
             // 

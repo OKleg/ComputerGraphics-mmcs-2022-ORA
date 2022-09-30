@@ -20,6 +20,7 @@ namespace CG_lab2
         private void hVCToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             groupBoxHSV.Visible = true;
+            groupBoxHSV.Show();
             if (pictureBox1.Image == null)
             {
                 openToolStripMenuItem_Click(sender, e);
@@ -38,14 +39,14 @@ namespace CG_lab2
 
             if (pictureBox1.Image != null)
             {
-                buttonRGB_Click(sender, e);
+                buttonRGB_Click();
             }
             else
             {
                 openToolStripMenuItem_Click(sender, e);
                 if (pictureBox1.Image != null)
                 {
-                    buttonRGB_Click(sender, e);
+                    buttonRGB_Click();
                 }
             }
             if (label2.Text != "Red")
@@ -113,6 +114,8 @@ namespace CG_lab2
                     }
                 }
             }
+             if (pictureBox1.Image!=null)
+            pictureBox1.BorderStyle = BorderStyle.None;
         }
 
 
@@ -477,7 +480,7 @@ namespace CG_lab2
         } 
              
            
-        private void buttonRGB_Click(object sender, EventArgs e)
+        private void buttonRGB_Click()
         {
             label2.ForeColor = Color.Red;
             label3.ForeColor = Color.Green;
@@ -584,12 +587,16 @@ namespace CG_lab2
         private void buttonHSV_Click(object sender, EventArgs e)
         {
             newHVCButton_Click(sender, e);
-            buttonRGB_Click(sender,  e);
+            buttonRGB_Click();
         }
 
         private void buttonOrig_Click(object sender, EventArgs e)
         {
             pictureBox1.Image = SelectedImage;
+            hScrollBar1.Value = 100;
+            hScrollBar2.Value = 100;
+            hScrollBar3.Value = 100;
+            buttonRGB_Click();
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
