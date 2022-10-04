@@ -31,19 +31,20 @@ namespace CG_lab2
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form2));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.pen = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.lab2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lab2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.button1 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.button7 = new System.Windows.Forms.Button();
+            this.buttonColor = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -54,22 +55,27 @@ namespace CG_lab2
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox1.Location = new System.Drawing.Point(57, 25);
+            this.pictureBox1.Location = new System.Drawing.Point(62, 27);
             this.pictureBox1.MinimumSize = new System.Drawing.Size(600, 600);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(600, 600);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
+            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
             // 
-            // button2
+            // pen
             // 
-            this.button2.Image = ((System.Drawing.Image)(resources.GetObject("button2.Image")));
-            this.button2.Location = new System.Drawing.Point(6, 27);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(50, 50);
-            this.button2.TabIndex = 2;
-            this.button2.UseVisualStyleBackColor = true;
+            this.pen.Image = ((System.Drawing.Image)(resources.GetObject("pen.Image")));
+            this.pen.Location = new System.Drawing.Point(6, 27);
+            this.pen.Name = "pen";
+            this.pen.Size = new System.Drawing.Size(50, 50);
+            this.pen.TabIndex = 2;
+            this.pen.UseVisualStyleBackColor = true;
+            this.pen.Click += new System.EventHandler(this.pen_Click);
+            this.pen.Enter += new System.EventHandler(this.pen_Enter);
+            this.pen.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pen_MouseDown);
             // 
             // button3
             // 
@@ -91,6 +97,13 @@ namespace CG_lab2
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
+            // lab2ToolStripMenuItem
+            // 
+            this.lab2ToolStripMenuItem.Name = "lab2ToolStripMenuItem";
+            this.lab2ToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
+            this.lab2ToolStripMenuItem.Text = "<<";
+            this.lab2ToolStripMenuItem.Click += new System.EventHandler(this.lab2ToolStripMenuItem_Click);
+            // 
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -103,21 +116,14 @@ namespace CG_lab2
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.openToolStripMenuItem.Text = "Open";
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.saveToolStripMenuItem.Text = "Save";
-            // 
-            // lab2ToolStripMenuItem
-            // 
-            this.lab2ToolStripMenuItem.Name = "lab2ToolStripMenuItem";
-            this.lab2ToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
-            this.lab2ToolStripMenuItem.Text = "<<";
-            this.lab2ToolStripMenuItem.Click += new System.EventHandler(this.lab2ToolStripMenuItem_Click);
             // 
             // button1
             // 
@@ -145,6 +151,7 @@ namespace CG_lab2
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(50, 50);
             this.button5.TabIndex = 7;
+            this.button5.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
@@ -168,11 +175,23 @@ namespace CG_lab2
             this.button7.TabIndex = 9;
             this.button7.UseVisualStyleBackColor = true;
             // 
+            // buttonColor
+            // 
+            this.buttonColor.BackColor = System.Drawing.Color.Black;
+            this.buttonColor.ForeColor = System.Drawing.SystemColors.Control;
+            this.buttonColor.Location = new System.Drawing.Point(6, 415);
+            this.buttonColor.Name = "buttonColor";
+            this.buttonColor.Size = new System.Drawing.Size(50, 50);
+            this.buttonColor.TabIndex = 10;
+            this.buttonColor.UseVisualStyleBackColor = false;
+            this.buttonColor.Click += new System.EventHandler(this.buttonColor_Click);
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(669, 631);
+            this.Controls.Add(this.buttonColor);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
@@ -180,7 +199,7 @@ namespace CG_lab2
             this.Controls.Add(this.button1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.pen);
             this.Controls.Add(this.pictureBox1);
             this.MinimumSize = new System.Drawing.Size(685, 670);
             this.Name = "Form2";
@@ -196,7 +215,7 @@ namespace CG_lab2
 
         #endregion
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button pen;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
@@ -209,5 +228,6 @@ namespace CG_lab2
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button buttonColor;
     }
 }

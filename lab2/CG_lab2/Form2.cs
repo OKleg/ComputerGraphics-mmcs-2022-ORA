@@ -12,12 +12,25 @@ namespace CG_lab2
 {
     public partial class Form2 : Form
     {
+
         public Form1 f1;
+        private Graphics g;
+        bool pen_active=false;
         public Form2()
         {
             InitializeComponent();
-        }
+            pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            pictureBox1.Paint += Draw;
+            g = Graphics.FromImage(pictureBox1.Image);
+            g.Clear(Color.White);
 
+        }
+        private void Draw(object sender, PaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            Pen p = new Pen(colorDialog1.Color);
+            g.DrawImage(pictureBox1.Image, 0, 0, pictureBox1.Image.Width, pictureBox1.Image.Height);
+        }
         private void button1_Click(object sender, EventArgs e)
         {
             f1.Show();
@@ -51,5 +64,57 @@ namespace CG_lab2
         {
 
         }
+
+        private void pen_Click(object sender, EventArgs e)
+        {
+            pen_active = !pen_active;
+        }
+
+
+        int OldX=0, oldY=0;
+         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            OldX= e.X;
+            oldY= e.Y;
+        }
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+
+            if (pen_active && e.Button == MouseButtons.Left)
+            {
+               
+                Pen p = new Pen(colorDialog1.Color);
+                //g.DrawEllipse(p, e.X, e.Y, 3, 3);
+                g.DrawLine(p, OldX, oldY, e.X, e.Y);
+                //pen.Dispose();
+                g = Graphics.FromImage(pictureBox1.Image);
+                pictureBox1.Invalidate();
+                OldX = e.X;
+                oldY = e.Y;
+            }
+            
+        }
+       
+
+
+
+
+
+        private void pen_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pen_MouseDown(object sender, MouseEventArgs e)
+        {
+        }
+
+        private void buttonColor_Click(object sender, EventArgs e)
+        {
+            colorDialog1.ShowDialog();
+            buttonColor.BackColor = colorDialog1.Color;
+        }
+
+      
     }
 }
