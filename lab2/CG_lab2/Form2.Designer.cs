@@ -59,9 +59,6 @@ namespace CG_lab2
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pictureBox1.Location = new System.Drawing.Point(62, 27);
             this.pictureBox1.MinimumSize = new System.Drawing.Size(600, 600);
@@ -70,6 +67,7 @@ namespace CG_lab2
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseClick);
             this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
             this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
             this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
@@ -83,11 +81,10 @@ namespace CG_lab2
             this.pen.TabIndex = 2;
             this.pen.UseVisualStyleBackColor = true;
             this.pen.Click += new System.EventHandler(this.pen_Click);
-            this.pen.Enter += new System.EventHandler(this.pen_Enter);
-            this.pen.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pen_MouseDown);
             // 
             // button3
             // 
+            this.button3.Cursor = System.Windows.Forms.Cursors.Default;
             this.button3.Image = ((System.Drawing.Image)(resources.GetObject("button3.Image")));
             this.button3.Location = new System.Drawing.Point(6, 83);
             this.button3.Name = "button3";
@@ -126,13 +123,13 @@ namespace CG_lab2
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openToolStripMenuItem.Text = "Open";
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveToolStripMenuItem.Text = "Save";
             // 
             // button1
@@ -209,6 +206,7 @@ namespace CG_lab2
             // radioButPen
             // 
             this.radioButPen.AutoSize = true;
+            this.radioButPen.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.radioButPen.Location = new System.Drawing.Point(42, 27);
             this.radioButPen.Name = "radioButPen";
             this.radioButPen.Size = new System.Drawing.Size(14, 13);
@@ -220,6 +218,7 @@ namespace CG_lab2
             // radioButBuc
             // 
             this.radioButBuc.AutoSize = true;
+            this.radioButBuc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.radioButBuc.Location = new System.Drawing.Point(42, 83);
             this.radioButBuc.Name = "radioButBuc";
             this.radioButBuc.Size = new System.Drawing.Size(14, 13);
@@ -231,6 +230,7 @@ namespace CG_lab2
             // radioButShtamp
             // 
             this.radioButShtamp.AutoSize = true;
+            this.radioButShtamp.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.radioButShtamp.Location = new System.Drawing.Point(42, 139);
             this.radioButShtamp.Name = "radioButShtamp";
             this.radioButShtamp.Size = new System.Drawing.Size(14, 13);
@@ -242,6 +242,7 @@ namespace CG_lab2
             // radioButMagic
             // 
             this.radioButMagic.AutoSize = true;
+            this.radioButMagic.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.radioButMagic.Location = new System.Drawing.Point(42, 195);
             this.radioButMagic.Name = "radioButMagic";
             this.radioButMagic.Size = new System.Drawing.Size(14, 13);
@@ -253,6 +254,7 @@ namespace CG_lab2
             // radioButBrez
             // 
             this.radioButBrez.AutoSize = true;
+            this.radioButBrez.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.radioButBrez.Location = new System.Drawing.Point(42, 251);
             this.radioButBrez.Name = "radioButBrez";
             this.radioButBrez.Size = new System.Drawing.Size(14, 13);
@@ -264,6 +266,7 @@ namespace CG_lab2
             // radioButVu
             // 
             this.radioButVu.AutoSize = true;
+            this.radioButVu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.radioButVu.Location = new System.Drawing.Point(42, 303);
             this.radioButVu.Name = "radioButVu";
             this.radioButVu.Size = new System.Drawing.Size(14, 13);
@@ -275,6 +278,7 @@ namespace CG_lab2
             // radioButTriangle
             // 
             this.radioButTriangle.AutoSize = true;
+            this.radioButTriangle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.radioButTriangle.Location = new System.Drawing.Point(42, 359);
             this.radioButTriangle.Name = "radioButTriangle";
             this.radioButTriangle.Size = new System.Drawing.Size(14, 13);
