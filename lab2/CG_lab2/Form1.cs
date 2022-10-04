@@ -10,8 +10,10 @@ using System.Windows.Forms;
 using System.Threading;
 namespace CG_lab2
 {
+    
     public partial class Form1 : Form
     {
+        Form2 f2 = new Form2();
         public Form1()
         {
             InitializeComponent();
@@ -605,6 +607,14 @@ namespace CG_lab2
             { 
                 pictureBox1.Image.Save("SavedImage.png");
             }
+        }
+
+        private void lab3ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            f2 = new Form2();
+            f2.Show();
+            f2.f1 = this;
         }
     }
 }

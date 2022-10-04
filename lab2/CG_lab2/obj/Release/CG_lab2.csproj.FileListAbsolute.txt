@@ -1,0 +1,11 @@
+C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\CG_lab2\bin\Release\CG_lab2.exe.config
+C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\CG_lab2\bin\Release\CG_lab2.exe
+C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\CG_lab2\bin\Release\CG_lab2.pdb
+C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\CG_lab2\obj\Release\CG_lab2.csproj.AssemblyReference.cache
+C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\CG_lab2\obj\Release\CG_lab2.Form1.resources
+C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\CG_lab2\obj\Release\CG_lab2.Form2.resources
+C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\CG_lab2\obj\Release\CG_lab2.Properties.Resources.resources
+C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\CG_lab2\obj\Release\CG_lab2.csproj.GenerateResource.cache
+C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\CG_lab2\obj\Release\CG_lab2.csproj.CoreCompileInputs.cache
+C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\CG_lab2\obj\Release\CG_lab2.exe
+C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\CG_lab2\obj\Release\CG_lab2.pdb
