@@ -29,15 +29,15 @@ namespace CG_lab2
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea16 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend16 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series16 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea17 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend17 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series17 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea18 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend18 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series18 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -68,6 +68,7 @@ namespace CG_lab2
             this.groupBoxHSV = new System.Windows.Forms.GroupBox();
             this.buttonOrig = new System.Windows.Forms.Button();
             this.buttonHSV = new System.Windows.Forms.Button();
+            this.ghfhfghToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -104,7 +105,7 @@ namespace CG_lab2
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
@@ -124,6 +125,7 @@ namespace CG_lab2
             this.lab2ToolStripMenuItem.Name = "lab2ToolStripMenuItem";
             this.lab2ToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
             this.lab2ToolStripMenuItem.Text = "lab2";
+            this.lab2ToolStripMenuItem.Click += new System.EventHandler(this.lab2ToolStripMenuItem_Click);
             // 
             // grayToolStripMenuItem
             // 
@@ -148,9 +150,12 @@ namespace CG_lab2
             // 
             // lab3ToolStripMenuItem
             // 
+            this.lab3ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ghfhfghToolStripMenuItem});
             this.lab3ToolStripMenuItem.Name = "lab3ToolStripMenuItem";
             this.lab3ToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
             this.lab3ToolStripMenuItem.Text = "lab3";
+            this.lab3ToolStripMenuItem.Click += new System.EventHandler(this.lab3ToolStripMenuItem_Click);
             // 
             // lab4ToolStripMenuItem
             // 
@@ -198,17 +203,17 @@ namespace CG_lab2
             // 
             // chart1
             // 
-            chartArea4.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.chart1.Legends.Add(legend4);
+            chartArea16.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea16);
+            legend16.Name = "Legend1";
+            this.chart1.Legends.Add(legend16);
             this.chart1.Location = new System.Drawing.Point(319, 341);
             this.chart1.Name = "chart1";
-            series4.ChartArea = "ChartArea1";
-            series4.Font = new System.Drawing.Font("Stencil", 12F);
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.chart1.Series.Add(series4);
+            series16.ChartArea = "ChartArea1";
+            series16.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            series16.Legend = "Legend1";
+            series16.Name = "Series1";
+            this.chart1.Series.Add(series16);
             this.chart1.Size = new System.Drawing.Size(300, 275);
             this.chart1.TabIndex = 5;
             this.chart1.Text = "chart1";
@@ -216,17 +221,17 @@ namespace CG_lab2
             // 
             // chart2
             // 
-            chartArea5.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea5);
-            legend5.Name = "Legend1";
-            this.chart2.Legends.Add(legend5);
+            chartArea17.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea17);
+            legend17.Name = "Legend1";
+            this.chart2.Legends.Add(legend17);
             this.chart2.Location = new System.Drawing.Point(625, 341);
             this.chart2.Name = "chart2";
-            series5.ChartArea = "ChartArea1";
-            series5.Font = new System.Drawing.Font("Stencil", 12F);
-            series5.Legend = "Legend1";
-            series5.Name = "Series1";
-            this.chart2.Series.Add(series5);
+            series17.ChartArea = "ChartArea1";
+            series17.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            series17.Legend = "Legend1";
+            series17.Name = "Series1";
+            this.chart2.Series.Add(series17);
             this.chart2.Size = new System.Drawing.Size(300, 275);
             this.chart2.TabIndex = 6;
             this.chart2.Text = "chart2";
@@ -234,17 +239,17 @@ namespace CG_lab2
             // 
             // chart3
             // 
-            chartArea6.Name = "ChartArea1";
-            this.chart3.ChartAreas.Add(chartArea6);
-            legend6.Name = "Legend1";
-            this.chart3.Legends.Add(legend6);
+            chartArea18.Name = "ChartArea1";
+            this.chart3.ChartAreas.Add(chartArea18);
+            legend18.Name = "Legend1";
+            this.chart3.Legends.Add(legend18);
             this.chart3.Location = new System.Drawing.Point(931, 341);
             this.chart3.Name = "chart3";
-            series6.ChartArea = "ChartArea1";
-            series6.Font = new System.Drawing.Font("Stencil", 12F);
-            series6.Legend = "Legend1";
-            series6.Name = "Series1";
-            this.chart3.Series.Add(series6);
+            series18.ChartArea = "ChartArea1";
+            series18.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            series18.Legend = "Legend1";
+            series18.Name = "Series1";
+            this.chart3.Series.Add(series18);
             this.chart3.Size = new System.Drawing.Size(300, 275);
             this.chart3.TabIndex = 7;
             this.chart3.Text = "chart3";
@@ -253,10 +258,10 @@ namespace CG_lab2
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Stencil", 12F);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.label1.Location = new System.Drawing.Point(126, 306);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(82, 19);
+            this.label1.Size = new System.Drawing.Size(59, 20);
             this.label1.TabIndex = 11;
             this.label1.Text = "original";
             // 
@@ -264,21 +269,21 @@ namespace CG_lab2
             // 
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.SystemColors.Control;
-            this.label2.Font = new System.Drawing.Font("Stencil", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Red;
             this.label2.Location = new System.Drawing.Point(459, 306);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(0, 19);
+            this.label2.Size = new System.Drawing.Size(0, 20);
             this.label2.TabIndex = 12;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Stencil", 12F);
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.label3.ForeColor = System.Drawing.Color.Green;
             this.label3.Location = new System.Drawing.Point(758, 306);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(13, 19);
+            this.label3.Size = new System.Drawing.Size(13, 20);
             this.label3.TabIndex = 13;
             this.label3.Text = " ";
             // 
@@ -286,41 +291,41 @@ namespace CG_lab2
             // 
             this.label4.AutoSize = true;
             this.label4.BackColor = System.Drawing.SystemColors.Control;
-            this.label4.Font = new System.Drawing.Font("Stencil", 12F);
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.label4.ForeColor = System.Drawing.Color.Blue;
             this.label4.Location = new System.Drawing.Point(1061, 306);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(13, 19);
+            this.label4.Size = new System.Drawing.Size(13, 20);
             this.label4.TabIndex = 14;
             this.label4.Text = " ";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Stencil", 12F);
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.label5.Location = new System.Drawing.Point(145, 35);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(21, 19);
+            this.label5.Size = new System.Drawing.Size(21, 20);
             this.label5.TabIndex = 15;
             this.label5.Text = "H";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Stencil", 12F);
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.label6.Location = new System.Drawing.Point(146, 103);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(19, 19);
+            this.label6.Size = new System.Drawing.Size(20, 20);
             this.label6.TabIndex = 16;
             this.label6.Text = "V";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Stencil", 12F);
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.label7.Location = new System.Drawing.Point(146, 168);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(18, 19);
+            this.label7.Size = new System.Drawing.Size(20, 20);
             this.label7.TabIndex = 17;
             this.label7.Text = "C";
             // 
@@ -392,6 +397,13 @@ namespace CG_lab2
             this.buttonHSV.UseVisualStyleBackColor = true;
             this.buttonHSV.Click += new System.EventHandler(this.buttonHSV_Click);
             // 
+            // ghfhfghToolStripMenuItem
+            // 
+            this.ghfhfghToolStripMenuItem.Name = "ghfhfghToolStripMenuItem";
+            this.ghfhfghToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.ghfhfghToolStripMenuItem.Text = "Bresenham\'s line tool";
+            this.ghfhfghToolStripMenuItem.Click += new System.EventHandler(this.BresenhamToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -462,6 +474,7 @@ namespace CG_lab2
         private System.Windows.Forms.Button buttonHSV;
         private System.Windows.Forms.Button buttonOrig;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ghfhfghToolStripMenuItem;
     }
 }
 

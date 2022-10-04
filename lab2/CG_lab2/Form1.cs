@@ -17,8 +17,32 @@ namespace CG_lab2
             InitializeComponent();
         }
 
+
+        public void SetWorkArea(object sender, EventArgs e)
+        {
+            var WorkArea = sender as ToolStripMenuItem;
+
+            var wtext = WorkArea.Text;
+
+            (pictureBox1.Width, pictureBox1.Height) = (wtext == "lab3") ? (1218, 588) : (300, 275);
+            
+            (pictureBox1.Enabled) = (wtext != "lab3")? true : false;
+
+            (pictureBox2.Visible, pictureBox3.Visible, pictureBox4.Visible) = (wtext != "lab3")? (true,true,true) : (false,false,false);          
+
+            (chart1.Visible, chart2.Visible) = (wtext != "lab3") ? (true,true) : (false,false);
+
+            chart3.Visible = (wtext == "RGB")? true : false;
+            
+            foreach (Label lbl in this.Controls.OfType<Label>())
+            {
+                lbl.Visible = ( wtext != "lab3") ? true : false;
+            }           
+
+        }
         private void hVCToolStripMenuItem1_Click(object sender, EventArgs e)
         {
+            SetWorkArea(sender, e);
             groupBoxHSV.Visible = true;
             groupBoxHSV.Show();
             if (pictureBox1.Image == null)
@@ -35,7 +59,11 @@ namespace CG_lab2
 
         private void rGBToolStripMenuItem1_Click(object sender, EventArgs e)
         {
+            SetWorkArea(sender, e);
             groupBoxHSV.Visible = false;
+
+            pictureBox1.Width =300;
+            pictureBox1.Width = 275;
 
             if (pictureBox1.Image != null)
             {
@@ -64,6 +92,7 @@ namespace CG_lab2
 
         private void grayToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            SetWorkArea(sender, e);
             groupBoxHSV.Visible = false;
             chart1.Visible = true;
             chart2.Visible = true;
@@ -118,7 +147,10 @@ namespace CG_lab2
             pictureBox1.BorderStyle = BorderStyle.None;
         }
 
-
+        private void BresenhamToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetWorkArea(sender, e);
+        }
 
         private void Gray(object sender, EventArgs e)
         {
@@ -333,7 +365,6 @@ namespace CG_lab2
 			//Color clr2 = TransformHSV(Color.FromArgb(255, 135, 12, 55), 1, 1, 1);
 			TranformImage((double)hScrollBar1.Value / 100, (double)hScrollBar2.Value / 100, (double)hScrollBar3.Value / 100);
 		}
-
 
 		private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
 		{
@@ -605,6 +636,16 @@ namespace CG_lab2
             { 
                 pictureBox1.Image.Save("SavedImage.png");
             }
+        }
+
+        private void lab2ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetWorkArea(sender, e);
+        }
+
+        private void lab3ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetWorkArea(sender, e);
         }
     }
 }
