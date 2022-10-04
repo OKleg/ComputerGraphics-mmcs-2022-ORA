@@ -1,4 +1,3 @@
-﻿
 namespace CG_lab2
 {
     partial class Form2
@@ -59,9 +58,6 @@ namespace CG_lab2
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pictureBox1.Location = new System.Drawing.Point(62, 27);
             this.pictureBox1.MinimumSize = new System.Drawing.Size(600, 600);
@@ -84,11 +80,10 @@ namespace CG_lab2
             this.pen.TabIndex = 2;
             this.pen.UseVisualStyleBackColor = true;
             this.pen.Click += new System.EventHandler(this.pen_Click);
-            this.pen.Enter += new System.EventHandler(this.pen_Enter);
-            this.pen.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pen_MouseDown);
             // 
             // button3
             // 
+            this.button3.Cursor = System.Windows.Forms.Cursors.Default;
             this.button3.Image = ((System.Drawing.Image)(resources.GetObject("button3.Image")));
             this.button3.Location = new System.Drawing.Point(6, 83);
             this.button3.Name = "button3";
@@ -212,6 +207,7 @@ namespace CG_lab2
             // radioButPen
             // 
             this.radioButPen.AutoSize = true;
+            this.radioButPen.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.radioButPen.Location = new System.Drawing.Point(42, 27);
             this.radioButPen.Name = "radioButPen";
             this.radioButPen.Size = new System.Drawing.Size(14, 13);
@@ -223,6 +219,7 @@ namespace CG_lab2
             // radioButBuc
             // 
             this.radioButBuc.AutoSize = true;
+            this.radioButBuc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.radioButBuc.Location = new System.Drawing.Point(42, 83);
             this.radioButBuc.Name = "radioButBuc";
             this.radioButBuc.Size = new System.Drawing.Size(14, 13);
@@ -234,6 +231,7 @@ namespace CG_lab2
             // radioButShtamp
             // 
             this.radioButShtamp.AutoSize = true;
+            this.radioButShtamp.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.radioButShtamp.Location = new System.Drawing.Point(42, 139);
             this.radioButShtamp.Name = "radioButShtamp";
             this.radioButShtamp.Size = new System.Drawing.Size(14, 13);
@@ -245,6 +243,7 @@ namespace CG_lab2
             // radioButMagic
             // 
             this.radioButMagic.AutoSize = true;
+            this.radioButMagic.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.radioButMagic.Location = new System.Drawing.Point(42, 195);
             this.radioButMagic.Name = "radioButMagic";
             this.radioButMagic.Size = new System.Drawing.Size(14, 13);
@@ -256,6 +255,7 @@ namespace CG_lab2
             // radioButBrez
             // 
             this.radioButBrez.AutoSize = true;
+            this.radioButBrez.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.radioButBrez.Location = new System.Drawing.Point(42, 251);
             this.radioButBrez.Name = "radioButBrez";
             this.radioButBrez.Size = new System.Drawing.Size(14, 13);
@@ -274,10 +274,12 @@ namespace CG_lab2
             this.radioButWu.TabStop = true;
             this.radioButWu.UseVisualStyleBackColor = true;
             this.radioButWu.Visible = false;
+
             // 
             // radioButTriangle
             // 
             this.radioButTriangle.AutoSize = true;
+            this.radioButTriangle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.radioButTriangle.Location = new System.Drawing.Point(42, 359);
             this.radioButTriangle.Name = "radioButTriangle";
             this.radioButTriangle.Size = new System.Drawing.Size(14, 13);
