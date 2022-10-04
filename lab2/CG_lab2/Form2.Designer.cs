@@ -45,6 +45,14 @@ namespace CG_lab2
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.button7 = new System.Windows.Forms.Button();
             this.buttonColor = new System.Windows.Forms.Button();
+            this.buttonClean = new System.Windows.Forms.Button();
+            this.radioButPen = new System.Windows.Forms.RadioButton();
+            this.radioButBuc = new System.Windows.Forms.RadioButton();
+            this.radioButShtamp = new System.Windows.Forms.RadioButton();
+            this.radioButMagic = new System.Windows.Forms.RadioButton();
+            this.radioButBrez = new System.Windows.Forms.RadioButton();
+            this.radioButVu = new System.Windows.Forms.RadioButton();
+            this.radioButTriangle = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -64,6 +72,7 @@ namespace CG_lab2
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
             this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
+            this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
             // 
             // pen
             // 
@@ -85,6 +94,7 @@ namespace CG_lab2
             this.button3.Size = new System.Drawing.Size(50, 50);
             this.button3.TabIndex = 3;
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // menuStrip1
             // 
@@ -186,11 +196,106 @@ namespace CG_lab2
             this.buttonColor.UseVisualStyleBackColor = false;
             this.buttonColor.Click += new System.EventHandler(this.buttonColor_Click);
             // 
+            // buttonClean
+            // 
+            this.buttonClean.Location = new System.Drawing.Point(6, 471);
+            this.buttonClean.Name = "buttonClean";
+            this.buttonClean.Size = new System.Drawing.Size(50, 45);
+            this.buttonClean.TabIndex = 11;
+            this.buttonClean.Text = "Clean";
+            this.buttonClean.UseVisualStyleBackColor = true;
+            this.buttonClean.Click += new System.EventHandler(this.Clean_Click);
+            // 
+            // radioButPen
+            // 
+            this.radioButPen.AutoSize = true;
+            this.radioButPen.Location = new System.Drawing.Point(42, 27);
+            this.radioButPen.Name = "radioButPen";
+            this.radioButPen.Size = new System.Drawing.Size(14, 13);
+            this.radioButPen.TabIndex = 12;
+            this.radioButPen.TabStop = true;
+            this.radioButPen.UseVisualStyleBackColor = true;
+            this.radioButPen.Visible = false;
+            // 
+            // radioButBuc
+            // 
+            this.radioButBuc.AutoSize = true;
+            this.radioButBuc.Location = new System.Drawing.Point(42, 83);
+            this.radioButBuc.Name = "radioButBuc";
+            this.radioButBuc.Size = new System.Drawing.Size(14, 13);
+            this.radioButBuc.TabIndex = 13;
+            this.radioButBuc.TabStop = true;
+            this.radioButBuc.UseVisualStyleBackColor = true;
+            this.radioButBuc.Visible = false;
+            // 
+            // radioButShtamp
+            // 
+            this.radioButShtamp.AutoSize = true;
+            this.radioButShtamp.Location = new System.Drawing.Point(42, 139);
+            this.radioButShtamp.Name = "radioButShtamp";
+            this.radioButShtamp.Size = new System.Drawing.Size(14, 13);
+            this.radioButShtamp.TabIndex = 14;
+            this.radioButShtamp.TabStop = true;
+            this.radioButShtamp.UseVisualStyleBackColor = true;
+            this.radioButShtamp.Visible = false;
+            // 
+            // radioButMagic
+            // 
+            this.radioButMagic.AutoSize = true;
+            this.radioButMagic.Location = new System.Drawing.Point(42, 195);
+            this.radioButMagic.Name = "radioButMagic";
+            this.radioButMagic.Size = new System.Drawing.Size(14, 13);
+            this.radioButMagic.TabIndex = 15;
+            this.radioButMagic.TabStop = true;
+            this.radioButMagic.UseVisualStyleBackColor = true;
+            this.radioButMagic.Visible = false;
+            // 
+            // radioButBrez
+            // 
+            this.radioButBrez.AutoSize = true;
+            this.radioButBrez.Location = new System.Drawing.Point(42, 251);
+            this.radioButBrez.Name = "radioButBrez";
+            this.radioButBrez.Size = new System.Drawing.Size(14, 13);
+            this.radioButBrez.TabIndex = 16;
+            this.radioButBrez.TabStop = true;
+            this.radioButBrez.UseVisualStyleBackColor = true;
+            this.radioButBrez.Visible = false;
+            // 
+            // radioButVu
+            // 
+            this.radioButVu.AutoSize = true;
+            this.radioButVu.Location = new System.Drawing.Point(42, 303);
+            this.radioButVu.Name = "radioButVu";
+            this.radioButVu.Size = new System.Drawing.Size(14, 13);
+            this.radioButVu.TabIndex = 17;
+            this.radioButVu.TabStop = true;
+            this.radioButVu.UseVisualStyleBackColor = true;
+            this.radioButVu.Visible = false;
+            // 
+            // radioButTriangle
+            // 
+            this.radioButTriangle.AutoSize = true;
+            this.radioButTriangle.Location = new System.Drawing.Point(42, 359);
+            this.radioButTriangle.Name = "radioButTriangle";
+            this.radioButTriangle.Size = new System.Drawing.Size(14, 13);
+            this.radioButTriangle.TabIndex = 18;
+            this.radioButTriangle.TabStop = true;
+            this.radioButTriangle.UseVisualStyleBackColor = true;
+            this.radioButTriangle.Visible = false;
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(669, 631);
+            this.Controls.Add(this.radioButTriangle);
+            this.Controls.Add(this.radioButVu);
+            this.Controls.Add(this.radioButBrez);
+            this.Controls.Add(this.radioButMagic);
+            this.Controls.Add(this.radioButShtamp);
+            this.Controls.Add(this.radioButBuc);
+            this.Controls.Add(this.radioButPen);
+            this.Controls.Add(this.buttonClean);
             this.Controls.Add(this.buttonColor);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
@@ -229,5 +334,13 @@ namespace CG_lab2
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button buttonColor;
+        private System.Windows.Forms.Button buttonClean;
+        private System.Windows.Forms.RadioButton radioButPen;
+        private System.Windows.Forms.RadioButton radioButBuc;
+        private System.Windows.Forms.RadioButton radioButShtamp;
+        private System.Windows.Forms.RadioButton radioButMagic;
+        private System.Windows.Forms.RadioButton radioButBrez;
+        private System.Windows.Forms.RadioButton radioButVu;
+        private System.Windows.Forms.RadioButton radioButTriangle;
     }
 }

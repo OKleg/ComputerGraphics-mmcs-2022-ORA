@@ -15,7 +15,6 @@ namespace CG_lab2
 
         public Form1 f1;
         private Graphics g;
-        bool pen_active=false;
         public Form2()
         {
             InitializeComponent();
@@ -23,7 +22,7 @@ namespace CG_lab2
             pictureBox1.Paint += Draw;
             g = Graphics.FromImage(pictureBox1.Image);
             g.Clear(Color.White);
-
+            
         }
         private void Draw(object sender, PaintEventArgs e)
         {
@@ -65,12 +64,12 @@ namespace CG_lab2
 
         }
 
+        
+
         private void pen_Click(object sender, EventArgs e)
         {
-            pen_active = !pen_active;
+            radioButPen.Checked = radioButPen.Checked ?  false : true;
         }
-
-
         int OldX=0, oldY=0;
          private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
@@ -80,7 +79,7 @@ namespace CG_lab2
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
 
-            if (pen_active && e.Button == MouseButtons.Left)
+            if (radioButPen.Checked && e.Button == MouseButtons.Left)
             {
                
                 Pen p = new Pen(colorDialog1.Color);
@@ -92,7 +91,6 @@ namespace CG_lab2
                 OldX = e.X;
                 oldY = e.Y;
             }
-            
         }
        
 
@@ -108,6 +106,23 @@ namespace CG_lab2
         private void pen_MouseDown(object sender, MouseEventArgs e)
         {
         }
+
+        private void Clean_Click(object sender, EventArgs e)
+        {
+            g.Clear(Color.White);
+            pictureBox1.Invalidate();
+        }
+
+        private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            radioButBuc.Checked = radioButBuc.Checked ? false : true;
+        }
+
 
         private void buttonColor_Click(object sender, EventArgs e)
         {
