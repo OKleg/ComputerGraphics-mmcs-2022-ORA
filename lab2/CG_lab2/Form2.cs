@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CG_lab2
 {
@@ -15,12 +16,15 @@ namespace CG_lab2
 
         public Form1 f1;
         private Graphics g;
+        //Bitmap bmp;
         public Form2()
         {
             InitializeComponent();
             pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             pictureBox1.Paint += Draw;
             g = Graphics.FromImage(pictureBox1.Image);
+            //g = pictureBox1.CreateGraphics();
+            //bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             g.Clear(Color.White);
             
         }
@@ -61,17 +65,162 @@ namespace CG_lab2
 
         private void button5_Click(object sender, EventArgs e)
         {
-
+            radioButBrez.Checked = radioButBrez.Checked ? false : true;          
         }
 
+        private void button7_Click(object sender, EventArgs e)
+        {
+            radioButWu.Checked = radioButWu.Checked ? false : true;
+        }
+
+        private Point p1, p2;
+        private int p_n = 0;
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            
+        }
+        private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
+        {
+            if ((radioButBrez.Checked || radioButWu.Checked) && e.Button == MouseButtons.Left)
+            {
+                if (p_n % 2 == 0)
+                {
+                    (p1.X, p1.Y) = (e.X, e.Y);
+                }
+                else if (p_n % 2 == 1)
+                {
+                    (p2.X, p2.Y) = (e.X, e.Y);
+                    if (radioButBrez.Checked) 
+                    { 
+                        BresenhamLine(p1, p2); 
+                    }
+                    else Wyline(p1, p2);
+                }
+                p_n++;
+            }  
+        }
+        //floor
+        int ipart(double x) { return (int)x; }
+        // double part of num
+        double fpart(double x)
+        {
+            return x - ipart(x);
+        }
+        //1 - double part
+        double rfpart(double x)
+        {
+            return 1 - fpart(x);
+        }
         
+        //Point placer
+        private void Plot(Bitmap bmp,int x, int y, double c, Color penColor)
+        {
+            int alpha = ipart(c * 255);
+            Color color = Color.FromArgb(alpha, penColor);
+            bmp.SetPixel(x, y, color);
+        }
+        //Xiaolin Wu's line algorithm
+        private void Wyline(Point p1, Point p2)
+        {
+            if (p1 == p2) return;
+            var bmp = (pictureBox1.Image as Bitmap);
+            Pen pen = new Pen(colorDialog1.Color);
+            (int x1, int y1) = (p1.X, p1.Y);
+            (int x2, int y2) = (p2.X, p2.Y);
+
+            float dx = x2 - x1;
+            float dy = y2 - y1;
+
+            var steep = Math.Abs(dy) > Math.Abs(dx);
+            if (steep)
+            {
+                if (y1 > y2)
+                {
+                    (x1, x2) = (x2, x1);
+                    (y1, y2) = (y2, y1);
+                }
+            }
+            else
+            {
+                if (x1 > x2)
+                {
+                    (x1, x2) = (x2, x1);
+                    (y1, y2) = (y2, y1);
+                }
+            }
+
+            bmp.SetPixel(x2, y2, pen.Color);
+            pictureBox1.Invalidate();
+            float gradient = steep ? dx / dy : dy / dx;
+            float intery = steep ? x1 + gradient : y1 + gradient;
+
+            if (steep)
+            {
+                for (var y = y1 + 1; y <= y2 - 1; y++)
+                {
+                    Plot(bmp,ipart(intery), y, rfpart(intery), pen.Color);
+                    Plot(bmp,ipart(intery) + 1, y, fpart(intery), pen.Color);
+                    pictureBox1.Invalidate();
+                    intery += gradient;
+                }
+            }
+            else
+            {
+                for (var x = x1 + 1; x <= x2 - 1; x++)
+                {
+                    Plot(bmp,x, ipart(intery), rfpart(intery), pen.Color);
+                    Plot(bmp,x, ipart(intery) + 1, fpart(intery), pen.Color);
+                    pictureBox1.Invalidate();
+                    intery += gradient;
+                }
+            }
+            //pictureBox1.Image = bmp;
+            pictureBox1.Invalidate();
+        }       
+
+        private void BresenhamLine(Point p1, Point p2)
+        {
+            if (p1 == p2) return;
+
+            var bmp = (pictureBox1.Image as Bitmap);
+            Pen pen = new Pen(colorDialog1.Color);
+            //Color color = Color.Black;          
+            //delta
+            int dx = Math.Abs(p2.X - p1.X);
+            int dy = Math.Abs(p2.Y - p1.Y);
+
+            //signs, to where go
+            int sx = p1.X < p2.X ? 1 : -1;
+            int sy = p1.Y < p2.Y ? 1 : -1;
+
+            int err = (dx > dy ? dx : -dy) / 2;
+            int e2;
+
+            while (p1.X != p2.X || p1.Y != p2.Y)
+            {
+                bmp.SetPixel(p1.X, p1.Y, pen.Color);
+                pictureBox1.Invalidate();
+                e2 = err;
+                if (e2 > -dx)
+                {
+                    err -= dy;
+                    p1.X += sx;
+                }
+                if (e2 < dy)
+                {
+                    err += dx;
+                    p1.Y += sy;
+                }
+            }
+            //pictureBox1.Image = bmp;
+        }
 
         private void pen_Click(object sender, EventArgs e)
         {
             radioButPen.Checked = radioButPen.Checked ?  false : true;
         }
         int OldX=0, oldY=0;
-         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
             OldX= e.X;
             oldY= e.Y;
@@ -92,11 +241,6 @@ namespace CG_lab2
                 oldY = e.Y;
             }
         }
-       
-
-
-
-
 
         private void pen_Enter(object sender, EventArgs e)
         {
@@ -116,6 +260,36 @@ namespace CG_lab2
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
 
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image != null) //если в pictureBox есть изображение
+            {
+                //создание диалогового окна "Сохранить как..", для сохранения изображения
+                SaveFileDialog savedialog = new SaveFileDialog();
+                savedialog.Title = "Сохранить картинку как...";
+                //отображать ли предупреждение, если пользователь указывает имя уже существующего файла
+                savedialog.OverwritePrompt = true;
+                //отображать ли предупреждение, если пользователь указывает несуществующий путь
+                savedialog.CheckPathExists = true;
+                //список форматов файла, отображаемый в поле "Тип файла"
+                savedialog.Filter = "Image Files(*.BMP)|*.BMP|Image Files(*.JPG)|*.JPG|Image Files(*.GIF)|*.GIF|Image Files(*.PNG)|*.PNG|All files (*.*)|*.*";
+                //отображается ли кнопка "Справка" в диалоговом окне
+                savedialog.ShowHelp = true;
+                if (savedialog.ShowDialog() == DialogResult.OK) //если в диалоговом окне нажата кнопка "ОК"
+                {
+                    try
+                    {
+                        pictureBox1.Image.Save(savedialog.FileName, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Невозможно сохранить изображение", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)

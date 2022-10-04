@@ -51,7 +51,7 @@ namespace CG_lab2
             this.radioButShtamp = new System.Windows.Forms.RadioButton();
             this.radioButMagic = new System.Windows.Forms.RadioButton();
             this.radioButBrez = new System.Windows.Forms.RadioButton();
-            this.radioButVu = new System.Windows.Forms.RadioButton();
+            this.radioButWu = new System.Windows.Forms.RadioButton();
             this.radioButTriangle = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -67,9 +67,10 @@ namespace CG_lab2
             this.pictureBox1.MinimumSize = new System.Drawing.Size(600, 600);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(600, 600);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseClick);
             this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
             this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
             this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
@@ -126,14 +127,15 @@ namespace CG_lab2
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openToolStripMenuItem.Text = "Open";
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // button1
             // 
@@ -184,6 +186,7 @@ namespace CG_lab2
             this.button7.Size = new System.Drawing.Size(50, 50);
             this.button7.TabIndex = 9;
             this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // buttonColor
             // 
@@ -261,16 +264,16 @@ namespace CG_lab2
             this.radioButBrez.UseVisualStyleBackColor = true;
             this.radioButBrez.Visible = false;
             // 
-            // radioButVu
+            // radioButWu
             // 
-            this.radioButVu.AutoSize = true;
-            this.radioButVu.Location = new System.Drawing.Point(42, 303);
-            this.radioButVu.Name = "radioButVu";
-            this.radioButVu.Size = new System.Drawing.Size(14, 13);
-            this.radioButVu.TabIndex = 17;
-            this.radioButVu.TabStop = true;
-            this.radioButVu.UseVisualStyleBackColor = true;
-            this.radioButVu.Visible = false;
+            this.radioButWu.AutoSize = true;
+            this.radioButWu.Location = new System.Drawing.Point(42, 303);
+            this.radioButWu.Name = "radioButWu";
+            this.radioButWu.Size = new System.Drawing.Size(14, 13);
+            this.radioButWu.TabIndex = 17;
+            this.radioButWu.TabStop = true;
+            this.radioButWu.UseVisualStyleBackColor = true;
+            this.radioButWu.Visible = false;
             // 
             // radioButTriangle
             // 
@@ -289,7 +292,7 @@ namespace CG_lab2
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(669, 631);
             this.Controls.Add(this.radioButTriangle);
-            this.Controls.Add(this.radioButVu);
+            this.Controls.Add(this.radioButWu);
             this.Controls.Add(this.radioButBrez);
             this.Controls.Add(this.radioButMagic);
             this.Controls.Add(this.radioButShtamp);
@@ -340,7 +343,7 @@ namespace CG_lab2
         private System.Windows.Forms.RadioButton radioButShtamp;
         private System.Windows.Forms.RadioButton radioButMagic;
         private System.Windows.Forms.RadioButton radioButBrez;
-        private System.Windows.Forms.RadioButton radioButVu;
+        private System.Windows.Forms.RadioButton radioButWu;
         private System.Windows.Forms.RadioButton radioButTriangle;
     }
 }
