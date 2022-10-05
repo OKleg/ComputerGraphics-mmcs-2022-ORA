@@ -73,8 +73,6 @@ namespace CG_lab2
             radioButWu.Checked = radioButWu.Checked ? false : true;
         }
 
-        private Point p1, p2;
-        private int p_n = 0;
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             
@@ -82,48 +80,59 @@ namespace CG_lab2
         //bool backetPaint = false;
         Color bucketColor;
 
-		List<Point> trianglePoints = new List<Point>();
+		List<Point> PointsList = new List<Point>();
+		Stack<Point> stackToFill = new Stack<Point>();
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
             Bitmap holst = new Bitmap(pictureBox1.Image);
             if ((radioButBrez.Checked || radioButWu.Checked) && e.Button == MouseButtons.Left)
             {
-                if (p_n % 2 == 0)
+                if (PointsList.Count == 0)
                 {
-                    (p1.X, p1.Y) = (e.X, e.Y);
-                }
-                else if (p_n % 2 == 1)
+					PointsList.Add(e.Location);
+
+				}
+                else
                 {
-                    (p2.X, p2.Y) = (e.X, e.Y);
-                    if (radioButBrez.Checked) 
-                    { 
-                        BresenhamLine(p1, p2); 
-                    }
-                    else Wyline(p1, p2);
+					PointsList.Add(e.Location);
+
+					if (radioButBrez.Checked)
+					{
+						BresenhamLine(PointsList[0], PointsList[1], colorDialog1.Color);
+					}
+					else
+					{
+						Wyline(PointsList[0], PointsList[1]);
+					}
+					PointsList.Clear();
                 }
-                p_n++;
             }           
             if (radioButBuc.Checked)//|| backetPaint
             {
-                // backetPaint = true;
-                bucketColor = colorDialog1.Color;
+				stackToFill.Clear();
+				bucketColor = colorDialog1.Color;
                 Pen p = new Pen(bucketColor);
-                ReDrawUp(e.Location, p, holst);
-                pictureBox1.Invalidate();
-                ReDrawDown(e.Location, p, holst);
+				Color fromColor = holst.GetPixel(e.X, e.Y);
+				Dictionary<Point, bool> dict = new Dictionary<Point, bool>();
+				ReDraw(e.Location, fromColor, bucketColor, holst, dict);
+				while(stackToFill.Count>0)
+				{
+					Point pt = stackToFill.Pop();
+					ReDraw(pt, fromColor, bucketColor, holst, dict);
+				}
                 pictureBox1.Invalidate();
             }
 			if (radioButTriangle.Checked)
 			{
-				if (trianglePoints.Count<2)
+				if (PointsList.Count<2)
 				{
-					trianglePoints.Add(e.Location);
+					PointsList.Add(e.Location);
 				}
 				else
 				{
-					trianglePoints.Add(e.Location);
-					RastrTriangle(trianglePoints[0], trianglePoints[1], trianglePoints[2], Color.Blue, Color.Red, Color.Green);
-					trianglePoints.Clear();
+					PointsList.Add(e.Location);
+					RastrTriangle(PointsList[0], PointsList[1], PointsList[2], Color.Blue, Color.Red, Color.Green);
+					PointsList.Clear();
 				}
 			}
         }
@@ -206,14 +215,19 @@ namespace CG_lab2
             pictureBox1.Invalidate();
         }       
 
-        private void BresenhamLine(Point p1, Point p2)
+        private void BresenhamLine(Point p1, Point p2, Color clr)
         {
-            if (p1 == p2) return;
-            Pen pen = new Pen(colorDialog1.Color);
             var bmp = (pictureBox1.Image as Bitmap);
-            //Color color = Color.Black;          
-            //delta
-            int dx = Math.Abs(p2.X - p1.X);
+
+			if (p1 == p2)
+			{
+				bmp.SetPixel(p1.X, p1.Y, clr);
+				pictureBox1.Invalidate();
+				return;
+			}
+			//Color color = Color.Black;          
+			//delta
+			int dx = Math.Abs(p2.X - p1.X);
             int dy = Math.Abs(p2.Y - p1.Y);
             
             //signs, to where go
@@ -225,8 +239,7 @@ namespace CG_lab2
 
             while (p1.X != p2.X || p1.Y != p2.Y)
             {
-                bmp.SetPixel(p1.X, p1.Y, pen.Color);
-                pictureBox1.Invalidate();
+                bmp.SetPixel(p1.X, p1.Y, clr);
                 e2 = err;
                 if (e2 > -dx)
                 {
@@ -239,8 +252,9 @@ namespace CG_lab2
                     p1.Y += sy;
                 }
             }
-            //pictureBox1.Image = bmp;
-        }
+			pictureBox1.Invalidate();
+			//pictureBox1.Image = bmp;
+		}
 
 
 		private void pen_Click(object sender, EventArgs e)
@@ -326,69 +340,57 @@ namespace CG_lab2
 
         }
              
-        private void ReDrawUp(Point start, Pen p, Bitmap holst)
+        private void ReDraw(Point point, Color fromColor, Color toColor, Bitmap holst, Dictionary<Point, bool> dict)
         {
-            Point left = start, right = start;
-            Color startColor = holst.GetPixel(start.X, start.Y);
-            while ( left.X>2 && holst.GetPixel(left.X-1, left.Y)== startColor)
-            {
-                --left.X;
-            }
-            while ( right.X<holst.Width-2 && holst.GetPixel(right.X + 1, right.Y) == startColor)
-            {
-                ++right.X;
-            }
-            g.DrawLine(p,left,right);
-            Point up = left;
-            if (up.Y + 1 < holst.Height - 1)
-                ++up.Y;
-            else return;
-            for (int i = left.X; i < right.X; i++)
-            {
-                if (holst.GetPixel(i, up.Y) == startColor )
-                {
-                    up.X = i;
-                    ReDrawUp(up, p, holst);
-                    break;
-                }
-            }
-        }
+			if (dict.Count > 100000)
+				return;
+			if (dict.ContainsKey(point))
+				return;
+			dict[point] = true;
 
-        private void ReDrawDown(Point start, Pen p, Bitmap holst)
-        {
-            Point left = start, right = start;
-            Color startColor = holst.GetPixel(start.X, start.Y);
-            while (left.X > 2 && holst.GetPixel(left.X - 1, left.Y) == startColor)
-            {
-                left.X--;
-            }
-            while (right.X < holst.Width - 2 && holst.GetPixel(right.X + 1, right.Y) == startColor)
-            {
-                right.X++;
-            }
-            g.DrawLine(p, left, right);
-            Point down = left;
-            if (down.Y - 1 > 1)
-                --down.Y;
-            else return;
-            for (int i = left.X; i < right.X; i++)
-            {
-                if (holst.GetPixel(i, down.Y) == startColor)
-                {
-                    down.X = i;
-                    ReDrawDown(down, p, holst);
-                    break;
-                }
+			if (fromColor == toColor)
+				return;
 
-            }
-        }
 
+			var bmp = (pictureBox1.Image as Bitmap);
+
+			if (bmp.GetPixel(point.X, point.Y) != fromColor)
+				return;
+
+			Point left = point;
+			while (left.X>0 && holst.GetPixel(left.X-1, left.Y) == fromColor)
+				left.X--;
+
+			Point right = point;
+			while (right.X+1 < holst.Width && holst.GetPixel(right.X+1, right.Y) == fromColor)
+				right.X++;
+
+			for (int i = left.X; i <= right.X; ++i)
+			{
+				dict[new Point(i, point.Y)] = true;
+				bmp.SetPixel(i, point.Y, toColor);
+				pictureBox1.Invalidate();
+				if (point.Y + 1 < holst.Height)
+				{
+					Point up = new Point(i, point.Y + 1);
+					if (!dict.ContainsKey(up))
+						stackToFill.Push(up);
+				}
+				if (point.Y - 1>0) 
+				{
+					
+					Point down = new Point(i, point.Y - 1);
+					if (!dict.ContainsKey(down))
+						stackToFill.Push(down);
+				}
+			}
+		}
 		//For Task3
 
 		private void BresenhamLineGradient(Point p1, Point p2, Color clr1, Color clr2)
 		{
-			if (p1 == p2) return;
-			Pen pen = new Pen(colorDialog1.Color);
+			if (p1 == p2) 
+				return;
 			var bmp = (pictureBox1.Image as Bitmap);
 			//Color color = Color.Black;          
 			//delta
