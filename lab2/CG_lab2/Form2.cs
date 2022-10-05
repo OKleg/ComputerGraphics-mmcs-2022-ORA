@@ -261,7 +261,7 @@ namespace CG_lab2
         {
              radioButPen.Checked = radioButPen.Checked ?  false : true;
             
-            //pictureBox1.MouseMove += pictureBox1_MouseMove;
+			pictureBox1.MouseMove += pictureBox1_MouseMove;
         }
 
         int OldX=0, oldY=0;
