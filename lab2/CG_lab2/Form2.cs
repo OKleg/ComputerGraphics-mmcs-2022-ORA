@@ -79,8 +79,11 @@ namespace CG_lab2
         {
             
         }
+        //bool backetPaint = false;
+        Color bucketColor;
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
+            Bitmap holst = new Bitmap(pictureBox1.Image);
             if ((radioButBrez.Checked || radioButWu.Checked) && e.Button == MouseButtons.Left)
             {
                 if (p_n % 2 == 0)
@@ -97,7 +100,17 @@ namespace CG_lab2
                     else Wyline(p1, p2);
                 }
                 p_n++;
-            }  
+            }           
+            if (radioButBuc.Checked)//|| backetPaint
+            {
+                // backetPaint = true;
+                bucketColor = colorDialog1.Color;
+                Pen p = new Pen(bucketColor);
+                ReDrawUp(e.Location, p, holst);
+                pictureBox1.Invalidate();
+                ReDrawDown(e.Location, p, holst);
+                pictureBox1.Invalidate();
+            }
         }
         //floor
         int ipart(double x) { return (int)x; }
@@ -158,8 +171,8 @@ namespace CG_lab2
             {
                 for (var y = y1 + 1; y <= y2 - 1; y++)
                 {
-                    Plot(bmp,ipart(intery), y, rfpart(intery), pen.Color);
-                    Plot(bmp,ipart(intery) + 1, y, fpart(intery), pen.Color);
+                    Plot(bmp, ipart(intery), y, rfpart(intery), pen.Color);
+                    Plot(bmp, ipart(intery) + 1, y, fpart(intery), pen.Color);
                     pictureBox1.Invalidate();
                     intery += gradient;
                 }
@@ -168,8 +181,8 @@ namespace CG_lab2
             {
                 for (var x = x1 + 1; x <= x2 - 1; x++)
                 {
-                    Plot(bmp,x, ipart(intery), rfpart(intery), pen.Color);
-                    Plot(bmp,x, ipart(intery) + 1, fpart(intery), pen.Color);
+                    Plot(bmp, x, ipart(intery), rfpart(intery), pen.Color);
+                    Plot(bmp, x, ipart(intery) + 1, fpart(intery), pen.Color);
                     pictureBox1.Invalidate();
                     intery += gradient;
                 }
@@ -181,14 +194,13 @@ namespace CG_lab2
         private void BresenhamLine(Point p1, Point p2)
         {
             if (p1 == p2) return;
-
-            var bmp = (pictureBox1.Image as Bitmap);
             Pen pen = new Pen(colorDialog1.Color);
+            var bmp = (pictureBox1.Image as Bitmap);
             //Color color = Color.Black;          
             //delta
             int dx = Math.Abs(p2.X - p1.X);
             int dy = Math.Abs(p2.Y - p1.Y);
-
+            
             //signs, to where go
             int sx = p1.X < p2.X ? 1 : -1;
             int sy = p1.Y < p2.Y ? 1 : -1;
@@ -233,24 +245,11 @@ namespace CG_lab2
         }
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
-//
-            if ( radioButPen.Checked &&
-                e.Button == MouseButtons.Left)
-            {
-               
-                Pen p = new Pen(colorDialog1.Color,2);
-                //g.DrawEllipse(p, e.X, e.Y, 3, 3);
-                g.DrawLine(p, OldX, oldY, e.X, e.Y);
-                //pen.Dispose();
-                g = Graphics.FromImage(pictureBox1.Image);
-                pictureBox1.Invalidate();
-                OldX = e.X;
-                oldY = e.Y;
-            }
+
         }
 
 
-  
+
 
         private void Clean_Click(object sender, EventArgs e)
         {
@@ -300,23 +299,7 @@ namespace CG_lab2
             
 
         }
-        //bool backetPaint = false;
-        Color bucketColor;
-        private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
-        { 
-            Bitmap holst = new Bitmap(pictureBox1.Image);
-            if (radioButBuc.Checked )//|| backetPaint
-            {
-               // backetPaint = true;
-                bucketColor = colorDialog1.Color;
-                Pen p = new Pen(bucketColor);
-                ReDrawUp(e.Location,p, holst);
-                pictureBox1.Invalidate();
-                ReDrawDown(e.Location, p, holst);
-                pictureBox1.Invalidate();
-            }
-
-        }
+             
         private void ReDrawUp(Point start, Pen p, Bitmap holst)
         {
             Point left = start, right = start;
@@ -344,6 +327,7 @@ namespace CG_lab2
                 }
             }
         }
+
         private void ReDrawDown(Point start, Pen p, Bitmap holst)
         {
             Point left = start, right = start;
