@@ -300,7 +300,7 @@ namespace CG_lab2
 			double max = Math.Max(R, Math.Max(G, B));
 			double min = Math.Min(R, Math.Min(G, B));
 
-			double H = (GetHue(R, G, B, min, max) + (h - 1) / 2 * 360) % 360d;
+			double H = (GetHue(R, G, B, min, max) + (h - 1) * 360) % 360d;
 			double S = Math.Min(1, GetSaturation(min, max) * s);
 			double V = Math.Min(1, GetValue(min, max) * v);
 

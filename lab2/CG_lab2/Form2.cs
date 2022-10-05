@@ -130,11 +130,11 @@ namespace CG_lab2
 				Pen p = new Pen(bucketColor);
 				Color fromColor = holst.GetPixel(e.X, e.Y);
 				Dictionary<Point, bool> dict = new Dictionary<Point, bool>();
-				ReDrawImage(e.Location, fromColor, bucketColor, holst, dict);
+				ReDrawImage(e.Location, fromColor, bucketColor, holst, dict, e.Location);
 				while (stackToFill.Count > 0)
 				{
 					Point pt = stackToFill.Pop();
-					ReDrawImage(pt, fromColor, bucketColor, holst, dict);
+					ReDrawImage(pt, fromColor, bucketColor, holst, dict, e.Location);
 				}
 				pictureBox1.Invalidate();
 			}
@@ -438,7 +438,7 @@ namespace CG_lab2
 			}
 		}
 
-		private void ReDrawImage(Point point, Color fromColor, Color toColor, Bitmap holst, Dictionary<Point, bool> dict)
+		private void ReDrawImage(Point point, Color fromColor, Color toColor, Bitmap holst, Dictionary<Point, bool> dict,Point startPoint)
 		{
 			//if (dict.Count > 300000)
 			//	return;
@@ -466,7 +466,7 @@ namespace CG_lab2
 			for (int i = left.X; i <= right.X; ++i)
 			{
 				dict[new Point(i, point.Y)] = true;
-				bmp.SetPixel(i, point.Y, img.GetPixel(i % img.Width, point.Y % img.Height));
+				bmp.SetPixel(i, point.Y, img.GetPixel((startPoint.X + i) % img.Width,(startPoint.Y + point.Y) % img.Height));
 				pictureBox1.Invalidate();
 				if (point.Y + 1 < holst.Height)
 				{
