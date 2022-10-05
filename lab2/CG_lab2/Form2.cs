@@ -261,7 +261,17 @@ namespace CG_lab2
         }
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
-
+            if (radioButPen.Checked && e.Button == MouseButtons.Left)
+            {
+                Pen p = new Pen(colorDialog1.Color, 2);
+                //g.DrawEllipse(p, e.X, e.Y, 2, 2);
+                g.DrawLine(p, OldX, oldY, e.X, e.Y);
+                //pen.Dispose();
+                g = Graphics.FromImage(pictureBox1.Image);
+                pictureBox1.Invalidate();
+                OldX = e.X;
+                oldY = e.Y;
+            }
         }
 
 
