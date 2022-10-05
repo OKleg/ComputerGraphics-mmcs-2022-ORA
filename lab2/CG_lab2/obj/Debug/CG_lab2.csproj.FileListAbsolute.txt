@@ -9,3 +9,14 @@ C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\CG_lab2\obj\Debug\CG_lab
 C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\CG_lab2\obj\Debug\CG_lab2.csproj.CoreCompileInputs.cache
 C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\CG_lab2\obj\Debug\CG_lab2.exe
 C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\CG_lab2\obj\Debug\CG_lab2.pdb
+C:\Users\rodio\Documents\GitHub\ComputerGraphics-mmcs-2022-ORA\lab2\CG_lab2\bin\Debug\CG_lab2.exe.config
+C:\Users\rodio\Documents\GitHub\ComputerGraphics-mmcs-2022-ORA\lab2\CG_lab2\bin\Debug\CG_lab2.exe
+C:\Users\rodio\Documents\GitHub\ComputerGraphics-mmcs-2022-ORA\lab2\CG_lab2\bin\Debug\CG_lab2.pdb
+C:\Users\rodio\Documents\GitHub\ComputerGraphics-mmcs-2022-ORA\lab2\CG_lab2\obj\Debug\CG_lab2.csproj.AssemblyReference.cache
+C:\Users\rodio\Documents\GitHub\ComputerGraphics-mmcs-2022-ORA\lab2\CG_lab2\obj\Debug\CG_lab2.Form1.resources
+C:\Users\rodio\Documents\GitHub\ComputerGraphics-mmcs-2022-ORA\lab2\CG_lab2\obj\Debug\CG_lab2.Form2.resources
+C:\Users\rodio\Documents\GitHub\ComputerGraphics-mmcs-2022-ORA\lab2\CG_lab2\obj\Debug\CG_lab2.Properties.Resources.resources
+C:\Users\rodio\Documents\GitHub\ComputerGraphics-mmcs-2022-ORA\lab2\CG_lab2\obj\Debug\CG_lab2.csproj.GenerateResource.cache
+C:\Users\rodio\Documents\GitHub\ComputerGraphics-mmcs-2022-ORA\lab2\CG_lab2\obj\Debug\CG_lab2.csproj.CoreCompileInputs.cache
+C:\Users\rodio\Documents\GitHub\ComputerGraphics-mmcs-2022-ORA\lab2\CG_lab2\obj\Debug\CG_lab2.exe
+C:\Users\rodio\Documents\GitHub\ComputerGraphics-mmcs-2022-ORA\lab2\CG_lab2\obj\Debug\CG_lab2.pdb
