@@ -60,8 +60,8 @@ namespace CG_lab2
 
         private void button6_Click(object sender, EventArgs e)
         {
-            colorDialog1.ShowDialog();
-        }
+			radioButTriangle.Checked = radioButTriangle.Checked ? false : true;
+		}
 
         private void button5_Click(object sender, EventArgs e)
         {
@@ -81,6 +81,8 @@ namespace CG_lab2
         }
         //bool backetPaint = false;
         Color bucketColor;
+
+		List<Point> trianglePoints = new List<Point>();
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
             Bitmap holst = new Bitmap(pictureBox1.Image);
@@ -111,6 +113,19 @@ namespace CG_lab2
                 ReDrawDown(e.Location, p, holst);
                 pictureBox1.Invalidate();
             }
+			if (radioButTriangle.Checked)
+			{
+				if (trianglePoints.Count<2)
+				{
+					trianglePoints.Add(e.Location);
+				}
+				else
+				{
+					trianglePoints.Add(e.Location);
+					RastrTriangle(trianglePoints[0], trianglePoints[1], trianglePoints[2], Color.Blue, Color.Red, Color.Green);
+					trianglePoints.Clear();
+				}
+			}
         }
         //floor
         int ipart(double x) { return (int)x; }
@@ -227,7 +242,8 @@ namespace CG_lab2
             //pictureBox1.Image = bmp;
         }
 
-        private void pen_Click(object sender, EventArgs e)
+
+		private void pen_Click(object sender, EventArgs e)
         {
              radioButPen.Checked = radioButPen.Checked ?  false : true;
             
@@ -356,6 +372,192 @@ namespace CG_lab2
 
             }
         }
+
+		//For Task3
+
+		private void BresenhamLineGradient(Point p1, Point p2, Color clr1, Color clr2)
+		{
+			if (p1 == p2) return;
+			Pen pen = new Pen(colorDialog1.Color);
+			var bmp = (pictureBox1.Image as Bitmap);
+			//Color color = Color.Black;          
+			//delta
+			int dx = Math.Abs(p2.X - p1.X);
+			int dy = Math.Abs(p2.Y - p1.Y);
+
+			//signs, to where go
+			int sx = p1.X < p2.X ? 1 : -1;
+			int sy = p1.Y < p2.Y ? 1 : -1;
+
+			int err = (dx > dy ? dx : -dy) / 2;
+			int e2;
+
+			Point pt = p1;
+
+			//Count steps
+			int steps = 0;
+			while (pt.X != p2.X || pt.Y != p2.Y)
+			{
+				steps++;
+				e2 = err;
+				if (e2 > -dx)
+				{
+					err -= dy;
+					pt.X += sx;
+				}
+				if (e2 < dy)
+				{
+					err += dx;
+					pt.Y += sy;
+				}
+			}
+
+			int step = 0;
+			while (p1.X != p2.X || p1.Y != p2.Y)
+			{
+				Color clr;
+				clr = Color.FromArgb(clr1.R + (clr2.R - clr1.R) * step / steps, clr1.G + (clr2.G - clr1.G) * step / steps, clr1.B + (clr2.B - clr1.B) * step / steps);
+				bmp.SetPixel(p1.X, p1.Y, clr);
+				pictureBox1.Invalidate();
+				e2 = err;
+				if (e2 > -dx)
+				{
+					err -= dy;
+					p1.X += sx;
+				}
+				if (e2 < dy)
+				{
+					err += dx;
+					p1.Y += sy;
+				}
+
+				step++;
+			}
+		}
+
+		private class GradientLeftRight
+		{
+			public int left_x;
+			public int right_x;
+			public Color left_Color;
+			public Color right_Color;
+
+			public GradientLeftRight(int left_x, int right_x, Color left_Color, Color right_Color)
+			{
+				this.left_x = left_x;
+				this.right_x = right_x;
+				this.left_Color = left_Color;
+				this.right_Color = right_Color;
+			}
+		}
+
+		//Key in Dict is y
+		private void BresenhamLineGradientForEdge(Point p1, Point p2, Color clr1, Color clr2, Dictionary<int, GradientLeftRight> dict)
+		{
+			if (p1 == p2) return;
+			var bmp = (pictureBox1.Image as Bitmap);
+			//Color color = Color.Black;          
+			//delta
+			int dx = Math.Abs(p2.X - p1.X);
+			int dy = Math.Abs(p2.Y - p1.Y);
+
+			//signs, to where go
+			int sx = p1.X < p2.X ? 1 : -1;
+			int sy = p1.Y < p2.Y ? 1 : -1;
+
+			int err = (dx > dy ? dx : -dy) / 2;
+			int e2;
+
+			Point pt = p1;
+
+			//Count steps
+			int steps = 0;
+			while (pt.X != p2.X || pt.Y != p2.Y)
+			{
+				steps++;
+				e2 = err;
+				if (e2 > -dx)
+				{
+					err -= dy;
+					pt.X += sx;
+				}
+				if (e2 < dy)
+				{
+					err += dx;
+					pt.Y += sy;
+				}
+			}
+
+			int step = 0;
+			while (p1.X != p2.X || p1.Y != p2.Y)
+			{
+				Color clr;
+				clr = Color.FromArgb(clr1.R + (clr2.R - clr1.R) * step / steps, clr1.G + (clr2.G - clr1.G) * step / steps, clr1.B + (clr2.B - clr1.B) * step / steps);
+				if (dict.ContainsKey(p1.Y))
+				{
+					if (dict[p1.Y].left_x > p1.X)
+					{
+						dict[p1.Y].left_x = p1.X;
+						dict[p1.Y].left_Color = clr;
+					}
+					if (dict[p1.Y].right_x < p1.X)
+					{
+						dict[p1.Y].right_x = p1.X;
+						dict[p1.Y].right_Color = clr;
+					}
+					
+				}
+				else
+					dict.Add(p1.Y, new GradientLeftRight(p1.X, p1.X, clr, clr));
+				step++;
+
+				bmp.SetPixel(p1.X, p1.Y, clr);
+				pictureBox1.Invalidate();
+				e2 = err;
+				if (e2 > -dx)
+				{
+					err -= dy;
+					p1.X += sx;
+				}
+				if (e2 < dy)
+				{
+					err += dx;
+					p1.Y += sy;
+				}
+			}
+		}
+
+		private void button4_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void button1_Click_1(object sender, EventArgs e)
+		{
+
+		}
+
+		private void radioButBuc_CheckedChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void RastrTriangle(Point p1, Point p2, Point p3, Color c1, Color c2, Color c3)
+		{
+			Dictionary<int, GradientLeftRight> dict = new Dictionary<int, GradientLeftRight>();
+			BresenhamLineGradientForEdge(p1, p2, c1, c2, dict);
+			BresenhamLineGradientForEdge(p1, p3, c1, c3, dict);
+			BresenhamLineGradientForEdge(p2, p3, c2, c3, dict);
+
+			foreach (var t in dict)
+			{
+				int y = t.Key;
+				Point pt1 = new Point(t.Value.left_x, y);
+				Point pt2 = new Point(t.Value.right_x, y);
+				BresenhamLineGradient(pt1, pt2, t.Value.left_Color, t.Value.right_Color);
+			}
+		}
+
         /*     private void ReDraw(Point start,Pen p, Bitmap holst)
          {   
              if (start.X <= 0 || start.Y<=0 
