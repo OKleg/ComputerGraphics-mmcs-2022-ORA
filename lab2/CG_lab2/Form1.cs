@@ -22,23 +22,33 @@ namespace CG_lab2
         private void hVCToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             groupBoxHSV.Visible = true;
+            pictureBox2.Visible = false;
+            pictureBox3.Visible = false;
+            pictureBox4.Visible = false;
+            chart1.Visible = false;
+            chart2.Visible = false;
+            chart3.Visible = false;
+            label2.Text = "";
+            label3.Text = "";
+            label4.Text = "";
             groupBoxHSV.Show();
             if (pictureBox1.Image == null)
             {
                 openToolStripMenuItem_Click(sender, e);
             }
-            if (label2.Text != "Red") {
-                label2.Text = "Red";
-                label3.Text = "Green";
-                label4.Text = "Blue";
-            }
+           
           
         }
 
         private void rGBToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             groupBoxHSV.Visible = false;
-
+            pictureBox2.Visible = true;
+            pictureBox3.Visible = true;
+            pictureBox4.Visible = true;
+            chart1.Visible = true;
+            chart2.Visible = true;
+            chart3.Visible = true;
             if (pictureBox1.Image != null)
             {
                 buttonRGB_Click();
@@ -67,6 +77,9 @@ namespace CG_lab2
         private void grayToolStripMenuItem_Click(object sender, EventArgs e)
         {
             groupBoxHSV.Visible = false;
+            pictureBox2.Visible = true;
+            pictureBox3.Visible = true;
+            pictureBox4.Visible = true;
             chart1.Visible = true;
             chart2.Visible = true;
             chart3.Visible = false;
@@ -589,7 +602,7 @@ namespace CG_lab2
         private void buttonHSV_Click(object sender, EventArgs e)
         {
             newHVCButton_Click(sender, e);
-            buttonRGB_Click();
+            //buttonRGB_Click();
         }
 
         private void buttonOrig_Click(object sender, EventArgs e)
