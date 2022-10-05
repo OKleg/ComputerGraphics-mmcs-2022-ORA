@@ -15,6 +15,7 @@ namespace CG_lab2
     public partial class Form2 : Form
     {
 
+		public System.Drawing.Image fillImage;
         public Form1 f1;
         private Graphics g;
         //Bitmap bmp;
@@ -122,6 +123,57 @@ namespace CG_lab2
 				}
                 pictureBox1.Invalidate();
             }
+			if (radioButShtamp.Checked)
+			{
+				stackToFill.Clear();
+				bucketColor = colorDialog1.Color;
+				Pen p = new Pen(bucketColor);
+				Color fromColor = holst.GetPixel(e.X, e.Y);
+				Dictionary<Point, bool> dict = new Dictionary<Point, bool>();
+				ReDrawImage(e.Location, fromColor, bucketColor, holst, dict);
+				while (stackToFill.Count > 0)
+				{
+					Point pt = stackToFill.Pop();
+					ReDrawImage(pt, fromColor, bucketColor, holst, dict);
+				}
+				pictureBox1.Invalidate();
+			}
+			if (radioButMagic.Checked)
+			{
+				stackToFill.Clear();
+				bucketColor = colorDialog1.Color;
+				Pen p = new Pen(bucketColor);
+				Color fromColor = holst.GetPixel(e.X, e.Y);
+				Dictionary<Point, bool> dict = new Dictionary<Point, bool>();
+				ReDrawEdges(e.Location, fromColor, bucketColor, holst, dict);
+				while (stackToFill.Count > 0)
+				{
+					Point pt = stackToFill.Pop();
+					ReDrawEdges(pt, fromColor, bucketColor, holst, dict);
+				}
+				Dictionary<Point, bool> dict2 = new Dictionary<Point, bool>();
+				foreach (Point pt in dict.Keys)
+				{
+					Point left = pt;
+					Point right = pt;
+					Point top = pt;
+					Point down = pt;
+					left.X--;
+					right.X++;
+					top.Y--;
+					down.Y++;
+					if (!dict.ContainsKey(left) || !dict.ContainsKey(right) || !dict.ContainsKey(top) || !dict.ContainsKey(down) )
+					{
+						dict2[pt] = true;
+					}
+				}
+				var bmp = (pictureBox1.Image as Bitmap);
+				foreach (Point pt in dict2.Keys)
+				{
+					bmp.SetPixel(pt.X, pt.Y, bucketColor);
+				}
+				pictureBox1.Invalidate();
+			}
 			if (radioButTriangle.Checked)
 			{
 				if (PointsList.Count<2)
@@ -342,8 +394,8 @@ namespace CG_lab2
              
         private void ReDraw(Point point, Color fromColor, Color toColor, Bitmap holst, Dictionary<Point, bool> dict)
         {
-			if (dict.Count > 100000)
-				return;
+			//if (dict.Count > 300000)
+			//	return;
 			if (dict.ContainsKey(point))
 				return;
 			dict[point] = true;
@@ -379,6 +431,98 @@ namespace CG_lab2
 				if (point.Y - 1>0) 
 				{
 					
+					Point down = new Point(i, point.Y - 1);
+					if (!dict.ContainsKey(down))
+						stackToFill.Push(down);
+				}
+			}
+		}
+
+		private void ReDrawImage(Point point, Color fromColor, Color toColor, Bitmap holst, Dictionary<Point, bool> dict)
+		{
+			//if (dict.Count > 300000)
+			//	return;
+			if (dict.ContainsKey(point))
+				return;
+			dict[point] = true;
+
+			if (fromColor == toColor)
+				return;
+
+
+			var bmp = (pictureBox1.Image as Bitmap);
+			var img = (fillImage as Bitmap);
+			if (bmp.GetPixel(point.X, point.Y) != fromColor)
+				return;
+
+			Point left = point;
+			while (left.X > 0 && holst.GetPixel(left.X - 1, left.Y) == fromColor)
+				left.X--;
+
+			Point right = point;
+			while (right.X + 1 < holst.Width && holst.GetPixel(right.X + 1, right.Y) == fromColor)
+				right.X++;
+
+			for (int i = left.X; i <= right.X; ++i)
+			{
+				dict[new Point(i, point.Y)] = true;
+				bmp.SetPixel(i, point.Y, img.GetPixel(i % img.Width, point.Y % img.Height));
+				pictureBox1.Invalidate();
+				if (point.Y + 1 < holst.Height)
+				{
+					Point up = new Point(i, point.Y + 1);
+					if (!dict.ContainsKey(up))
+						stackToFill.Push(up);
+				}
+				if (point.Y - 1 > 0)
+				{
+
+					Point down = new Point(i, point.Y - 1);
+					if (!dict.ContainsKey(down))
+						stackToFill.Push(down);
+				}
+			}
+		}
+
+		private void ReDrawEdges(Point point, Color fromColor, Color toColor, Bitmap holst, Dictionary<Point, bool> dict)
+		{
+			//if (dict.Count > 300000)
+			//	return;
+			if (dict.ContainsKey(point))
+				return;
+			dict[point] = true;
+
+			if (fromColor == toColor)
+				return;
+
+
+			var bmp = (pictureBox1.Image as Bitmap);
+			var img = (fillImage as Bitmap);
+			if (bmp.GetPixel(point.X, point.Y) != fromColor)
+				return;
+
+			Point left = point;
+			while (left.X > 0 && holst.GetPixel(left.X - 1, left.Y) == fromColor)
+				left.X--;
+
+			Point right = point;
+			while (right.X + 1 < holst.Width && holst.GetPixel(right.X + 1, right.Y) == fromColor)
+				right.X++;
+
+			for (int i = left.X; i <= right.X; ++i)
+			{
+				dict[new Point(i, point.Y)] = true;
+				//bmp.SetPixel(i, point.Y, img.GetPixel(i % img.Width, point.Y % img.Height));
+				pictureBox1.Invalidate();
+				if (point.Y + 1 < holst.Height)
+				{
+					Point up = new Point(i, point.Y + 1);
+					if (!dict.ContainsKey(up))
+						stackToFill.Push(up);
+				}
+				if (point.Y - 1 > 0)
+				{
+
 					Point down = new Point(i, point.Y - 1);
 					if (!dict.ContainsKey(down))
 						stackToFill.Push(down);
@@ -541,12 +685,25 @@ namespace CG_lab2
 
 		private void button4_Click(object sender, EventArgs e)
 		{
-
+			radioButMagic.Checked = radioButMagic.Checked ? false : true;
 		}
 
 		private void button1_Click_1(object sender, EventArgs e)
 		{
-
+			OpenFileDialog ofd = new OpenFileDialog();
+			ofd.Filter = "Image Files(*.BMP;*.JPG;*.GIF;*.PNG)|*.BMP;*.JPG;*.GIF;*.PNG|All files (*.*)|*.*";
+			if (ofd.ShowDialog() == DialogResult.OK)
+			{
+				try
+				{
+					fillImage = new Bitmap(ofd.FileName);
+				}
+				catch
+				{
+					MessageBox.Show("Невозможно открыть выбранный файл", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+			}
+			radioButShtamp.Checked = radioButBuc.Checked ? false : true;
 		}
 
 		private void radioButBuc_CheckedChanged(object sender, EventArgs e)
