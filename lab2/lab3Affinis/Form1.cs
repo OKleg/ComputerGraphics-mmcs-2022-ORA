@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -27,7 +28,7 @@ namespace lab3Affinis
             pen = new Pen(color);
             PaintEventArgs ev = new PaintEventArgs(g, pictureBox1.ClientRectangle);
         }
-       List<Point> points = new List<Point>();
+        List<Point> points = new List<Point>();
         List<Point> intersect = new List<Point>();
         Point[] p;
         Point center;
@@ -193,7 +194,9 @@ namespace lab3Affinis
 
         private void button4_Click(object sender, EventArgs e) //Clear
         {
-            g.Clear(Color.White);
+            g.Clear(PictureBox.DefaultBackColor);
+            points.Clear();
+            pictureBox1.Invalidate();
         }
     }
 }
