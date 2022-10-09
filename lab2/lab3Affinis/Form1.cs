@@ -194,7 +194,7 @@ namespace lab3Affinis
 
         private void button4_Click(object sender, EventArgs e) //Clear
         {
-            g.Clear(PictureBox.DefaultBackColor);
+            g.Clear(pictureBox1.BackColor);
             points.Clear();
             pictureBox1.Invalidate();
         }
