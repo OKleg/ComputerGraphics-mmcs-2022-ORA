@@ -42,7 +42,7 @@ namespace lab3Affinis
         {0,1,0 },
         {0,0,1 }
         };
-        int[,] rotate90 = new int[3, 3] {
+        int[,] rotate = new int[3, 3] {
         {0,  1, 0 },
         {-1, 0, 0 },
         {0,  0, 1 }
@@ -83,10 +83,16 @@ namespace lab3Affinis
             shift[1, 2] = dy;
             Change(shift);
         }
-        private void Rotate(Point A)
+        private void Rotate(Point A,double angl)
         {
+            int sin = (int)Math.Round(Math.Sin(angl));
+            int cos = (int)Math.Round(Math.Cos(angl));
+            rotate[0, 0] = cos;
+            rotate[0, 1] = -sin;
+            rotate[1, 0] = sin;
+            rotate[1, 1] = cos;
             Shift(-A.X, -A.Y);
-            Change(rotate90);
+            Change(rotate);
             Shift(A.X, A.Y);
             Draw();
         }
@@ -241,7 +247,7 @@ namespace lab3Affinis
         // поворот на 90 градусов
         private void buttonRotate_Click(object sender, EventArgs e)// buttonRotate
         {
-            Rotate(p[0]);// Центр !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 
+            Rotate(p[0],Math.PI/2);// Центр !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 
             Draw();
         }
 
