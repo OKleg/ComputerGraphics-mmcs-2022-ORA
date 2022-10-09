@@ -28,10 +28,56 @@ namespace lab3Affinis
             pen = new Pen(color);
             PaintEventArgs ev = new PaintEventArgs(g, pictureBox1.ClientRectangle);
         }
-        List<Point> points = new List<Point>();
+        List<Point> points = new List<Point>(); // лист вершин полигона
         List<Point> intersect = new List<Point>();
         Point[] p;
         Point center;
+
+        int[,] shift = new int[3, 3] {
+        {1,0,0 },
+        {0,1,0 },
+        {0,0,1 }
+        };
+        int[,] rotate90 = new int[3, 3] {
+        {0,  1, 0 },
+        {-1, 0, 0 },
+        {0,  0, 1 }
+        };
+        //===============================================================================
+        private Point MultMatrix(Point p,int[,] m)
+        {
+            int[] pp = new int[3] { p.X, p.Y ,1};
+            int[] result = new int[3] {0,0,0};
+            for (int i = 0; i < 3; i++)//i < 2
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    result[i] += pp[j] * m[i, j];
+                }
+            }
+            return new Point(result[0],result[1]);
+        }
+        private void Change(int[,] mat)
+        {
+            for (int i = 0; i < p.Length; i++)
+            {
+                p[i] = MultMatrix(p[i], mat);// перемножаем матрицу на точку и получаем новое положение точки
+            }
+        }
+        private void Shift(int dx, int dy)
+        {
+            shift[0, 2] = dx;
+            shift[1, 2] = dy;
+            Change(shift);
+
+            ev = new PaintEventArgs(g, pictureBox1.ClientRectangle);
+            if (p.Length > 1)
+                ev.Graphics.DrawPolygon(Pens.Red, p);
+            else if (p.Length == 1)
+                (pictureBox1.Image as Bitmap).SetPixel(p[0].X,p[0].Y, Pens.Red.Color);
+            pictureBox1.Invalidate();
+        }
+        //==================================================================================================
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
             if (radioButtonIntersect.Checked)
@@ -47,7 +93,7 @@ namespace lab3Affinis
                     }
                     
                 }
-                if (intersect.Count == 4)//!!!!!!!!!!!!!!!!!
+                if (intersect.Count == 4)//!!!!!!!!!!!!!!!!!  Пересечение 
                 {
                     g.DrawLine(pen, intersect[2], intersect[3]);
                     pictureBox1.Invalidate();
@@ -84,7 +130,8 @@ namespace lab3Affinis
                 return n * (a - c) / z;
             return 0;
         }
-        private void button1_Click(object sender, EventArgs e) // Задать примитив
+        // Задать примитив
+        private void button1_Click(object sender, EventArgs e) 
         {
            // g.Clear(Color.White);
             var bmp = (pictureBox1.Image as Bitmap);
@@ -107,25 +154,11 @@ namespace lab3Affinis
             //center =                        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             points.Clear();
         }
-
-        private void Shift(int x, int y)
-        {
-            using (Matrix m = new Matrix())
-            {
-                ev = new PaintEventArgs(g, pictureBox1.ClientRectangle);
-                x = textBox1.Text != "" ? int.Parse(textBox1.Text) : 0;
-                y = textBox2.Text != "" ? int.Parse(textBox2.Text) : 0;
-                m.Reset();
-                m.Translate(x, 0);
-                m.TransformPoints(p);
-                ev.Graphics.DrawPolygon(pen, p);
-                pictureBox1.Invalidate();
-            }
-        }
+        //=================Button: Up, Down, Left, Right, Shift ===========================================================
         private void buttonUp_Click(object sender, EventArgs e)
         {
             int y = textBox2.Text != "" ? int.Parse(textBox2.Text) : 0;
-            Shift(0, y);
+            Shift(0, -y);
         }
 
         private void buttonDown_Click(object sender, EventArgs e)
@@ -138,7 +171,7 @@ namespace lab3Affinis
         {
             
              int x = textBox1.Text != "" ? int.Parse(textBox1.Text) : 0;
-             Shift(x, 0);
+             Shift(-x, 0);
             
         }
        
@@ -146,45 +179,56 @@ namespace lab3Affinis
         {
                 int x = textBox1.Text != "" ? int.Parse(textBox1.Text) : 0;
                 Shift(x, 0);
-            }
+        }
+        private void buttonShift_Click(object sender, EventArgs e)
+        {
+            Shift(int.Parse(textBox1.Text), int.Parse(textBox2.Text));
+        }
+        // _______________________ Button: Up, Down, Left, Right, Shift __________________________________________
 
+        // Масштабирование - увеличение
         private void button6_Click(object sender, EventArgs e)//!!!!!!!!!!!!!!!! buttonScaleUp !!!!!!!!!!!!!!!!
         {
-            using (Matrix m = new Matrix())
+            /*using (Matrix m = new Matrix())
             {
                 ev = new PaintEventArgs(g, pictureBox1.ClientRectangle);
                 m.Reset();
                 m.Scale(2f, 2f);
                 m.TransformPoints(p);
                 ev.Graphics.DrawPolygon(pen, p); 
-                pictureBox1.Invalidate();
-            }
+            }*/
+            pictureBox1.Invalidate();
         }
-
+        // Масштабирование - уменьшение
         private void button2_Click(object sender, EventArgs e)//!!!!!!!!!!!!!!!! buttonScaleDown !!!!!!!!!!!!!!!!
         {
-            using (Matrix m = new Matrix())
+            /*using (Matrix m = new Matrix())
             {
                 ev = new PaintEventArgs(g, pictureBox1.ClientRectangle);
                 m.Reset();
                 m.Scale(0.5f, 0.5f);
                 m.TransformPoints(p);
                 ev.Graphics.DrawPolygon(pen, p);
-                pictureBox1.Invalidate();
-            }
+            }*/
+            pictureBox1.Invalidate();
         }
 
+        // поворот на 90 градусов
         private void buttonRotate_Click(object sender, EventArgs e)// buttonRotate
         {
-            using (Matrix m = new Matrix())
+            Change(rotate90);
+
+            /*using (Matrix m = new Matrix())
             {
                 center = p[1];//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Need center
                 m.RotateAt(90, center);
                 m.TransformPoints(p);
-             
                 ev.Graphics.DrawPolygon(pen, p);
-                pictureBox1.Invalidate();
-            }
+                
+            }*/
+            ev = new PaintEventArgs(g, pictureBox1.ClientRectangle);
+            ev.Graphics.DrawPolygon(Pens.Orange, p);
+            pictureBox1.Invalidate();
         }
 
         private void button3_Click(object sender, EventArgs e) // пересечение
@@ -192,11 +236,14 @@ namespace lab3Affinis
             radioButtonIntersect.Checked = radioButtonIntersect.Checked ? false : true;
         }
 
-        private void button4_Click(object sender, EventArgs e) //Clear
+        //Clear
+        private void button4_Click(object sender, EventArgs e) 
         {
             g.Clear(pictureBox1.BackColor);
             points.Clear();
             pictureBox1.Invalidate();
         }
+
+  
     }
 }

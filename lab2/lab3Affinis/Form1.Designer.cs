@@ -48,6 +48,7 @@ namespace lab3Affinis
             this.button3 = new System.Windows.Forms.Button();
             this.radioButtonIntersect = new System.Windows.Forms.RadioButton();
             this.button4 = new System.Windows.Forms.Button();
+            this.buttonShift = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -217,11 +218,22 @@ namespace lab3Affinis
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
+            // buttonShift
+            // 
+            this.buttonShift.Location = new System.Drawing.Point(423, 414);
+            this.buttonShift.Name = "buttonShift";
+            this.buttonShift.Size = new System.Drawing.Size(97, 23);
+            this.buttonShift.TabIndex = 17;
+            this.buttonShift.Text = "Shift";
+            this.buttonShift.UseVisualStyleBackColor = true;
+            this.buttonShift.Click += new System.EventHandler(this.buttonShift_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.buttonShift);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.radioButtonIntersect);
             this.Controls.Add(this.button3);
@@ -267,6 +279,7 @@ namespace lab3Affinis
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.RadioButton radioButtonIntersect;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button buttonShift;
     }
 }
 
