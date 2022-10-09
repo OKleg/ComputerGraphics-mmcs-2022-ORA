@@ -44,6 +44,15 @@ namespace lab3Affinis
         {0,  0, 1 }
         };
         //===============================================================================
+        private void Draw()
+        {
+            ev = new PaintEventArgs(g, pictureBox1.ClientRectangle);
+            if (p.Length > 1)
+                ev.Graphics.DrawPolygon(Pens.Red, p);
+            else if (p.Length == 1)
+                (pictureBox1.Image as Bitmap).SetPixel(p[0].X, p[0].Y, Pens.Red.Color);
+            pictureBox1.Invalidate();
+        }
         private Point MultMatrix(Point p,int[,] m)
         {
             int[] pp = new int[3] { p.X, p.Y ,1};
@@ -69,13 +78,13 @@ namespace lab3Affinis
             shift[0, 2] = dx;
             shift[1, 2] = dy;
             Change(shift);
-
-            ev = new PaintEventArgs(g, pictureBox1.ClientRectangle);
-            if (p.Length > 1)
-                ev.Graphics.DrawPolygon(Pens.Red, p);
-            else if (p.Length == 1)
-                (pictureBox1.Image as Bitmap).SetPixel(p[0].X,p[0].Y, Pens.Red.Color);
-            pictureBox1.Invalidate();
+        }
+        private void Rotate(Point A)
+        {
+            Shift(-A.X, -A.Y);
+            Change(rotate90);
+            Shift(A.X, A.Y);
+            Draw();
         }
         //==================================================================================================
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
@@ -159,30 +168,33 @@ namespace lab3Affinis
         {
             int y = textBox2.Text != "" ? int.Parse(textBox2.Text) : 0;
             Shift(0, -y);
+            Draw();
         }
 
         private void buttonDown_Click(object sender, EventArgs e)
         {
             int y = textBox2.Text != "" ? int.Parse(textBox2.Text) : 0;
             Shift(0, y);
+            Draw();
         }
 
         private void buttonLeft_Click(object sender, EventArgs e)
         {
-            
-             int x = textBox1.Text != "" ? int.Parse(textBox1.Text) : 0;
-             Shift(-x, 0);
-            
+            int x = textBox1.Text != "" ? int.Parse(textBox1.Text) : 0;
+            Shift(-x, 0);
+            Draw();
         }
        
         private void buttonRight_Click(object sender, EventArgs e)
         {
-                int x = textBox1.Text != "" ? int.Parse(textBox1.Text) : 0;
-                Shift(x, 0);
+            int x = textBox1.Text != "" ? int.Parse(textBox1.Text) : 0;
+            Shift(x, 0);
+            Draw();
         }
         private void buttonShift_Click(object sender, EventArgs e)
         {
             Shift(int.Parse(textBox1.Text), int.Parse(textBox2.Text));
+            Draw();
         }
         // _______________________ Button: Up, Down, Left, Right, Shift __________________________________________
 
@@ -216,19 +228,8 @@ namespace lab3Affinis
         // поворот на 90 градусов
         private void buttonRotate_Click(object sender, EventArgs e)// buttonRotate
         {
-            Change(rotate90);
-
-            /*using (Matrix m = new Matrix())
-            {
-                center = p[1];//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Need center
-                m.RotateAt(90, center);
-                m.TransformPoints(p);
-                ev.Graphics.DrawPolygon(pen, p);
-                
-            }*/
-            ev = new PaintEventArgs(g, pictureBox1.ClientRectangle);
-            ev.Graphics.DrawPolygon(Pens.Orange, p);
-            pictureBox1.Invalidate();
+            Rotate(p[0]);// Центр !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 
+            Draw();
         }
 
         private void button3_Click(object sender, EventArgs e) // пересечение
