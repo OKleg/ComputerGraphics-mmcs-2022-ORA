@@ -49,6 +49,7 @@ namespace lab3Affinis
             this.radioButtonIntersect = new System.Windows.Forms.RadioButton();
             this.button4 = new System.Windows.Forms.Button();
             this.buttonShift = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -190,7 +191,7 @@ namespace lab3Affinis
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(696, 117);
+            this.button3.Location = new System.Drawing.Point(696, 67);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(89, 50);
             this.button3.TabIndex = 14;
@@ -201,7 +202,7 @@ namespace lab3Affinis
             // radioButtonIntersect
             // 
             this.radioButtonIntersect.AutoSize = true;
-            this.radioButtonIntersect.Location = new System.Drawing.Point(696, 117);
+            this.radioButtonIntersect.Location = new System.Drawing.Point(696, 67);
             this.radioButtonIntersect.Name = "radioButtonIntersect";
             this.radioButtonIntersect.Size = new System.Drawing.Size(14, 13);
             this.radioButtonIntersect.TabIndex = 15;
@@ -228,11 +229,22 @@ namespace lab3Affinis
             this.buttonShift.UseVisualStyleBackColor = true;
             this.buttonShift.Click += new System.EventHandler(this.buttonShift_Click);
             // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(696, 124);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(89, 68);
+            this.button5.TabIndex = 18;
+            this.button5.Text = "Set Affine Point";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.buttonShift);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.radioButtonIntersect);
@@ -280,6 +292,7 @@ namespace lab3Affinis
         private System.Windows.Forms.RadioButton radioButtonIntersect;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button buttonShift;
+        private System.Windows.Forms.Button button5;
     }
 }
 

@@ -18,6 +18,10 @@ namespace lab3Affinis
         Color color ;
         Pen pen;
         PaintEventArgs ev;
+        //for affine point
+        bool AffineClick = false;
+        Point AffinePoint;
+
         public Form1()
         {
             InitializeComponent();
@@ -89,48 +93,57 @@ namespace lab3Affinis
         //==================================================================================================
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
-            if (radioButtonIntersect.Checked)
+            if (AffineClick)
             {
-                intersect.Add(e.Location);
-                
-                if (intersect.Count < 4)
+                AffineClick = false;
+                AffinePoint = e.Location;
+                button5.Text = String.Format("Set Affine Point\nCurrent: {0};{1}", e.Location.X.ToString(), e.Location.Y.ToString());
+            }
+            else
+            {
+                if (radioButtonIntersect.Checked)
                 {
-                    if (intersect.Count == 2)
-                    {
-                        g.DrawLine(pen,intersect[0], intersect[1]);
-                        pictureBox1.Invalidate();
-                    }
-                    
-                }
-                if (intersect.Count == 4)//!!!!!!!!!!!!!!!!!  Пересечение 
-                {
-                    g.DrawLine(pen, intersect[2], intersect[3]);
-                    pictureBox1.Invalidate();
-                    int t = 0;// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  Слайд 37  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    int nx=0, ny=0;
-                    t = T(intersect[0].X, intersect[1].X, intersect[2].X, intersect[3].X, nx);
-                    int Pt1x = intersect[0].X + t * (intersect[1].X - intersect[0].X);
-                    int Pt1y = intersect[0].Y + t * (intersect[1].Y - intersect[0].Y);
-                    int Pt2x = intersect[2].X + t * (intersect[3].X - intersect[2].X);
-                    int Pt2y = intersect[2].Y + t * (intersect[3].Y - intersect[2].Y);
-                    
-                    if (Pt1x == Pt2x && Pt1y == Pt2y)
-                    {
-                        g.DrawLine(Pens.Orange, intersect[0].X, intersect[0].Y, Pt1x, Pt1y);
-                        g.DrawLine(Pens.Orange, intersect[2].X, intersect[2].Y, Pt1x, Pt1y);
-                        g.DrawEllipse(Pens.Orange, Pt1x - 1, Pt1y - 1, 3, 3);
-                    }
-                    intersect.Clear();
-                   // points.Clear();
-                }
+                    intersect.Add(e.Location);
 
-            }else points.Add(e.Location);
+                    if (intersect.Count < 4)
+                    {
+                        if (intersect.Count == 2)
+                        {
+                            g.DrawLine(pen, intersect[0], intersect[1]);
+                            pictureBox1.Invalidate();
+                        }
+
+                    }
+                    if (intersect.Count == 4)//!!!!!!!!!!!!!!!!!  Пересечение 
+                    {
+                        g.DrawLine(pen, intersect[2], intersect[3]);
+                        pictureBox1.Invalidate();
+                        int t = 0;// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  Слайд 37  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                        int nx = 0, ny = 0;
+                        t = T(intersect[0].X, intersect[1].X, intersect[2].X, intersect[3].X, nx);
+                        int Pt1x = intersect[0].X + t * (intersect[1].X - intersect[0].X);
+                        int Pt1y = intersect[0].Y + t * (intersect[1].Y - intersect[0].Y);
+                        int Pt2x = intersect[2].X + t * (intersect[3].X - intersect[2].X);
+                        int Pt2y = intersect[2].Y + t * (intersect[3].Y - intersect[2].Y);
+
+                        if (Pt1x == Pt2x && Pt1y == Pt2y)
+                        {
+                            g.DrawLine(Pens.Orange, intersect[0].X, intersect[0].Y, Pt1x, Pt1y);
+                            g.DrawLine(Pens.Orange, intersect[2].X, intersect[2].Y, Pt1x, Pt1y);
+                            g.DrawEllipse(Pens.Orange, Pt1x - 1, Pt1y - 1, 3, 3);
+                        }
+                        intersect.Clear();
+                        // points.Clear();
+                    }
+
+                }
+                else points.Add(e.Location);
                 var bmp = (pictureBox1.Image as Bitmap);
                 bmp.SetPixel(e.X, e.Y, color);
                 g.DrawEllipse(pen, e.X - 1, e.Y - 1, 2, 2);
-                
+
                 pictureBox1.Invalidate();
-            
+            }
         }
         private int T(int a,int b,int c, int d, int n)
         {
@@ -245,6 +258,9 @@ namespace lab3Affinis
             pictureBox1.Invalidate();
         }
 
-  
+        private void button5_Click(object sender, EventArgs e)
+        {
+            AffineClick = true;
+        }
     }
 }
