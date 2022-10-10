@@ -19,7 +19,7 @@ namespace lab3Affinis
         Pen pen;
         PaintEventArgs ev;
         //for affine point
-        bool AffineClick = false;
+        bool SelectingPoint = false;
         Point AffinePoint;
 
         public Form1()
@@ -31,18 +31,19 @@ namespace lab3Affinis
             color = Color.Black;
             pen = new Pen(color);
             PaintEventArgs ev = new PaintEventArgs(g, pictureBox1.ClientRectangle);
+            BtnSetCenter.Enabled = false;
         }
         List<Point> points = new List<Point>(); // лист вершин полигона
         List<Point> intersect = new List<Point>();
         Point[] p;
         Point center;
 
-        int[,] shift = new int[3, 3] {
+        double[,] shift = new double[3, 3] {
         {1,0,0 },
         {0,1,0 },
         {0,0,1 }
         };
-        int[,] rotate = new int[3, 3] {
+        double [,] rotate = new double[3, 3] {
         {0,  1, 0 },
         {-1, 0, 0 },
         {0,  0, 1 }
@@ -57,10 +58,10 @@ namespace lab3Affinis
                 (pictureBox1.Image as Bitmap).SetPixel(p[0].X, p[0].Y, Pens.Red.Color);
             pictureBox1.Invalidate();
         }
-        private Point MultMatrix(Point p,int[,] m)
+        private Point MultMatrix(Point p,double[,] m)
         {
-            int[] pp = new int[3] { p.X, p.Y ,1};
-            int[] result = new int[3] {0,0,0};
+            double[] pp = new double[3] { p.X, p.Y ,1};
+            double[] result = new double[3] {0,0,0};
             for (int i = 0; i < 3; i++)//i < 2
             {
                 for (int j = 0; j < 3; j++)
@@ -68,9 +69,9 @@ namespace lab3Affinis
                     result[i] += pp[j] * m[i, j];
                 }
             }
-            return new Point(result[0],result[1]);
+            return new Point((int)Math.Round(result[0]),(int)Math.Round(result[1]));
         }
-        private void Change(int[,] mat)
+        private void Change(double[,] mat)
         {
             for (int i = 0; i < p.Length; i++)
             {
@@ -85,25 +86,33 @@ namespace lab3Affinis
         }
         private void Rotate(Point A,double angl)
         {
-            int sin = (int)Math.Round(Math.Sin(angl));
-            int cos = (int)Math.Round(Math.Cos(angl));
+            double sin = Math.Sin(angl);
+            double cos = Math.Cos(angl);
             rotate[0, 0] = cos;
             rotate[0, 1] = -sin;
             rotate[1, 0] = sin;
             rotate[1, 1] = cos;
+
+            double[,] mmm = new double[,]
+            {
+                {Math.Cos(angl),-Math.Sin(angl),0 },
+                {Math.Sin(angl), Math.Cos(angl),0},
+                {0,0,1 }
+            };
+
             Shift(-A.X, -A.Y);
-            Change(rotate);
+            Change(mmm);
             Shift(A.X, A.Y);
             Draw();
         }
         //==================================================================================================
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
-            if (AffineClick)
+            if (SelectingPoint)
             {
-                AffineClick = false;
+                SelectingPoint = false;
                 AffinePoint = e.Location;
-                button5.Text = String.Format("Set Affine Point\nCurrent: {0};{1}", e.Location.X.ToString(), e.Location.Y.ToString());
+                button5.Text = String.Format("Set Affine Point\nCurrent: {0};{1}", e.Location.X.ToString(), e.Location.Y.ToString());                           
             }
             else
             {
@@ -181,6 +190,10 @@ namespace lab3Affinis
             pictureBox1.Invalidate();
             //center =                        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             points.Clear();
+            if (p.Length !=0)
+            {
+                BtnSetCenter.Enabled = true;
+            }           
         }
         //=================Button: Up, Down, Left, Right, Shift ===========================================================
         private void buttonUp_Click(object sender, EventArgs e)
@@ -247,7 +260,9 @@ namespace lab3Affinis
         // поворот на 90 градусов
         private void buttonRotate_Click(object sender, EventArgs e)// buttonRotate
         {
-            Rotate(p[0],Math.PI/2);// Центр !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 
+            var angle = Math.PI / 180 * trackBar1.Value;
+            var c = RadioBtnAffine.Checked ? AffinePoint : center;
+            Rotate(c, angle);// Центр !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 
             Draw();
         }
 
@@ -261,12 +276,41 @@ namespace lab3Affinis
         {
             g.Clear(pictureBox1.BackColor);
             points.Clear();
+            center = AffinePoint;
+            BtnSetCenter.Text = "Set Centroid";
+            BtnSetCenter.Enabled = false;
             pictureBox1.Invalidate();
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            AffineClick = true;
+            RadioBtnAffine.Checked = RadioBtnAffine.Checked ? false : true;
+            SelectingPoint = true;
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {        
+            buttonRotate.Text = String.Format("rotate on {0}", trackBar1.Value);
+        }
+
+        private void BtnSetCenter_Click(object sender, EventArgs e)
+        {          
+            
+            RadioBtnCenter.Checked = RadioBtnCenter.Checked ? false : true;
+            center = FindCentroid();
+        }
+        private Point FindCentroid()
+        {
+            if (p.Length != 0)
+            {
+
+                Point res = p.Aggregate((current, point) => new Point(current.X + point.X, current.Y + point.Y));
+                (res.X, res.Y) = (res.X / p.Count(), res.Y / p.Count());
+                //center = res;
+                BtnSetCenter.Text = String.Format("Set Centroid\nCurrent: {0};{1}", res.X.ToString(), res.Y.ToString());
+                return res;
+            }
+            else return AffinePoint;
         }
     }
 }

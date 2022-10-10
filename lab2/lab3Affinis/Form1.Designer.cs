@@ -44,13 +44,17 @@ namespace lab3Affinis
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.buttonScaleDown = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.radioButtonIntersect = new System.Windows.Forms.RadioButton();
             this.button4 = new System.Windows.Forms.Button();
             this.buttonShift = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.BtnSetCenter = new System.Windows.Forms.Button();
+            this.RadioBtnAffine = new System.Windows.Forms.RadioButton();
+            this.RadioBtnCenter = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -120,7 +124,7 @@ namespace lab3Affinis
             // 
             // buttonScaleUp
             // 
-            this.buttonScaleUp.Location = new System.Drawing.Point(696, 275);
+            this.buttonScaleUp.Location = new System.Drawing.Point(696, 313);
             this.buttonScaleUp.Name = "buttonScaleUp";
             this.buttonScaleUp.Size = new System.Drawing.Size(92, 23);
             this.buttonScaleUp.TabIndex = 6;
@@ -130,7 +134,7 @@ namespace lab3Affinis
             // 
             // buttonRotate
             // 
-            this.buttonRotate.Location = new System.Drawing.Point(696, 198);
+            this.buttonRotate.Location = new System.Drawing.Point(696, 236);
             this.buttonRotate.Name = "buttonRotate";
             this.buttonRotate.Size = new System.Drawing.Size(92, 23);
             this.buttonRotate.TabIndex = 7;
@@ -172,7 +176,7 @@ namespace lab3Affinis
             // 
             // buttonScaleDown
             // 
-            this.buttonScaleDown.Location = new System.Drawing.Point(696, 304);
+            this.buttonScaleDown.Location = new System.Drawing.Point(696, 342);
             this.buttonScaleDown.Name = "buttonScaleDown";
             this.buttonScaleDown.Size = new System.Drawing.Size(92, 23);
             this.buttonScaleDown.TabIndex = 12;
@@ -180,20 +184,11 @@ namespace lab3Affinis
             this.buttonScaleDown.UseVisualStyleBackColor = true;
             this.buttonScaleDown.Click += new System.EventHandler(this.button2_Click);
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(696, 13);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(58, 48);
-            this.button2.TabIndex = 13;
-            this.button2.Text = "квадрат";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(696, 67);
+            this.button3.Location = new System.Drawing.Point(695, 13);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(89, 50);
+            this.button3.Size = new System.Drawing.Size(92, 50);
             this.button3.TabIndex = 14;
             this.button3.Text = "пересечение";
             this.button3.UseVisualStyleBackColor = true;
@@ -202,12 +197,13 @@ namespace lab3Affinis
             // radioButtonIntersect
             // 
             this.radioButtonIntersect.AutoSize = true;
-            this.radioButtonIntersect.Location = new System.Drawing.Point(696, 67);
+            this.radioButtonIntersect.Location = new System.Drawing.Point(695, 13);
             this.radioButtonIntersect.Name = "radioButtonIntersect";
             this.radioButtonIntersect.Size = new System.Drawing.Size(14, 13);
             this.radioButtonIntersect.TabIndex = 15;
             this.radioButtonIntersect.TabStop = true;
             this.radioButtonIntersect.UseVisualStyleBackColor = true;
+            this.radioButtonIntersect.Visible = false;
             // 
             // button4
             // 
@@ -231,25 +227,72 @@ namespace lab3Affinis
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(696, 124);
+            this.button5.Location = new System.Drawing.Point(695, 70);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(89, 68);
+            this.button5.Size = new System.Drawing.Size(92, 68);
             this.button5.TabIndex = 18;
             this.button5.Text = "Set Affine Point";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // trackBar1
+            // 
+            this.trackBar1.LargeChange = 15;
+            this.trackBar1.Location = new System.Drawing.Point(696, 266);
+            this.trackBar1.Maximum = 360;
+            this.trackBar1.Minimum = -360;
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(104, 45);
+            this.trackBar1.SmallChange = 5;
+            this.trackBar1.TabIndex = 19;
+            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            // 
+            // BtnSetCenter
+            // 
+            this.BtnSetCenter.Location = new System.Drawing.Point(694, 144);
+            this.BtnSetCenter.Name = "BtnSetCenter";
+            this.BtnSetCenter.Size = new System.Drawing.Size(92, 62);
+            this.BtnSetCenter.TabIndex = 20;
+            this.BtnSetCenter.Text = "Set Centroid";
+            this.BtnSetCenter.UseVisualStyleBackColor = true;
+            this.BtnSetCenter.Click += new System.EventHandler(this.BtnSetCenter_Click);
+            // 
+            // RadioBtnAffine
+            // 
+            this.RadioBtnAffine.AutoSize = true;
+            this.RadioBtnAffine.Location = new System.Drawing.Point(694, 69);
+            this.RadioBtnAffine.Name = "RadioBtnAffine";
+            this.RadioBtnAffine.Size = new System.Drawing.Size(14, 13);
+            this.RadioBtnAffine.TabIndex = 21;
+            this.RadioBtnAffine.TabStop = true;
+            this.RadioBtnAffine.UseVisualStyleBackColor = true;
+            this.RadioBtnAffine.Visible = false;
+            // 
+            // RadioBtnCenter
+            // 
+            this.RadioBtnCenter.AutoSize = true;
+            this.RadioBtnCenter.Location = new System.Drawing.Point(694, 144);
+            this.RadioBtnCenter.Name = "RadioBtnCenter";
+            this.RadioBtnCenter.Size = new System.Drawing.Size(14, 13);
+            this.RadioBtnCenter.TabIndex = 22;
+            this.RadioBtnCenter.TabStop = true;
+            this.RadioBtnCenter.UseVisualStyleBackColor = true;
+            this.RadioBtnCenter.Visible = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.RadioBtnCenter);
+            this.Controls.Add(this.RadioBtnAffine);
+            this.Controls.Add(this.BtnSetCenter);
+            this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.buttonShift);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.radioButtonIntersect);
             this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.buttonScaleDown);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -266,6 +309,7 @@ namespace lab3Affinis
             this.Name = "Form1";
             this.Text = "Afin";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -287,12 +331,15 @@ namespace lab3Affinis
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button buttonScaleDown;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.RadioButton radioButtonIntersect;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button buttonShift;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.Button BtnSetCenter;
+        private System.Windows.Forms.RadioButton RadioBtnAffine;
+        private System.Windows.Forms.RadioButton RadioBtnCenter;
     }
 }
 
