@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -275,7 +276,7 @@ namespace lab3Affinis
         private void button4_Click(object sender, EventArgs e) 
         {
             g.Clear(pictureBox1.BackColor);
-            points.Clear();
+            points.Clear();           
             center = AffinePoint;
             BtnSetCenter.Text = "Set Centroid";
             BtnSetCenter.Enabled = false;
@@ -304,9 +305,13 @@ namespace lab3Affinis
             if (p.Length != 0)
             {
 
-                Point res = p.Aggregate((current, point) => new Point(current.X + point.X, current.Y + point.Y));
-                (res.X, res.Y) = (res.X / p.Count(), res.Y / p.Count());
+                //Point res = p.Aggregate((current, point) => new Point(current.X + point.X, current.Y + point.Y));
+                //(res.X, res.Y) = (res.X / p.Count(), res.Y / p.Count());
                 //center = res;
+                /*
+                int X = (int)Math.Round(p.Average(p => p.X));
+                int Y = (int)Math.Round(p.Average(p => p.Y));*/
+                Point res = new Point((int)Math.Round(p.Average(p => p.X)), (int)Math.Round(p.Average(p => p.Y)));
                 BtnSetCenter.Text = String.Format("Set Centroid\nCurrent: {0};{1}", res.X.ToString(), res.Y.ToString());
                 return res;
             }
