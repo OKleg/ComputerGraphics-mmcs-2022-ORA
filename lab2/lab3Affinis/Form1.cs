@@ -58,7 +58,10 @@ namespace lab3Affinis
         {
             ev = new PaintEventArgs(g, pictureBox1.ClientRectangle);
             if (p.Length > 1)
+            {
+                ev.Graphics.SmoothingMode = SmoothingMode.HighQuality;
                 ev.Graphics.DrawPolygon(Pens.Red, p);
+            }
             else if (p.Length == 1)
                 (pictureBox1.Image as Bitmap).SetPixel(p[0].X, p[0].Y, Pens.Red.Color);
             pictureBox1.Invalidate();
@@ -100,6 +103,54 @@ namespace lab3Affinis
             Draw();
         }
         //==================================================================================================
+        /*struct Vector
+        {
+            Point a;
+            Point b;
+            public Vector(Point A, Point B)
+            {
+                a = A;
+                b = B;
+            }
+            public static Vector operator *(Vector ab1, Vector ab2)
+            {
+                Point newA = new Point(ab1.a.X*ab2.a.X, ab1.a.Y * ab2.a.Y);
+                Point newB = new Point(ab1.b.X * ab2.b.X, ab1.b.Y * ab2.b.Y);
+                return new Vector(newA, newB);
+            }
+            public static Vector operator /(Vector ab1, Vector ab2)
+            {
+                Point newA = new Point(ab1.a.X / ab2.a.X, ab1.a.Y / ab2.a.Y);
+                Point newB = new Point(ab1.b.X / ab2.b.X, ab1.b.Y / ab2.b.Y);
+                return new Vector(newA, newB);
+            }
+            public static Vector operator +(Vector ab1, Vector ab2)
+            {
+                Point newA = new Point(ab1.a.X + ab2.a.X, ab1.a.Y + ab2.a.Y);
+                Point newB = new Point(ab1.b.X + ab2.b.X, ab1.b.Y + ab2.b.Y);
+                return new Vector(newA, newB);
+            }
+
+        }*/
+        static public Point Intersection(Point A, Point B, Point C, Point D)
+        {
+            int xo = A.X, yo = A.Y;
+            int p = B.X - A.X, q = B.Y - A.Y;
+
+            int x1 = C.X, y1 = C.Y;
+            int p1 = D.X - C.X, q1 = D.Y - C.Y;
+            if ((q * p1 - q1 * p)!= 0 && (p * q1 - p1 * q) != 0){
+                int x = (xo * q * p1 - x1 * q1 * p - yo * p * p1 + y1 * p * p1) /
+                (q * p1 - q1 * p);
+                int y = (yo * p * q1 - y1 * p1 * q - xo * q * q1 + x1 * q * q1) /
+                    (p * q1 - p1 * q);
+
+            
+            return new Point(x, y);
+            }
+            else return new Point(-1, -1);
+        }
+        bool DinamicPoint = false;
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
             if (SelectingPoint)
@@ -116,20 +167,27 @@ namespace lab3Affinis
 
                     if (intersect.Count < 4)
                     {
+                       
                         if (intersect.Count == 2)
                         {
                             g.DrawLine(pen, intersect[0], intersect[1]);
                             pictureBox1.Invalidate();
                         }
-
                     }
+                    if (intersect.Count == 3)
+                        DinamicPoint = true;
                     if (intersect.Count == 4)//!!!!!!!!!!!!!!!!!  Пересечение 
                     {
+                        DinamicPoint = false;
                         g.DrawLine(pen, intersect[2], intersect[3]);
                         pictureBox1.Invalidate();
                         int t = 0;// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  Слайд 37  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                         int nx = 0, ny = 0;
                         t = T(intersect[0].X, intersect[1].X, intersect[2].X, intersect[3].X, nx);
+                        for (int x = intersect[0].X; x < intersect[1].X; x++)
+                        {
+
+                        }
                         int Pt1x = intersect[0].X + t * (intersect[1].X - intersect[0].X);
                         int Pt1y = intersect[0].Y + t * (intersect[1].Y - intersect[0].Y);
                         int Pt2x = intersect[2].X + t * (intersect[3].X - intersect[2].X);
@@ -137,8 +195,8 @@ namespace lab3Affinis
 
                         if (Pt1x == Pt2x && Pt1y == Pt2y)
                         {
-                            g.DrawLine(Pens.Orange, intersect[0].X, intersect[0].Y, Pt1x, Pt1y);
-                            g.DrawLine(Pens.Orange, intersect[2].X, intersect[2].Y, Pt1x, Pt1y);
+                           // g.DrawLine(Pens.Orange, intersect[0].X, intersect[0].Y, Pt1x, Pt1y);
+                           //g.DrawLine(Pens.Orange, intersect[2].X, intersect[2].Y, Pt1x, Pt1y);
                             g.DrawEllipse(Pens.Orange, Pt1x - 1, Pt1y - 1, 3, 3);
                         }
                         intersect.Clear();
@@ -322,6 +380,24 @@ namespace lab3Affinis
                 return res;
             }
             else return AffinePoint;
+        }
+
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (DinamicPoint)
+            {  
+                g.Clear(pictureBox1.BackColor);
+                g.DrawLine(pen, intersect[1], intersect[0]);
+                g.DrawLine(pen, intersect[2], e.Location);
+                SortedSet<Point> sp = new SortedSet<Point>();
+                
+                Point intersection = Intersection(intersect[0], intersect[1], intersect[2], e.Location);
+                if (intersection.X != -1)
+                {
+                    g.DrawEllipse(Pens.OrangeRed, intersection.X - 2, intersection.Y - 2, 4, 4);
+                }
+                pictureBox1.Invalidate();
+            }
         }
     }
 }
