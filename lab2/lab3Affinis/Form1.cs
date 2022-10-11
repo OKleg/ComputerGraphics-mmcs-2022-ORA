@@ -104,7 +104,7 @@ namespace lab3Affinis
             {
                 SelectingPoint = false;
                 AffinePoint = e.Location;
-                button5.Text = String.Format("Set Affine Point\nCurrent: {0};{1}", e.Location.X.ToString(), e.Location.Y.ToString());                           
+                SelectedPointLabel.Text = String.Format("Selected point:\n{0};{1}", e.Location.X.ToString(), e.Location.Y.ToString());                           
             }
             else
             {
@@ -289,6 +289,7 @@ namespace lab3Affinis
         private void button5_Click(object sender, EventArgs e)
         {
             RadioBtnAffine.Checked = RadioBtnAffine.Checked ? false : true;
+            SelectedPointLabel.Text = String.Format("Selected point:\n{0};{1}", AffinePoint.X.ToString(), AffinePoint.Y.ToString());
             SelectingPoint = true;
         }
 
@@ -305,7 +306,7 @@ namespace lab3Affinis
         }
         private Point FindCentroid()
         {
-            if (p.Length != 0)
+            if (p.Length > 1)
             {
 
                 //Point res = p.Aggregate((current, point) => new Point(current.X + point.X, current.Y + point.Y));
@@ -315,7 +316,7 @@ namespace lab3Affinis
                 int X = (int)Math.Round(p.Average(p => p.X));
                 int Y = (int)Math.Round(p.Average(p => p.Y));*/
                 Point res = new Point((int)Math.Round(p.Average(p => p.X)), (int)Math.Round(p.Average(p => p.Y)));
-                BtnSetCenter.Text = String.Format("Set Centroid\nCurrent: {0};{1}", res.X.ToString(), res.Y.ToString());
+                SelectedPointLabel.Text = String.Format("Selected Point:\n{0};{1}", res.X.ToString(), res.Y.ToString());
                 return res;
             }
             else return AffinePoint;

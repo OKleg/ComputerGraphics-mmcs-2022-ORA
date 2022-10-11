@@ -53,6 +53,7 @@ namespace lab3Affinis
             this.BtnSetCenter = new System.Windows.Forms.Button();
             this.RadioBtnAffine = new System.Windows.Forms.RadioButton();
             this.RadioBtnCenter = new System.Windows.Forms.RadioButton();
+            this.SelectedPointLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
@@ -60,18 +61,18 @@ namespace lab3Affinis
             // pictureBox1
             // 
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox1.Location = new System.Drawing.Point(13, 13);
+            this.pictureBox1.Location = new System.Drawing.Point(123, 12);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(676, 386);
+            this.pictureBox1.Size = new System.Drawing.Size(600, 600);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseClick);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(13, 405);
+            this.button1.Location = new System.Drawing.Point(7, 146);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(104, 33);
+            this.button1.Size = new System.Drawing.Size(109, 25);
             this.button1.TabIndex = 1;
             this.button1.Text = "Задать примитив";
             this.button1.UseVisualStyleBackColor = true;
@@ -84,9 +85,9 @@ namespace lab3Affinis
             // 
             // buttonLeft
             // 
-            this.buttonLeft.Location = new System.Drawing.Point(696, 407);
+            this.buttonLeft.Location = new System.Drawing.Point(18, 578);
             this.buttonLeft.Name = "buttonLeft";
-            this.buttonLeft.Size = new System.Drawing.Size(26, 31);
+            this.buttonLeft.Size = new System.Drawing.Size(23, 31);
             this.buttonLeft.TabIndex = 2;
             this.buttonLeft.Text = "<";
             this.buttonLeft.UseVisualStyleBackColor = true;
@@ -94,9 +95,9 @@ namespace lab3Affinis
             // 
             // buttonRight
             // 
-            this.buttonRight.Location = new System.Drawing.Point(762, 407);
+            this.buttonRight.Location = new System.Drawing.Point(75, 578);
             this.buttonRight.Name = "buttonRight";
-            this.buttonRight.Size = new System.Drawing.Size(26, 31);
+            this.buttonRight.Size = new System.Drawing.Size(23, 31);
             this.buttonRight.TabIndex = 3;
             this.buttonRight.Text = ">";
             this.buttonRight.UseVisualStyleBackColor = true;
@@ -104,9 +105,9 @@ namespace lab3Affinis
             // 
             // buttonUP
             // 
-            this.buttonUP.Location = new System.Drawing.Point(728, 370);
+            this.buttonUP.Location = new System.Drawing.Point(47, 541);
             this.buttonUP.Name = "buttonUP";
-            this.buttonUP.Size = new System.Drawing.Size(26, 31);
+            this.buttonUP.Size = new System.Drawing.Size(23, 31);
             this.buttonUP.TabIndex = 4;
             this.buttonUP.Text = "^";
             this.buttonUP.UseVisualStyleBackColor = true;
@@ -114,9 +115,9 @@ namespace lab3Affinis
             // 
             // buttonDown
             // 
-            this.buttonDown.Location = new System.Drawing.Point(728, 407);
+            this.buttonDown.Location = new System.Drawing.Point(47, 578);
             this.buttonDown.Name = "buttonDown";
-            this.buttonDown.Size = new System.Drawing.Size(26, 31);
+            this.buttonDown.Size = new System.Drawing.Size(23, 31);
             this.buttonDown.TabIndex = 5;
             this.buttonDown.Text = "v";
             this.buttonDown.UseVisualStyleBackColor = true;
@@ -124,9 +125,9 @@ namespace lab3Affinis
             // 
             // buttonScaleUp
             // 
-            this.buttonScaleUp.Location = new System.Drawing.Point(696, 313);
+            this.buttonScaleUp.Location = new System.Drawing.Point(7, 479);
             this.buttonScaleUp.Name = "buttonScaleUp";
-            this.buttonScaleUp.Size = new System.Drawing.Size(92, 23);
+            this.buttonScaleUp.Size = new System.Drawing.Size(100, 25);
             this.buttonScaleUp.TabIndex = 6;
             this.buttonScaleUp.Text = "scale Up";
             this.buttonScaleUp.UseVisualStyleBackColor = true;
@@ -134,9 +135,9 @@ namespace lab3Affinis
             // 
             // buttonRotate
             // 
-            this.buttonRotate.Location = new System.Drawing.Point(696, 236);
+            this.buttonRotate.Location = new System.Drawing.Point(8, 313);
             this.buttonRotate.Name = "buttonRotate";
-            this.buttonRotate.Size = new System.Drawing.Size(92, 23);
+            this.buttonRotate.Size = new System.Drawing.Size(100, 25);
             this.buttonRotate.TabIndex = 7;
             this.buttonRotate.Text = "rotate";
             this.buttonRotate.UseVisualStyleBackColor = true;
@@ -144,14 +145,14 @@ namespace lab3Affinis
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(554, 417);
+            this.textBox1.Location = new System.Drawing.Point(12, 262);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(36, 20);
             this.textBox1.TabIndex = 8;
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(617, 417);
+            this.textBox2.Location = new System.Drawing.Point(72, 262);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(36, 20);
             this.textBox2.TabIndex = 9;
@@ -159,7 +160,7 @@ namespace lab3Affinis
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(530, 424);
+            this.label1.Location = new System.Drawing.Point(14, 246);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(18, 13);
             this.label1.TabIndex = 10;
@@ -168,7 +169,7 @@ namespace lab3Affinis
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(596, 424);
+            this.label2.Location = new System.Drawing.Point(72, 246);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(18, 13);
             this.label2.TabIndex = 11;
@@ -176,9 +177,9 @@ namespace lab3Affinis
             // 
             // buttonScaleDown
             // 
-            this.buttonScaleDown.Location = new System.Drawing.Point(696, 342);
+            this.buttonScaleDown.Location = new System.Drawing.Point(8, 510);
             this.buttonScaleDown.Name = "buttonScaleDown";
-            this.buttonScaleDown.Size = new System.Drawing.Size(92, 23);
+            this.buttonScaleDown.Size = new System.Drawing.Size(100, 25);
             this.buttonScaleDown.TabIndex = 12;
             this.buttonScaleDown.Text = "scale Down";
             this.buttonScaleDown.UseVisualStyleBackColor = true;
@@ -186,9 +187,9 @@ namespace lab3Affinis
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(695, 13);
+            this.button3.Location = new System.Drawing.Point(12, 12);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(92, 50);
+            this.button3.Size = new System.Drawing.Size(100, 25);
             this.button3.TabIndex = 14;
             this.button3.Text = "пересечение";
             this.button3.UseVisualStyleBackColor = true;
@@ -197,7 +198,7 @@ namespace lab3Affinis
             // radioButtonIntersect
             // 
             this.radioButtonIntersect.AutoSize = true;
-            this.radioButtonIntersect.Location = new System.Drawing.Point(695, 13);
+            this.radioButtonIntersect.Location = new System.Drawing.Point(12, 18);
             this.radioButtonIntersect.Name = "radioButtonIntersect";
             this.radioButtonIntersect.Size = new System.Drawing.Size(14, 13);
             this.radioButtonIntersect.TabIndex = 15;
@@ -207,9 +208,9 @@ namespace lab3Affinis
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(131, 408);
+            this.button4.Location = new System.Drawing.Point(8, 177);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(91, 29);
+            this.button4.Size = new System.Drawing.Size(109, 25);
             this.button4.TabIndex = 16;
             this.button4.Text = "clear";
             this.button4.UseVisualStyleBackColor = true;
@@ -217,9 +218,9 @@ namespace lab3Affinis
             // 
             // buttonShift
             // 
-            this.buttonShift.Location = new System.Drawing.Point(423, 414);
+            this.buttonShift.Location = new System.Drawing.Point(8, 288);
             this.buttonShift.Name = "buttonShift";
-            this.buttonShift.Size = new System.Drawing.Size(97, 23);
+            this.buttonShift.Size = new System.Drawing.Size(100, 25);
             this.buttonShift.TabIndex = 17;
             this.buttonShift.Text = "Shift";
             this.buttonShift.UseVisualStyleBackColor = true;
@@ -227,9 +228,9 @@ namespace lab3Affinis
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(695, 70);
+            this.button5.Location = new System.Drawing.Point(12, 43);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(92, 68);
+            this.button5.Size = new System.Drawing.Size(100, 25);
             this.button5.TabIndex = 18;
             this.button5.Text = "Set Affine Point";
             this.button5.UseVisualStyleBackColor = true;
@@ -238,20 +239,20 @@ namespace lab3Affinis
             // trackBar1
             // 
             this.trackBar1.LargeChange = 15;
-            this.trackBar1.Location = new System.Drawing.Point(696, 266);
+            this.trackBar1.Location = new System.Drawing.Point(8, 344);
             this.trackBar1.Maximum = 360;
             this.trackBar1.Minimum = -360;
             this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(104, 45);
+            this.trackBar1.Size = new System.Drawing.Size(100, 45);
             this.trackBar1.SmallChange = 5;
             this.trackBar1.TabIndex = 19;
             this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
             // 
             // BtnSetCenter
             // 
-            this.BtnSetCenter.Location = new System.Drawing.Point(694, 144);
+            this.BtnSetCenter.Location = new System.Drawing.Point(12, 74);
             this.BtnSetCenter.Name = "BtnSetCenter";
-            this.BtnSetCenter.Size = new System.Drawing.Size(92, 62);
+            this.BtnSetCenter.Size = new System.Drawing.Size(100, 25);
             this.BtnSetCenter.TabIndex = 20;
             this.BtnSetCenter.Text = "Set Centroid";
             this.BtnSetCenter.UseVisualStyleBackColor = true;
@@ -260,7 +261,7 @@ namespace lab3Affinis
             // RadioBtnAffine
             // 
             this.RadioBtnAffine.AutoSize = true;
-            this.RadioBtnAffine.Location = new System.Drawing.Point(694, 69);
+            this.RadioBtnAffine.Location = new System.Drawing.Point(12, 49);
             this.RadioBtnAffine.Name = "RadioBtnAffine";
             this.RadioBtnAffine.Size = new System.Drawing.Size(14, 13);
             this.RadioBtnAffine.TabIndex = 21;
@@ -271,7 +272,7 @@ namespace lab3Affinis
             // RadioBtnCenter
             // 
             this.RadioBtnCenter.AutoSize = true;
-            this.RadioBtnCenter.Location = new System.Drawing.Point(694, 144);
+            this.RadioBtnCenter.Location = new System.Drawing.Point(12, 80);
             this.RadioBtnCenter.Name = "RadioBtnCenter";
             this.RadioBtnCenter.Size = new System.Drawing.Size(14, 13);
             this.RadioBtnCenter.TabIndex = 22;
@@ -279,11 +280,21 @@ namespace lab3Affinis
             this.RadioBtnCenter.UseVisualStyleBackColor = true;
             this.RadioBtnCenter.Visible = false;
             // 
+            // SelectedPointLabel
+            // 
+            this.SelectedPointLabel.AutoSize = true;
+            this.SelectedPointLabel.Location = new System.Drawing.Point(14, 102);
+            this.SelectedPointLabel.Name = "SelectedPointLabel";
+            this.SelectedPointLabel.Size = new System.Drawing.Size(76, 13);
+            this.SelectedPointLabel.TabIndex = 23;
+            this.SelectedPointLabel.Text = "Selected Point";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(733, 620);
+            this.Controls.Add(this.SelectedPointLabel);
             this.Controls.Add(this.RadioBtnCenter);
             this.Controls.Add(this.RadioBtnAffine);
             this.Controls.Add(this.BtnSetCenter);
@@ -340,6 +351,7 @@ namespace lab3Affinis
         private System.Windows.Forms.Button BtnSetCenter;
         private System.Windows.Forms.RadioButton RadioBtnAffine;
         private System.Windows.Forms.RadioButton RadioBtnCenter;
+        private System.Windows.Forms.Label SelectedPointLabel;
     }
 }
 
