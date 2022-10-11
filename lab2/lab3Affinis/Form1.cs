@@ -32,7 +32,9 @@ namespace lab3Affinis
             color = Color.Black;
             pen = new Pen(color);
             PaintEventArgs ev = new PaintEventArgs(g, pictureBox1.ClientRectangle);
-            BtnSetCenter.Enabled = false;           
+            BtnSetCenter.Enabled = false;
+            trackBar1.Value = 90;
+            buttonRotate.Text = String.Format("Rotate on {0}°", trackBar1.Value.ToString());
         }
         List<Point> points = new List<Point>(); // лист вершин полигона
         List<Point> intersect = new List<Point>();
