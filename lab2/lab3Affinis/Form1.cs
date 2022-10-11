@@ -32,7 +32,7 @@ namespace lab3Affinis
             color = Color.Black;
             pen = new Pen(color);
             PaintEventArgs ev = new PaintEventArgs(g, pictureBox1.ClientRectangle);
-            BtnSetCenter.Enabled = false;
+            BtnSetCenter.Enabled = false;           
         }
         List<Point> points = new List<Point>(); // лист вершин полигона
         List<Point> intersect = new List<Point>();
@@ -49,6 +49,8 @@ namespace lab3Affinis
         {-1, 0, 0 },
         {0,  0, 1 }
         };
+        AffineMatrix AffineMatr = new AffineMatrix();
+
         //===============================================================================
         private void Draw()
         {
@@ -72,37 +74,25 @@ namespace lab3Affinis
             }
             return new Point((int)Math.Round(result[0]),(int)Math.Round(result[1]));
         }
-        private void Change(double[,] mat)
+        private void Change(AffineMatrix mat)
         {
             for (int i = 0; i < p.Length; i++)
             {
-                p[i] = MultMatrix(p[i], mat);// перемножаем матрицу на точку и получаем новое положение точки
+                //p[i] = MultMatrix(p[i], mat);// перемножаем матрицу на точку и получаем новое положение точки
+                AffineMatrix res = new AffineMatrix(p[i]) * mat;
+                p[i] = new Point((int)Math.Round(res[0, 0]), (int)Math.Round(res[0, 1]));
             }
         }
         private void Shift(int dx, int dy)
         {
-            shift[0, 2] = dx;
-            shift[1, 2] = dy;
-            Change(shift);
+            AffineMatr.SetShift(dx, dy);
+            Change(AffineMatr);
         }
-        private void Rotate(Point A,double angl)
+        private void Rotate(Point A,double angle)
         {
-            double sin = Math.Sin(angl);
-            double cos = Math.Cos(angl);
-            rotate[0, 0] = cos;
-            rotate[0, 1] = -sin;
-            rotate[1, 0] = sin;
-            rotate[1, 1] = cos;
-
-            double[,] mmm = new double[,]
-            {
-                {Math.Cos(angl),-Math.Sin(angl),0 },
-                {Math.Sin(angl), Math.Cos(angl),0},
-                {0,0,1 }
-            };
-
             Shift(-A.X, -A.Y);
-            Change(mmm);
+            AffineMatr.SetRotateAngle(angle);
+            Change(AffineMatr);
             Shift(A.X, A.Y);
             Draw();
         }
@@ -200,33 +190,33 @@ namespace lab3Affinis
         private void buttonUp_Click(object sender, EventArgs e)
         {
             int y = textBox2.Text != "" ? int.Parse(textBox2.Text) : 0;
-            Shift(0, -y);
+            AffineMatr.Shift(p,0, -y);
             Draw();
         }
 
         private void buttonDown_Click(object sender, EventArgs e)
         {
             int y = textBox2.Text != "" ? int.Parse(textBox2.Text) : 0;
-            Shift(0, y);
+            AffineMatr.Shift(p,0, y);
             Draw();
         }
 
         private void buttonLeft_Click(object sender, EventArgs e)
         {
             int x = textBox1.Text != "" ? int.Parse(textBox1.Text) : 0;
-            Shift(-x, 0);
+            AffineMatr.Shift(p,-x, 0);
             Draw();
         }
        
         private void buttonRight_Click(object sender, EventArgs e)
         {
             int x = textBox1.Text != "" ? int.Parse(textBox1.Text) : 0;
-            Shift(x, 0);
+            AffineMatr.Shift(p,x, 0);
             Draw();
         }
         private void buttonShift_Click(object sender, EventArgs e)
         {
-            Shift(int.Parse(textBox1.Text), int.Parse(textBox2.Text));
+            AffineMatr.Shift(p,int.Parse(textBox1.Text), int.Parse(textBox2.Text));
             Draw();
         }
         // _______________________ Button: Up, Down, Left, Right, Shift __________________________________________
@@ -262,8 +252,8 @@ namespace lab3Affinis
         private void buttonRotate_Click(object sender, EventArgs e)// buttonRotate
         {
             var angle = Math.PI / 180 * trackBar1.Value;
-            var c = RadioBtnAffine.Checked ? AffinePoint : center;
-            Rotate(c, angle);// Центр !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 
+            Point c = RadioBtnAffine.Checked ? AffinePoint : center;
+            AffineMatr.Rotate(p,c, angle);// Центр !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 
             Draw();
         }
 
