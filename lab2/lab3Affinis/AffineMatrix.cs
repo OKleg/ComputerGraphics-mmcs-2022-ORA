@@ -192,8 +192,8 @@ namespace lab3Affinis
         // ----------- Shift ----------- 
         public void SetShift(int dx,int dy)
         {
-            this.mass[2, 0] = dx;
-            this.mass[2, 1] = dy;
+            this[2, 0] = dx;
+            this[2, 1] = dy;
         }
        
         public void Shift(Point[] p,int dx,int dy)
@@ -219,15 +219,15 @@ namespace lab3Affinis
         {
             double sin = Math.Sin(angle);
             double cos = Math.Cos(angle);
-            (this.mass[0, 0], this.mass[1, 1]) = (cos, cos);
-            (this.mass[0, 1], this.mass[1, 0]) = (sin, -sin);
-            (this.mass[2, 0], this.mass[2, 1]) = (-c.X*cos + c.Y*sin + c.X, -c.X * sin - c.Y * cos + c.Y);
+            (this[0, 0], this[1, 1]) = (cos, cos);
+            (this[0, 1], this[1, 0]) = (sin, -sin);
+            (this[2, 0], this[2, 1]) = (-c.X*cos + c.Y*sin + c.X, -c.X * sin - c.Y * cos + c.Y);
         }
         public  void ResetRotateAngle()
         {
-            (this.mass[0, 0], this.mass[1, 1]) = (1, 1);
-            (this.mass[0, 1], this.mass[1, 0]) = (0, 0);
-            (this.mass[2, 0], this.mass[2, 1]) = (0, 0);
+            (this[0, 0], this[1, 1]) = (1, 1);
+            (this[0, 1], this[1, 0]) = (0, 0);
+            (this[2, 0], this[2, 1]) = (0, 0);
         }
 
         internal void Rotate(Point[] p, Point c, double angle)
@@ -244,13 +244,13 @@ namespace lab3Affinis
         // ----------- Scale ----------- 
         public void SetScaleCoef(double kx, double ky,Point c)
         {
-            (this.mass[0, 0], this.mass[1, 1]) = (kx, ky);
-            (this.mass[2, 0], this.mass[2, 1]) = ((1-kx) * c.X, (1 - ky) * c.Y);
+            (this[0, 0], this[1, 1]) = (kx, ky);
+            (this[2, 0], this[2, 1]) = ((1-kx) * c.X, (1 - ky) * c.Y);
         }
         public void ReSetScaleCoef()
         {
-            (this.mass[0, 0], this.mass[1, 1]) = (1, 1);
-            (this.mass[2, 0], this.mass[2, 1]) = (0,0);
+            (this[0, 0], this[1, 1]) = (1, 1);
+            (this[2, 0], this[2, 1]) = (0,0);
         }
         internal void Scale(Point[] p, Point c, double kx, double ky)
         {
