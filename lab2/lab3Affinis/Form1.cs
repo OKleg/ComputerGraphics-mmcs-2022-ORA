@@ -91,7 +91,8 @@ namespace lab3Affinis
         private void Rotate(Point A,double angle)
         {
             Shift(-A.X, -A.Y);
-            AffineMatr.SetRotateAngle(angle);
+            Point c = RadioBtnAffine.Checked ? AffinePoint : center;
+            AffineMatr.SetRotateAngle(angle,c);
             Change(AffineMatr);
             Shift(A.X, A.Y);
             Draw();
@@ -189,72 +190,84 @@ namespace lab3Affinis
         //=================Button: Up, Down, Left, Right, Shift ===========================================================
         private void buttonUp_Click(object sender, EventArgs e)
         {
-            int y = textBox2.Text != "" ? int.Parse(textBox2.Text) : 0;
-            AffineMatr.Shift(p,0, -y);
-            Draw();
+            if (p != null && p.Length > 0)
+            {
+                int y = textBox2.Text != "" ? int.Parse(textBox2.Text) : 0;
+                AffineMatr.Shift(p, 0, -y);
+                Draw();
+            }
         }
 
         private void buttonDown_Click(object sender, EventArgs e)
         {
-            int y = textBox2.Text != "" ? int.Parse(textBox2.Text) : 0;
-            AffineMatr.Shift(p,0, y);
-            Draw();
+            if (p != null && p.Length > 0)
+            {
+                int y = textBox2.Text != "" ? int.Parse(textBox2.Text) : 0;
+                AffineMatr.Shift(p, 0, y);
+                Draw();
+            }
         }
 
         private void buttonLeft_Click(object sender, EventArgs e)
         {
-            int x = textBox1.Text != "" ? int.Parse(textBox1.Text) : 0;
-            AffineMatr.Shift(p,-x, 0);
-            Draw();
+            if (p != null && p.Length > 0)
+            {
+                int x = textBox1.Text != "" ? int.Parse(textBox1.Text) : 0;
+                AffineMatr.Shift(p, -x, 0);
+                Draw();
+            }
         }
        
         private void buttonRight_Click(object sender, EventArgs e)
         {
-            int x = textBox1.Text != "" ? int.Parse(textBox1.Text) : 0;
-            AffineMatr.Shift(p,x, 0);
-            Draw();
+            if (p != null && p.Length > 0)
+            {
+                int x = textBox1.Text != "" ? int.Parse(textBox1.Text) : 0;
+                AffineMatr.Shift(p, x, 0);
+                Draw();
+            }
         }
         private void buttonShift_Click(object sender, EventArgs e)
         {
-            AffineMatr.Shift(p,int.Parse(textBox1.Text), int.Parse(textBox2.Text));
-            Draw();
+            if (p != null && p.Length > 0 && textBox1.Text!="" && textBox2.Text!="")
+            {
+                AffineMatr.Shift(p, int.Parse(textBox1.Text), int.Parse(textBox2.Text));
+                Draw();
+            }
         }
         // _______________________ Button: Up, Down, Left, Right, Shift __________________________________________
 
         // Масштабирование - увеличение
         private void button6_Click(object sender, EventArgs e)//!!!!!!!!!!!!!!!! buttonScaleUp !!!!!!!!!!!!!!!!
         {
-            /*using (Matrix m = new Matrix())
+            if (p != null && p.Length > 0)
             {
-                ev = new PaintEventArgs(g, pictureBox1.ClientRectangle);
-                m.Reset();
-                m.Scale(2f, 2f);
-                m.TransformPoints(p);
-                ev.Graphics.DrawPolygon(pen, p); 
-            }*/
-            pictureBox1.Invalidate();
+                Point c = RadioBtnAffine.Checked ? AffinePoint : center;
+                AffineMatr.Scale(p,c, 2, 2);
+                Draw();
+            }
         }
         // Масштабирование - уменьшение
         private void button2_Click(object sender, EventArgs e)//!!!!!!!!!!!!!!!! buttonScaleDown !!!!!!!!!!!!!!!!
         {
-            /*using (Matrix m = new Matrix())
+            if (p != null && p.Length > 0)
             {
-                ev = new PaintEventArgs(g, pictureBox1.ClientRectangle);
-                m.Reset();
-                m.Scale(0.5f, 0.5f);
-                m.TransformPoints(p);
-                ev.Graphics.DrawPolygon(pen, p);
-            }*/
-            pictureBox1.Invalidate();
+                Point c = RadioBtnAffine.Checked ? AffinePoint : center;
+                AffineMatr.Scale(p,c, 1.0/2, 1.0/2);
+                Draw();
+            }
         }
 
         // поворот на 90 градусов
         private void buttonRotate_Click(object sender, EventArgs e)// buttonRotate
         {
-            var angle = Math.PI / 180 * trackBar1.Value;
-            Point c = RadioBtnAffine.Checked ? AffinePoint : center;
-            AffineMatr.Rotate(p,c, angle);// Центр !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 
-            Draw();
+            if (p != null && p.Length > 0)
+            {
+                var angle = Math.PI / 180 * trackBar1.Value;
+                Point c = RadioBtnAffine.Checked ? AffinePoint : center;
+                AffineMatr.Rotate(p, c, angle);
+                Draw();
+            }
         }
 
         private void button3_Click(object sender, EventArgs e) // пересечение

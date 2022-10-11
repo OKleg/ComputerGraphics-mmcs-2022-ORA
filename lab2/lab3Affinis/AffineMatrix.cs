@@ -151,36 +151,6 @@ namespace lab3Affinis
             (rows, cols) = (1, 3);
             mass = new double[1, 3] { { p.X, p.Y, 1 } };
         }
-
-        public void SetShift(int dx,int dy)
-        {
-            this.mass[2, 0] = dx;
-            this.mass[2, 1] = dy;
-        }
-        public void SetRotateAngle(double angle)
-        {
-            double sin = Math.Sin(angle);
-            double cos = Math.Cos(angle);
-            (this.mass[0, 0], this.mass[1, 1]) = (cos, cos);
-            (this.mass[0, 1], this.mass[1, 0]) = (-sin, sin);
-        }
-        public void Shift(Point[] p,int dx,int dy)
-        {
-            this.SetShift(dx, dy);
-            Transform(p);
-            this.SetShift(0, 0);
-        }
-
-        private void Transform(Point[] p)
-        {
-            for (int i = 0; i < p.Length; i++)
-            {
-                //p[i] = MultMatrix(p[i], mat);// перемножаем матрицу на точку и получаем новое положение точки
-                AffineMatrix res = new AffineMatrix(p[i]) * this;
-                p[i] = new Point((int)Math.Round(res[0, 0]), (int)Math.Round(res[0, 1]));
-            }
-        }
-
         public int Rows
         {
             get { return rows; }
@@ -204,6 +174,7 @@ namespace lab3Affinis
                 mass[i, j] = value;
             }
         }
+
         // Умножение матрицы А на матрицу Б
         public static AffineMatrix umn(AffineMatrix a, AffineMatrix b)
         {
@@ -217,21 +188,77 @@ namespace lab3Affinis
             }
             return resMass;
         }
+
+        // ----------- Shift ----------- 
+        public void SetShift(int dx,int dy)
+        {
+            this.mass[2, 0] = dx;
+            this.mass[2, 1] = dy;
+        }
+       
+        public void Shift(Point[] p,int dx,int dy)
+        {
+            this.SetShift(dx, dy);
+            Transform(p);
+            this.SetShift(0, 0);
+        }
+        // =========== Shift =========== 
+
+        private void Transform(Point[] p)
+        {
+            for (int i = 0; i < p.Length; i++)
+            {
+                //p[i] = MultMatrix(p[i], mat);// перемножаем матрицу на точку и получаем новое положение точки
+                AffineMatrix res = new AffineMatrix(p[i]) * this;
+                p[i] = new Point((int)Math.Round(res[0, 0]), (int)Math.Round(res[0, 1]));
+            }
+        }
+
+        // ----------- Rotate ----------- 
+        public void SetRotateAngle(double angle, Point c)
+        {
+            double sin = Math.Sin(angle);
+            double cos = Math.Cos(angle);
+            (this.mass[0, 0], this.mass[1, 1]) = (cos, cos);
+            (this.mass[0, 1], this.mass[1, 0]) = (sin, -sin);
+            (this.mass[2, 0], this.mass[2, 1]) = (-c.X*cos + c.Y*sin + c.X, -c.X * sin - c.Y * cos + c.Y);
+        }
         public  void ResetRotateAngle()
         {
             (this.mass[0, 0], this.mass[1, 1]) = (1, 1);
             (this.mass[0, 1], this.mass[1, 0]) = (0, 0);
+            (this.mass[2, 0], this.mass[2, 1]) = (0, 0);
         }
 
         internal void Rotate(Point[] p, Point c, double angle)
         {
             //this.SetRotateAngle(angle);
-            this.Shift(p, -c.X, -c.Y);
-            this.SetRotateAngle(angle);
+           // this.Shift(p, -c.X, -c.Y);
+            this.SetRotateAngle(angle,c);
             Transform(p);
             this.ResetRotateAngle();
-            this.Shift(p, c.X, c.Y);
+           // this.Shift(p, c.X, c.Y);
         }
+        // =========== Rotate =========== 
+
+        // ----------- Scale ----------- 
+        public void SetScaleCoef(double kx, double ky,Point c)
+        {
+            (this.mass[0, 0], this.mass[1, 1]) = (kx, ky);
+            (this.mass[2, 0], this.mass[2, 1]) = ((1-kx) * c.X, (1 - ky) * c.Y);
+        }
+        public void ReSetScaleCoef()
+        {
+            (this.mass[0, 0], this.mass[1, 1]) = (1, 1);
+            (this.mass[2, 0], this.mass[2, 1]) = (0,0);
+        }
+        internal void Scale(Point[] p, Point c, double kx, double ky)
+        {
+            this.SetScaleCoef(kx, ky,c);
+            Transform(p);
+            ReSetScaleCoef();
+        }
+        // =========== Scale =========== 
 
         // перегрузка оператора умножения
         public static AffineMatrix operator *(AffineMatrix a, AffineMatrix b)
