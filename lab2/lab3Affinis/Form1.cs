@@ -97,9 +97,9 @@ namespace lab3Affinis
             int sign = (b.X - O.X) * (a.Y - O.Y) - (b.Y - O.Y) * (a.X - O.X);
 
             if (sign > 0)
-                return "right";
-            if (sign < 0)
                 return "left";
+            if (sign < 0)
+                return "right";
             else return "error";
         }
         private void Shift(int dx, int dy)
@@ -241,7 +241,8 @@ namespace lab3Affinis
         // Задать примитив
         private void button1_Click(object sender, EventArgs e) 
         {
-           // g.Clear(Color.White);
+            // g.Clear(Color.White);
+            RadioPointPos.Checked = false;
             var bmp = (pictureBox1.Image as Bitmap);
             p = new Point[points.Count];
             if (points.Count >1)
@@ -256,6 +257,7 @@ namespace lab3Affinis
                 //PaintEventArgs ev =  new PaintEventArgs(g,pictureBox1.ClientRectangle);
                 ev = new PaintEventArgs(g, pictureBox1.ClientRectangle);
                 ev.Graphics.DrawPolygon(pen, p);
+
             }
             g = Graphics.FromImage(pictureBox1.Image);
             pictureBox1.Invalidate();
@@ -352,6 +354,7 @@ namespace lab3Affinis
 
         private void button3_Click(object sender, EventArgs e) // пересечение
         {
+            RadioPointPos.Checked = false;
             radioButtonIntersect.Checked = radioButtonIntersect.Checked ? false : true;
         }
 
@@ -363,8 +366,10 @@ namespace lab3Affinis
             center = AffinePoint;
             BtnSetCenter.Text = "Set Centroid";
             BtnSetCenter.Enabled = false;
+            RadioPointPos.Checked = false;
             button2.Enabled = false;
             pictureBox1.Invalidate();
+            //RadioPointPos.Checked = RadioPointPos.Checked ? false : true;
         }
 
         private void button5_Click(object sender, EventArgs e)
