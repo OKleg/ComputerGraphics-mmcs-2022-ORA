@@ -35,6 +35,7 @@ namespace lab3Affinis
             BtnSetCenter.Enabled = false;
             trackBar1.Value = 90;
             buttonRotate.Text = String.Format("Rotate on {0}°", trackBar1.Value.ToString());
+            button2.Enabled = false;
         }
         List<Point> points = new List<Point>(); // лист вершин полигона
         List<Point> intersect = new List<Point>();
@@ -87,6 +88,19 @@ namespace lab3Affinis
                 AffineMatrix res = new AffineMatrix(p[i]) * mat;
                 p[i] = new Point((int)Math.Round(res[0, 0]), (int)Math.Round(res[0, 1]));
             }
+        }
+
+        private string PointPos(Point[] edge, Point b)
+        {
+            Point O = edge[0];
+            Point a = edge[1];
+            int sign = (b.X - O.X) * (a.Y - O.Y) - (b.Y - O.Y) * (a.X - O.X);
+
+            if (sign > 0)
+                return "right";
+            if (sign < 0)
+                return "left";
+            else return "error";
         }
         private void Shift(int dx, int dy)
         {
@@ -159,6 +173,11 @@ namespace lab3Affinis
                 AffinePoint = e.Location;
                 SelectedPointLabel.Text = String.Format("Selected point:\n{0};{1}", e.Location.X.ToString(), e.Location.Y.ToString());                           
             }
+            else if (RadioPointPos.Checked)
+            {
+                var output = PointPos(p, new Point(e.X, e.Y));
+                MessageBox.Show(output);
+            }
             else
             {
                 if (radioButtonIntersect.Checked)
@@ -208,7 +227,7 @@ namespace lab3Affinis
                 var bmp = (pictureBox1.Image as Bitmap);
                 bmp.SetPixel(e.X, e.Y, color);
                 g.DrawEllipse(pen, e.X - 1, e.Y - 1, 2, 2);
-
+                //if (p.Length == 2) button2.Enabled = true;
                 pictureBox1.Invalidate();
             }
         }
@@ -245,7 +264,8 @@ namespace lab3Affinis
             if (p.Length !=0)
             {
                 BtnSetCenter.Enabled = true;
-            }           
+            }
+            if (p.Length == 2) button2.Enabled = true;
         }
         //=================Button: Up, Down, Left, Right, Shift ===========================================================
         private void buttonUp_Click(object sender, EventArgs e)
@@ -343,6 +363,7 @@ namespace lab3Affinis
             center = AffinePoint;
             BtnSetCenter.Text = "Set Centroid";
             BtnSetCenter.Enabled = false;
+            button2.Enabled = false;
             pictureBox1.Invalidate();
         }
 
@@ -398,6 +419,11 @@ namespace lab3Affinis
                 }
                 pictureBox1.Invalidate();
             }
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            RadioPointPos.Checked = RadioPointPos.Checked ? false : true;
         }
     }
 }

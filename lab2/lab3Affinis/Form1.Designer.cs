@@ -54,6 +54,8 @@ namespace lab3Affinis
             this.RadioBtnAffine = new System.Windows.Forms.RadioButton();
             this.RadioBtnCenter = new System.Windows.Forms.RadioButton();
             this.SelectedPointLabel = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
+            this.RadioPointPos = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
@@ -290,11 +292,34 @@ namespace lab3Affinis
             this.SelectedPointLabel.TabIndex = 23;
             this.SelectedPointLabel.Text = "Selected Point";
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(7, 395);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(100, 23);
+            this.button2.TabIndex = 24;
+            this.button2.Text = "PointFromEdge";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click_1);
+            // 
+            // RadioPointPos
+            // 
+            this.RadioPointPos.AutoSize = true;
+            this.RadioPointPos.Location = new System.Drawing.Point(7, 400);
+            this.RadioPointPos.Name = "RadioPointPos";
+            this.RadioPointPos.Size = new System.Drawing.Size(14, 13);
+            this.RadioPointPos.TabIndex = 25;
+            this.RadioPointPos.TabStop = true;
+            this.RadioPointPos.UseVisualStyleBackColor = true;
+            this.RadioPointPos.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(733, 620);
+            this.Controls.Add(this.RadioPointPos);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.SelectedPointLabel);
             this.Controls.Add(this.RadioBtnCenter);
             this.Controls.Add(this.RadioBtnAffine);
@@ -353,6 +378,8 @@ namespace lab3Affinis
         private System.Windows.Forms.RadioButton RadioBtnAffine;
         private System.Windows.Forms.RadioButton RadioBtnCenter;
         private System.Windows.Forms.Label SelectedPointLabel;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.RadioButton RadioPointPos;
     }
 }
 
