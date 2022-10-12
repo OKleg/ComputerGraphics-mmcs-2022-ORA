@@ -54,7 +54,65 @@ namespace lab3Affinis
         };
         AffineMatrix AffineMatr = new AffineMatrix();
 
+        
+        private Point fourWay(int j, int x, int y)
+        {
+            switch (j)
+            {
+                case 0: { /*g.DrawLine(Pens.Yellow, new Point(x, y), new Point(x, 0)); pictureBox1.Invalidate();*/ return new Point(x, 0); }
+                case 1: { /*g.DrawLine(Pens.Yellow, new Point(x, y), new Point(0, y)); pictureBox1.Invalidate();*/ return new Point(0, y); }
+                case 2: { /*g.DrawLine(Pens.Yellow, new Point(x, y), new Point(x, pictureBox1.Height - 1)); pictureBox1.Invalidate();*/ return new Point(x, pictureBox1.Height - 1); }
+                case 3: {/*g.DrawLine(Pens.Yellow, new Point(x, y), new Point(pictureBox1.Width - 1, y)); pictureBox1.Invalidate();*/ return new Point(pictureBox1.Width - 1, y); }
+            default: {/*g.DrawLine(Pens.Yellow, new Point(x, y), new Point(0, 0)); pictureBox1.Invalidate();*/ return new Point(0, 0); }
+            }
+        }
+
         //===============================================================================
+        private bool isPointInner(Point point)
+        {
+            /*g.DrawEllipse(Pens.Red, point.X-2, point.Y - 2, 4, 4);
+            pictureBox1.Invalidate();*/
+            int[] countIntersect = new int[4]{0,0,0,0};
+            if (p != null && p.Length > 2)
+            {
+                Point p1 = p[p.Length - 1];
+                Point shine;
+
+                for (int j = 0; j < 4; j++)
+                {
+                    int x, y;
+                    shine = fourWay(j, point.X, point.Y);
+                    for (int i = 0; i < p.Length; i++)
+                    {
+                        Point p2 = p[i];
+                        int x1 = p1.X, y1 = p1.Y, x2 = p2.X, y2 = p2.Y;
+                        int x3 = point.X, y3 = point.Y, x4 = shine.X, y4 = shine.Y;
+                        double k1 = 0, k2 = 0;
+                        if ((y2 - y1) != 0)
+                            k1 = 1.0 * (x2 - x1) / (y2 - y1);
+                        if ((y4 - y3) != 0)
+                            k2 = 1.0 * (x4 - x3) / (y4 - y3);
+
+                        if (Math.Abs(k1 - k2) > 0.001)
+                        {
+                           Point Intersect = Intersection(p1, p2, point, shine);
+                            if ((Math.Abs(x1 - x2) == Math.Abs(x1 - Intersect.X) + Math.Abs(x2 - Intersect.X)
+                                && Math.Abs(y1 - y2) == Math.Abs(y1 - Intersect.Y) + Math.Abs(y2 - Intersect.Y))
+                                 && (Math.Abs(x3 - x4) == Math.Abs(x3 - Intersect.X) + Math.Abs(x4 - Intersect.X)
+                                && Math.Abs(y3 - y4) == Math.Abs(y3 - Intersect.Y) + Math.Abs(y4 - Intersect.Y)))
+                            {
+                                countIntersect[j]++;
+                                /*g.DrawEllipse(Pens.Red, Intersect.X - 2, Intersect.Y - 2, 4, 4);
+                                pictureBox1.Invalidate();*/
+                            }
+                        }
+                        p1 = p2;
+                    }
+                }
+            }
+
+            return countIntersect[0] % 2 != 0 || countIntersect[1] % 2 != 0 || countIntersect[2] % 2 != 0 || countIntersect[3] % 2 != 0;
+        }
         private void Draw()
         {
             ev = new PaintEventArgs(g, pictureBox1.ClientRectangle);
@@ -170,13 +228,26 @@ namespace lab3Affinis
             if (SelectingPoint)
             {
                 SelectingPoint = false;
+                g.DrawEllipse(new Pen(pictureBox1.BackColor), AffinePoint.X - 2, AffinePoint.Y - 2, 4, 4);
                 AffinePoint = e.Location;
-                SelectedPointLabel.Text = String.Format("Selected point:\n{0};{1}", e.Location.X.ToString(), e.Location.Y.ToString());                           
+                g.DrawEllipse(Pens.Red, e.X-2, e.Y - 2, 4, 4);
+                pictureBox1.Invalidate();
+                SelectedPointLabel.Text = String.Format("Selected point:\n{0};{1}\n{2}", e.Location.X.ToString(), e.Location.Y.ToString(), isPointInner(AffinePoint)?" Внутри ":" Снаружи ");                           
             }
             else if (RadioPointPos.Checked)
             {
                 var output = PointPos(p, new Point(e.X, e.Y));
-                MessageBox.Show(output);
+                g.DrawEllipse(Pens.OrangeRed, e.X - 2, e.Y - 2, 4, 4);
+                g.DrawEllipse(pen, p[1].X - 2, p[1].Y - 2, 4, 4);
+                pictureBox1.Invalidate();
+                if (MessageBox.Show(output) == DialogResult.OK)
+                {
+                    Pen penBackCol = new Pen(pictureBox1.BackColor);
+                    g.DrawEllipse(penBackCol, e.X - 2, e.Y - 2, 4, 4);
+                    g.DrawEllipse(penBackCol, p[1].X - 2, p[1].Y - 2, 4, 4);
+                    g.DrawLine(pen, p[0], p[1]);
+                    pictureBox1.Invalidate();
+                }
             }
             else
             {
@@ -200,24 +271,7 @@ namespace lab3Affinis
                         DinamicPoint = false;
                         g.DrawLine(pen, intersect[2], intersect[3]);
                         pictureBox1.Invalidate();
-                        int t = 0;// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  Слайд 37  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                        int nx = 0, ny = 0;
-                        t = T(intersect[0].X, intersect[1].X, intersect[2].X, intersect[3].X, nx);
-                        for (int x = intersect[0].X; x < intersect[1].X; x++)
-                        {
-
-                        }
-                        int Pt1x = intersect[0].X + t * (intersect[1].X - intersect[0].X);
-                        int Pt1y = intersect[0].Y + t * (intersect[1].Y - intersect[0].Y);
-                        int Pt2x = intersect[2].X + t * (intersect[3].X - intersect[2].X);
-                        int Pt2y = intersect[2].Y + t * (intersect[3].Y - intersect[2].Y);
-
-                        if (Pt1x == Pt2x && Pt1y == Pt2y)
-                        {
-                           // g.DrawLine(Pens.Orange, intersect[0].X, intersect[0].Y, Pt1x, Pt1y);
-                           //g.DrawLine(Pens.Orange, intersect[2].X, intersect[2].Y, Pt1x, Pt1y);
-                            g.DrawEllipse(Pens.Orange, Pt1x - 1, Pt1y - 1, 3, 3);
-                        }
+                        
                         intersect.Clear();
                         // points.Clear();
                     }
@@ -420,7 +474,16 @@ namespace lab3Affinis
                 Point intersection = Intersection(intersect[0], intersect[1], intersect[2], e.Location);
                 if (intersection.X != -1)
                 {
-                    g.DrawEllipse(Pens.OrangeRed, intersection.X - 2, intersection.Y - 2, 4, 4);
+                    int x = intersection.X, y = intersection.Y;
+                    int x1 = intersect[0].X, y1 = intersect[0].Y,  x2 = intersect[1].X, y2 = intersect[1].Y;
+                    int x3 = intersect[2].X, y3 = intersect[2].Y, x4 = e.X, y4 = e.Y;
+                    if ((Math.Abs(x1 - x2) == Math.Abs(x1 - x) + Math.Abs(x2 - x)
+                                && Math.Abs(y1 - y2) == Math.Abs(y1 - y) + Math.Abs(y2 - y))
+                                 && (Math.Abs(x3 - x4) == Math.Abs(x3 - x) + Math.Abs(x4 - x)
+                                && Math.Abs(y3 - y4) == Math.Abs(y3 - y) + Math.Abs(y4 - y)))
+                    {
+                        g.DrawEllipse(Pens.OrangeRed, intersection.X - 2, intersection.Y - 2, 4, 4);
+                    }
                 }
                 pictureBox1.Invalidate();
             }
