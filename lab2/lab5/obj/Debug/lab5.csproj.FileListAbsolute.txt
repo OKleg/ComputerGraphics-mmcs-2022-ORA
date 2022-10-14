@@ -1,0 +1,10 @@
+C:\AOLEG\ComputerGraphic\Новая папка (3)\lab2\lab5\bin\Debug\lab5.exe.config
+C:\AOLEG\ComputerGraphic\Новая папка (3)\lab2\lab5\bin\Debug\lab5.exe
+C:\AOLEG\ComputerGraphic\Новая папка (3)\lab2\lab5\bin\Debug\lab5.pdb
+C:\AOLEG\ComputerGraphic\Новая папка (3)\lab2\lab5\obj\Debug\lab5.csproj.AssemblyReference.cache
+C:\AOLEG\ComputerGraphic\Новая папка (3)\lab2\lab5\obj\Debug\lab5.Form1.resources
+C:\AOLEG\ComputerGraphic\Новая папка (3)\lab2\lab5\obj\Debug\lab5.Properties.Resources.resources
+C:\AOLEG\ComputerGraphic\Новая папка (3)\lab2\lab5\obj\Debug\lab5.csproj.GenerateResource.cache
+C:\AOLEG\ComputerGraphic\Новая папка (3)\lab2\lab5\obj\Debug\lab5.csproj.CoreCompileInputs.cache
+C:\AOLEG\ComputerGraphic\Новая папка (3)\lab2\lab5\obj\Debug\lab5.exe
+C:\AOLEG\ComputerGraphic\Новая папка (3)\lab2\lab5\obj\Debug\lab5.pdb
