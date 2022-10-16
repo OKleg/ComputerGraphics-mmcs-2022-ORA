@@ -35,6 +35,12 @@ namespace lab5
             this.buttonTree = new System.Windows.Forms.Button();
             this.buttonMidpoint = new System.Windows.Forms.Button();
             this.buttonBezier = new System.Windows.Forms.Button();
+            this.LeftHeight = new System.Windows.Forms.TextBox();
+            this.RightHeight = new System.Windows.Forms.TextBox();
+            this.Roughness = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -79,27 +85,83 @@ namespace lab5
             // 
             // buttonMidpoint
             // 
-            this.buttonMidpoint.Location = new System.Drawing.Point(2, 233);
+            this.buttonMidpoint.Location = new System.Drawing.Point(1, 323);
             this.buttonMidpoint.Name = "buttonMidpoint";
             this.buttonMidpoint.Size = new System.Drawing.Size(107, 23);
             this.buttonMidpoint.TabIndex = 5;
             this.buttonMidpoint.Text = "Midpoint";
             this.buttonMidpoint.UseVisualStyleBackColor = true;
+            this.buttonMidpoint.Click += new System.EventHandler(this.buttonMidpoint_Click);
             // 
             // buttonBezier
             // 
-            this.buttonBezier.Location = new System.Drawing.Point(2, 262);
+            this.buttonBezier.Location = new System.Drawing.Point(2, 233);
             this.buttonBezier.Name = "buttonBezier";
             this.buttonBezier.Size = new System.Drawing.Size(107, 23);
             this.buttonBezier.TabIndex = 6;
             this.buttonBezier.Text = "Безье";
             this.buttonBezier.UseVisualStyleBackColor = true;
             // 
+            // LeftHeight
+            // 
+            this.LeftHeight.Location = new System.Drawing.Point(2, 275);
+            this.LeftHeight.Name = "LeftHeight";
+            this.LeftHeight.Size = new System.Drawing.Size(50, 20);
+            this.LeftHeight.TabIndex = 7;
+            this.LeftHeight.TextChanged += new System.EventHandler(this.LeftHight_TextChanged);
+            // 
+            // RightHeight
+            // 
+            this.RightHeight.Location = new System.Drawing.Point(58, 275);
+            this.RightHeight.Name = "RightHeight";
+            this.RightHeight.Size = new System.Drawing.Size(50, 20);
+            this.RightHeight.TabIndex = 8;
+            // 
+            // Roughness
+            // 
+            this.Roughness.Location = new System.Drawing.Point(58, 297);
+            this.Roughness.Name = "Roughness";
+            this.Roughness.Size = new System.Drawing.Size(50, 20);
+            this.Roughness.TabIndex = 9;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(-1, 300);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(56, 13);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "roughness";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 259);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(25, 13);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "Left";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(68, 259);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(32, 13);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "Right";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(969, 528);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.Roughness);
+            this.Controls.Add(this.RightHeight);
+            this.Controls.Add(this.LeftHeight);
             this.Controls.Add(this.buttonBezier);
             this.Controls.Add(this.buttonMidpoint);
             this.Controls.Add(this.buttonTree);
@@ -121,6 +183,12 @@ namespace lab5
         private System.Windows.Forms.Button buttonTree;
         private System.Windows.Forms.Button buttonMidpoint;
         private System.Windows.Forms.Button buttonBezier;
+        private System.Windows.Forms.TextBox LeftHeight;
+        private System.Windows.Forms.TextBox RightHeight;
+        private System.Windows.Forms.TextBox Roughness;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
     }
 }
 
