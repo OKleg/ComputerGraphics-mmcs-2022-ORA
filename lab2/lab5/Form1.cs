@@ -21,7 +21,11 @@ namespace lab5
         PaintEventArgs ev;
         Point p;
         public Random rnd = new Random();
+        //2
         List<Edge> edges = new List<Edge>();
+        //3
+        List<BezierPoint> bPoints = new List<BezierPoint>();
+        double tb;
 
         public LinearGradientBrush SkyBrush { get; private set; }
         public LinearGradientBrush LandBrush {get; private set;}
@@ -52,10 +56,17 @@ namespace lab5
                                                               90F);
         }
 
-       
-        private void F()
+        void DrawBPoint()
         {
-
+            g.Clear(pictureBox1.BackColor);
+            foreach (BezierPoint e in bPoints)
+            {
+                g.DrawEllipse(pen, e.r.X - 1, e.r.Y - 1, 3, 3);
+                g.DrawEllipse(Pens.Blue, e.p1.X - 1, e.p1.Y - 1, 3, 3);
+                g.DrawEllipse(Pens.Blue, e.p2.X - 1, e.p2.Y - 1, 3, 3);
+                g.DrawLine(Pens.Red, e.p1, e.p2);
+            }
+            pictureBox1.Invalidate();
         }
         private void buttonL_Click(object sender, EventArgs e)
         {
@@ -77,6 +88,7 @@ namespace lab5
             p = e.Location;
             g.DrawEllipse(pen, e.X - 1, e.Y - 1, 3, 3); 
             pictureBox1.Invalidate();
+           
         }
 
         void MidPoint(double R = 0.1)
@@ -213,6 +225,74 @@ namespace lab5
             LandscapeBox.Checked = false;
             g.Clear(pictureBox1.BackColor);
             pictureBox1.Invalidate();
+        }
+
+        private void buttonBezier_Click(object sender, EventArgs e)
+        {
+            radioBezier.Checked = radioBezier.Checked ? false : true;
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+            label5.Visible = (!double.TryParse(textBox2.Text, out tb) || (!(tb >= 0) || !(tb <= 1))) ? true : false;
+        }
+        int SelectedId;
+        int SelectedNum;
+        bool rotaeBPoint = false, moveBPoint = false;
+        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            for (int i = 0; i < bPoints.Count; i++)
+            {
+                if (bPoints[i].p1 == e.Location)
+                {
+                    SelectedId = i;
+                    SelectedNum = 1;
+                    rotaeBPoint = true;
+                }
+                else if (bPoints[i].p2 == e.Location)
+                {
+                    SelectedId = i;
+                    SelectedNum = 2;
+                    rotaeBPoint = true;
+                }
+                else if (bPoints[i].r == e.Location)
+                {
+                    SelectedId = i;
+                    moveBPoint = true;
+                }
+            }
+        }
+
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (rotaeBPoint)
+            {
+                if (SelectedNum == 1) 
+                 bPoints[SelectedId].SetP1(e.Location);
+                else if (SelectedNum == 2)
+                    bPoints[SelectedId].SetP2(e.Location);
+                DrawBPoint();
+            }
+            else if (moveBPoint)
+            {
+                bPoints[SelectedId].SetR(e.Location);
+                DrawBPoint();
+            }
+        }
+
+        private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (!rotaeBPoint && !moveBPoint)
+            {
+                if (radioBezier.Checked)
+                {
+                    BezierPoint b = new BezierPoint(e.Location);
+                    bPoints.Add(b);
+                    DrawBPoint();
+                }
+            }
+            rotaeBPoint = false;
+            moveBPoint = false;
         }
     }
 }

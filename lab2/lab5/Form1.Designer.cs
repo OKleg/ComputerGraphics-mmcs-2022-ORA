@@ -43,6 +43,10 @@ namespace lab5
             this.label3 = new System.Windows.Forms.Label();
             this.LandscapeBox = new System.Windows.Forms.CheckBox();
             this.ClearBtn = new System.Windows.Forms.Button();
+            this.radioBezier = new System.Windows.Forms.RadioButton();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -65,6 +69,9 @@ namespace lab5
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseClick);
+            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
+            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
+            this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
             // 
             // textBox1
             // 
@@ -97,12 +104,13 @@ namespace lab5
             // 
             // buttonBezier
             // 
-            this.buttonBezier.Location = new System.Drawing.Point(2, 233);
+            this.buttonBezier.Location = new System.Drawing.Point(1, 389);
             this.buttonBezier.Name = "buttonBezier";
             this.buttonBezier.Size = new System.Drawing.Size(107, 23);
             this.buttonBezier.TabIndex = 6;
             this.buttonBezier.Text = "Безье";
             this.buttonBezier.UseVisualStyleBackColor = true;
+            this.buttonBezier.Click += new System.EventHandler(this.buttonBezier_Click);
             // 
             // LeftHeight
             // 
@@ -174,11 +182,55 @@ namespace lab5
             this.ClearBtn.UseVisualStyleBackColor = true;
             this.ClearBtn.Click += new System.EventHandler(this.ClearBtn_Click);
             // 
+            // radioBezier
+            // 
+            this.radioBezier.AutoSize = true;
+            this.radioBezier.Location = new System.Drawing.Point(0, 389);
+            this.radioBezier.Name = "radioBezier";
+            this.radioBezier.Size = new System.Drawing.Size(14, 13);
+            this.radioBezier.TabIndex = 15;
+            this.radioBezier.TabStop = true;
+            this.radioBezier.UseVisualStyleBackColor = true;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(34, 417);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(74, 20);
+            this.textBox2.TabIndex = 16;
+            this.textBox2.Text = "0,25";
+            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(12, 420);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(16, 13);
+            this.label4.TabIndex = 17;
+            this.label4.Text = "t: ";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label5.ForeColor = System.Drawing.Color.DarkRed;
+            this.label5.Location = new System.Drawing.Point(12, 440);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(48, 16);
+            this.label5.TabIndex = 18;
+            this.label5.Text = "t ∈ [0,1]";
+            this.label5.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(969, 528);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.radioBezier);
             this.Controls.Add(this.ClearBtn);
             this.Controls.Add(this.LandscapeBox);
             this.Controls.Add(this.label3);
@@ -216,6 +268,10 @@ namespace lab5
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox LandscapeBox;
         private System.Windows.Forms.Button ClearBtn;
+        private System.Windows.Forms.RadioButton radioBezier;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
     }
 }
 
