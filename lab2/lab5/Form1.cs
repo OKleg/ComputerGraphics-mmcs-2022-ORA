@@ -90,14 +90,14 @@ namespace lab5
                 var midY = edges[i].MidY() + rnd.Next((int)Math.Round(-R * lenght), (int)Math.Round(R * lenght));
                 //spli edge to two edges by midpoint
                 var mid = new Point(midX, midY);
-                var NewEdge = new Edge(new Point(midX, midY), edges[i].right);
+                var NewEdge = new Edge(new Point(midX, midY), edges[i].right);                 
                 edges[i].right = mid;
                 //insert new edge
                 edges.Insert(i + 1, NewEdge);
             }
         }
 
-        public Point[] GetRect()
+        /*public Point[] GetRect()
         {
             Point[] ps = new Point[edges.Count *2];
             ps.Append(new Point(0, pictureBox1.Height));
@@ -109,25 +109,30 @@ namespace lab5
             ps.Append(new Point(pictureBox1.Width, pictureBox1.Height));
 
             return ps;
-        }
+        }*/
 
 
         private void buttonMidpoint_Click(object sender, EventArgs e)
         {
             if (edges.Count < 1)
             {
-                int lh, rh;
-                if (!(int.TryParse(LeftHeight.Text, out lh) || lh <0 || lh > pictureBox1.Height)) lh = 250;
+                int lh, rh; //leftheight, rightheight
+                //parse user input
+                if (!(int.TryParse(LeftHeight.Text, out lh) || lh <0 || lh > pictureBox1.Height)) lh = 250; 
                 if (!(int.TryParse(RightHeight.Text, out rh) || rh < 0 || rh > pictureBox1.Height)) rh = 250;
+                //adding 1st edge (lh;rh)
                 edges.Add(new Edge(new Point(0, lh), new Point(pictureBox1.Width, rh)));
 
+                
                 if (LandscapeBox.Checked)
                 {
+                    // типо красиво
                     g.FillRectangle(SkyBrush, pictureBox1.ClientRectangle);
                     DrawTer(edges);
                 }
                 else
                 {     
+                    //просто линия
                     g.DrawLine(pen, edges[0].left, edges[0].right);
                     pictureBox1.Invalidate();
                 }
@@ -140,11 +145,13 @@ namespace lab5
 
                 if (LandscapeBox.Checked)
                 {
+                    // типо красиво
                     g.FillRectangle(SkyBrush, pictureBox1.ClientRectangle);
                     DrawTer(edges);
                 }
                 else
                 {
+                    //перерисовка линии
                     g.Clear(pictureBox1.BackColor);
                     
                     edges.ForEach(edge => {
@@ -164,12 +171,14 @@ namespace lab5
 
         private void DrawTer(List<Edge> edges)
         {
+            //...
             LinkedList<Point> pp = new LinkedList<Point>(edges.Select(e => e.left).Append(edges.Last().right));
 
             //pp.AddLast(edges.Last().right);
+            //adding points to draw land
             pp.AddFirst(new Point(0, pictureBox1.Height));
             pp.AddLast(new Point(pictureBox1.Width, pictureBox1.Height));    
-
+            //fill land
             g.FillPolygon(LandBrush, pp.ToArray());
             pictureBox1.Invalidate();
         }
@@ -181,6 +190,7 @@ namespace lab5
 
         private void LandscapeBox_CheckedChanged(object sender, EventArgs e)
         {
+            //переключатель красоты на не красоту
             if (LandscapeBox.Checked && edges.Count !=0)
             {
                 g.FillRectangle(SkyBrush, pictureBox1.ClientRectangle);
@@ -195,6 +205,14 @@ namespace lab5
                 });
 
             }
+        }
+
+        private void ClearBtn_Click(object sender, EventArgs e)
+        {
+            edges.Clear();
+            LandscapeBox.Checked = false;
+            g.Clear(pictureBox1.BackColor);
+            pictureBox1.Invalidate();
         }
     }
 }

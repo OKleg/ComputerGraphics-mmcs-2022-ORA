@@ -42,6 +42,7 @@ namespace lab5
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.LandscapeBox = new System.Windows.Forms.CheckBox();
+            this.ClearBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -163,11 +164,22 @@ namespace lab5
             this.LandscapeBox.UseVisualStyleBackColor = true;
             this.LandscapeBox.CheckedChanged += new System.EventHandler(this.LandscapeBox_CheckedChanged);
             // 
+            // ClearBtn
+            // 
+            this.ClearBtn.Location = new System.Drawing.Point(2, 493);
+            this.ClearBtn.Name = "ClearBtn";
+            this.ClearBtn.Size = new System.Drawing.Size(107, 23);
+            this.ClearBtn.TabIndex = 14;
+            this.ClearBtn.Text = "Clear";
+            this.ClearBtn.UseVisualStyleBackColor = true;
+            this.ClearBtn.Click += new System.EventHandler(this.ClearBtn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(969, 528);
+            this.Controls.Add(this.ClearBtn);
             this.Controls.Add(this.LandscapeBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -203,6 +215,7 @@ namespace lab5
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox LandscapeBox;
+        private System.Windows.Forms.Button ClearBtn;
     }
 }
 
