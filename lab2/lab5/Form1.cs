@@ -22,6 +22,11 @@ namespace lab5
         Point p;
         public Random rnd = new Random();
         List<Edge> edges = new List<Edge>();
+
+        public LinearGradientBrush SkyBrush { get; private set; }
+        public LinearGradientBrush LandBrush {get; private set;}
+
+        //List<Point> MidPoints = new List<Point>();
         public Form1()
         {
             InitializeComponent();
@@ -35,11 +40,20 @@ namespace lab5
             LeftHeight.Text = (pictureBox1.Height/2).ToString();
             RightHeight.Text = (pictureBox1.Height / 2).ToString();
             Roughness.Text = "0.1".ToString();
-            
+
+            SkyBrush = new LinearGradientBrush(this.ClientRectangle,
+                                                               Color.FromArgb(255, 14, 29, 58),
+                                                               Color.FromArgb(255, 82, 99, 127),
+                                                               90F);
+
+            LandBrush = new LinearGradientBrush(this.ClientRectangle,
+                                                              Color.FromArgb(255, 85, 92, 111),
+                                                              Color.FromArgb(255, 5, 5, 13),
+                                                              90F);
         }
 
-        
-         private void F()
+       
+        private void F()
         {
 
         }
@@ -83,10 +97,6 @@ namespace lab5
             }
         }
 
-        void MidPointNew(double R)
-        {
-            
-        }
         public Point[] GetRect()
         {
             Point[] ps = new Point[edges.Count *2];
@@ -111,49 +121,80 @@ namespace lab5
                 if (!(int.TryParse(RightHeight.Text, out rh) || rh < 0 || rh > pictureBox1.Height)) rh = 250;
                 edges.Add(new Edge(new Point(0, lh), new Point(pictureBox1.Width, rh)));
 
-                LinearGradientBrush mybrush = new LinearGradientBrush(this.ClientRectangle,
-                                                               Color.FromArgb(255, 0, 128, 128),
-                                                               Color.FromArgb(255, 222, 239, 239),
-                                                               90F);
-
-                g.FillRectangle(mybrush, pictureBox1.ClientRectangle);
-
-                g.DrawLine(pen, edges[0].left, edges[0].right);
-                pictureBox1.Invalidate();           
+                if (LandscapeBox.Checked)
+                {
+                    g.FillRectangle(SkyBrush, pictureBox1.ClientRectangle);
+                    DrawTer(edges);
+                }
+                else
+                {     
+                    g.DrawLine(pen, edges[0].left, edges[0].right);
+                    pictureBox1.Invalidate();
+                }
             }
             else
             {
                 double R;
-                if (!(double.TryParse(Roughness.Text, out R) || R < 0 || R > 3)) R = 0.1;
+                if (!(double.TryParse(Roughness.Text.Replace(".",","), out R) || R < 0 || R > 3)) R = 0.1;
                 MidPoint(R);
-                LinearGradientBrush mybrush = new LinearGradientBrush(this.ClientRectangle,
-                                                               Color.FromArgb(255, 0, 128, 128),
-                                                               Color.FromArgb(255, 222, 239, 239),
-                                                               90F);
 
-                g.FillRectangle(mybrush, pictureBox1.ClientRectangle); 
-                for (int i = 0; i < edges.Count; i++)
-                {                  
-                    g.DrawLine(pen, edges[i].left, edges[i].right);
-                    //var myBrush = new SolidBrush(Color.Black);
-                    //
-                    pictureBox1.Invalidate();
-                    
+                if (LandscapeBox.Checked)
+                {
+                    g.FillRectangle(SkyBrush, pictureBox1.ClientRectangle);
+                    DrawTer(edges);
                 }
+                else
+                {
+                    g.Clear(pictureBox1.BackColor);
+                    
+                    edges.ForEach(edge => {
+                        g.DrawLine(pen, edge.left, edge.right);                        
+                        pictureBox1.Invalidate();
+                    });
+                }
+      
                 //ev.Graphics.FillPolygon(Brushes.Black, GetRect());
                 //ev.Graphics.DrawLines(Pens.Black, GetRect());
                 //g.FillPolygon()
 
                 //g.DrawLines(pen);
-                
-                
-                pictureBox1.Invalidate();
+                //               
             }
+        }
+
+        private void DrawTer(List<Edge> edges)
+        {
+            LinkedList<Point> pp = new LinkedList<Point>(edges.Select(e => e.left).Append(edges.Last().right));
+
+            //pp.AddLast(edges.Last().right);
+            pp.AddFirst(new Point(0, pictureBox1.Height));
+            pp.AddLast(new Point(pictureBox1.Width, pictureBox1.Height));    
+
+            g.FillPolygon(LandBrush, pp.ToArray());
+            pictureBox1.Invalidate();
         }
 
         private void LeftHight_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void LandscapeBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (LandscapeBox.Checked && edges.Count !=0)
+            {
+                g.FillRectangle(SkyBrush, pictureBox1.ClientRectangle);
+                DrawTer(edges);
+            }
+            else
+            {
+                g.Clear(pictureBox1.BackColor);
+                edges.ForEach(edge => {
+                    g.DrawLine(pen, edge.left, edge.right);
+                    pictureBox1.Invalidate();
+                });
+
+            }
         }
     }
 }
