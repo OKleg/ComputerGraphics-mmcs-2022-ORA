@@ -55,9 +55,22 @@ namespace lab5
                                                               Color.FromArgb(255, 5, 5, 13),
                                                               90F);
         }
-
+        double[,] mass = new double[4, 4]
+                {
+                    {1,-3, 3, 1 },
+                    {0, 3,-6, 3 },
+                    {0, 0, 3,-3 },
+                    {0, 0, 0, 1 }
+                };
         void DrawBPoint()
         {
+            double[,] masst = new double[4,1]
+                {
+                    {1},
+                    {tb},
+                    {Math.Pow(tb,2)},
+                    {Math.Pow(tb,3)}
+                };
             g.Clear(pictureBox1.BackColor);
             foreach (BezierPoint e in bPoints)
             {
@@ -239,23 +252,27 @@ namespace lab5
         int SelectedId;
         int SelectedNum;
         bool rotaeBPoint = false, moveBPoint = false;
+        bool PointIsNear(Point p0, Point e)
+        {
+            return (Math.Abs(p0.X - e.X) < 3 && Math.Abs(p0.Y - e.Y) < 3);
+        }
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
             for (int i = 0; i < bPoints.Count; i++)
             {
-                if (bPoints[i].p1 == e.Location)
+                if (PointIsNear(bPoints[i].p1, e.Location))
                 {
                     SelectedId = i;
                     SelectedNum = 1;
                     rotaeBPoint = true;
                 }
-                else if (bPoints[i].p2 == e.Location)
+                else if (PointIsNear(bPoints[i].p2, e.Location))
                 {
                     SelectedId = i;
                     SelectedNum = 2;
                     rotaeBPoint = true;
                 }
-                else if (bPoints[i].r == e.Location)
+                else if (PointIsNear(bPoints[i].r, e.Location))
                 {
                     SelectedId = i;
                     moveBPoint = true;
