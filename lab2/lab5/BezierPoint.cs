@@ -31,8 +31,10 @@ namespace lab5
         }
         public void SetR(Point R)
         {
-            this.p1 = new Point(R.X + (r.X - p1.X), R.Y + (r.Y - p1.Y));
-            this.p2 = new Point(R.X + (r.X - p2.X), R.Y + (r.Y - p2.Y));
+            Point t1 =  new Point(R.X + (r.X - p2.X), R.Y + (r.Y - p2.Y));
+            Point t2 =new Point(R.X + (r.X - p1.X), R.Y + (r.Y - p1.Y));
+            this.p1 = t1;
+            this.p2 = t2;
             this.r = R;
         }
     }

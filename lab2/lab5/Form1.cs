@@ -25,6 +25,7 @@ namespace lab5
         List<Edge> edges = new List<Edge>();
         //3
         List<BezierPoint> bPoints = new List<BezierPoint>();
+       // List<Point> Points = new List<Point>();
         double tb;
 
         public LinearGradientBrush SkyBrush { get; private set; }
@@ -55,31 +56,150 @@ namespace lab5
                                                               Color.FromArgb(255, 5, 5, 13),
                                                               90F);
         }
-        double[,] mass = new double[4, 4]
-                {
-                    {1,-3, 3, 1 },
-                    {0, 3,-6, 3 },
-                    {0, 0, 3,-3 },
-                    {0, 0, 0, 1 }
-                };
+        private PointF calculate(double t, PointF p1, PointF p2, PointF p3, PointF p4)
+
+        {
+
+            double f = (1 - t);
+
+            double x = Math.Pow(f, 3) * p1.X +
+
+                 3 * Math.Pow(f, 2) * t * p2.X +
+
+                 3 * f * Math.Pow(t, 2) * p3.X +
+
+                 Math.Pow(t, 3) * p4.X;
+
+            double y = Math.Pow(f, 3) * p1.Y +
+
+                 3 * Math.Pow(f, 2) * t * p2.Y +
+
+                 3 * f * Math.Pow(t, 2) * p3.Y +
+
+                 Math.Pow(t, 3) * p4.Y;
+
+            return new PointF((float)x, (float)y);
+
+        }
+        private void drawcurveBy4pts(PointF p1, PointF p2, PointF p3, PointF p4)
+
+        {
+
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
+            double t = 0.0;
+
+
+            PointF prev = calculate(t, p1, p2, p3, p4);
+
+            while (t <= 1.0)
+
+            {
+
+                PointF next = calculate(t, p1, p2, p3, p4);
+
+                g.DrawLine(Pens.Blue, prev, next);
+
+                t += 0.001;
+
+                prev = next;
+
+            }
+
+            pictureBox1.Invalidate();
+
+
+        }
+
+        /* private double[,] MultMatrix1(double[,] pp, double[,] m)
+         {
+             double[,] result = new double[3, 4] { {0, 0, 0, 0 },{ 0, 0, 0, 0 },{ 0, 0, 0, 0 } };
+             for (int i = 0; i < 3; i++)//i < 2
+             {
+                 for (int j = 0; j < 4; j++)
+                 {
+                     result[i,j] += pp[i,j] * m[i, j];
+                 }
+             }
+             return result;
+         }
+         private double[,] MultMatrix2(double[,] pp, double[,] m)
+         {
+             double[,] result = new double[3, 1] { { 0}, { 0 }, { 0 } };
+             for (int i = 0; i < 3; i++)//i < 2
+             {
+                 for (int j = 0; j < 1; j++)
+                 {
+                     result[i, j] += pp[i, j] * m[i, j];
+                 }
+             }
+             return result;
+         }
+         double[,] M = new double[4, 4]
+                 {
+                     {1,-3, 3, 1 },
+                     {0, 3,-6, 3 },
+                     {0, 0, 3,-3 },
+                     {0, 0, 0, 1 }
+                 };
+         public void DrawBez()
+         {
+             int t1 = 0;
+             Point b1 = bPoints[0].r;
+             for (int t = 1; t < 99; t++)
+             {
+                 for (int i = 0; i < bPoints.Count-4; i++)
+                 {
+                     double[,] V = new double[3, 4]
+                     {
+                         {bPoints[i].r.X,bPoints[i+1].r.X, bPoints[i+2].r.X, bPoints[i+3].r.X },
+                         {bPoints[i].r.Y,bPoints[i+1].r.Y, bPoints[i+2].r.Y, bPoints[i+3].r.Y  },
+                         {1, 1, 1,1 }
+                     };
+
+                     double[,] T = new double[4, 1]
+                     {
+                     {1},
+                     {tb},
+                     {Math.Pow(tb,2)},
+                     {Math.Pow(tb,3)}
+                     };
+                     double[,] VM = MultMatrix1(V, M);
+                     double[,] VMT = MultMatrix2(VM, T);
+                     Point b2 = new Point((int)VMT[0,0], (int)VMT[1, 0]);
+                     g.DrawLine(Pens.Blue,b1, b2);
+                     pictureBox1.Invalidate();
+                     b1 = b2;
+                     t1 = t;
+                 }
+             }
+         }*/
         void DrawBPoint()
         {
-            double[,] masst = new double[4,1]
-                {
-                    {1},
-                    {tb},
-                    {Math.Pow(tb,2)},
-                    {Math.Pow(tb,3)}
-                };
             g.Clear(pictureBox1.BackColor);
+            Queue<BezierPoint> q = new Queue<BezierPoint>();
             foreach (BezierPoint e in bPoints)
             {
+                q.Enqueue(e);
                 g.DrawEllipse(pen, e.r.X - 1, e.r.Y - 1, 3, 3);
                 g.DrawEllipse(Pens.Blue, e.p1.X - 1, e.p1.Y - 1, 3, 3);
                 g.DrawEllipse(Pens.Blue, e.p2.X - 1, e.p2.Y - 1, 3, 3);
                 g.DrawLine(Pens.Red, e.p1, e.p2);
+                if (bPoints.Count > 1 )
+                {
+                    
+                    if (q.Count > 1)
+                    {
+                        BezierPoint br1 = q.Dequeue();
+                        BezierPoint br2 = q.Peek();
+
+                        drawcurveBy4pts(br1.r,br1.p2,br2.p1,br2.r);
+                    }
+                }
             }
+            
             pictureBox1.Invalidate();
+           // DrawBez();
         }
         private void buttonL_Click(object sender, EventArgs e)
         {
@@ -98,8 +218,8 @@ namespace lab5
 
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
-            p = e.Location;
-            g.DrawEllipse(pen, e.X - 1, e.Y - 1, 3, 3); 
+           // p = e.Location;
+           // g.DrawEllipse(pen, e.X - 1, e.Y - 1, 3, 3); 
             pictureBox1.Invalidate();
            
         }
@@ -235,6 +355,7 @@ namespace lab5
         private void ClearBtn_Click(object sender, EventArgs e)
         {
             edges.Clear();
+            bPoints.Clear();
             LandscapeBox.Checked = false;
             g.Clear(pictureBox1.BackColor);
             pictureBox1.Invalidate();
@@ -277,6 +398,7 @@ namespace lab5
                     SelectedId = i;
                     moveBPoint = true;
                 }
+                
             }
         }
 
@@ -304,6 +426,9 @@ namespace lab5
                 if (radioBezier.Checked)
                 {
                     BezierPoint b = new BezierPoint(e.Location);
+                    // Points.Add(b.p1);
+                    // Points.Add(b.r);
+                    // Points.Add(b.p2);
                     bPoints.Add(b);
                     DrawBPoint();
                 }
