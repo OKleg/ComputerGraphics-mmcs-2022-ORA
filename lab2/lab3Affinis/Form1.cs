@@ -111,7 +111,7 @@ namespace lab3Affinis
                 }
             }
 
-            return countIntersect[0] % 2 != 0 || countIntersect[1] % 2 != 0 || countIntersect[2] % 2 != 0 || countIntersect[3] % 2 != 0;
+            return countIntersect[0] % 2 != 0 && countIntersect[1] % 2 != 0 && countIntersect[2] % 2 != 0 && countIntersect[3] % 2 != 0;
         }
         private void Draw()
         {

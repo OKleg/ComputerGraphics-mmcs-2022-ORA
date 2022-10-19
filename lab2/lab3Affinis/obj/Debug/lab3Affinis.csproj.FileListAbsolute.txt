@@ -38,3 +38,13 @@ C:\AOLEG\ComputerGraphic\Новая папка (3)\lab2\lab3Affinis\obj\Debug\la
 C:\AOLEG\ComputerGraphic\Новая папка (3)\lab2\lab3Affinis\obj\Debug\lab3Affinis.csproj.CoreCompileInputs.cache
 C:\AOLEG\ComputerGraphic\Новая папка (3)\lab2\lab3Affinis\obj\Debug\lab3Affinis.exe
 C:\AOLEG\ComputerGraphic\Новая папка (3)\lab2\lab3Affinis\obj\Debug\lab3Affinis.pdb
+C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\lab3Affinis\bin\Debug\lab3Affinis.exe.config
+C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\lab3Affinis\bin\Debug\lab3Affinis.exe
+C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\lab3Affinis\bin\Debug\lab3Affinis.pdb
+C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\lab3Affinis\obj\Debug\lab3Affinis.csproj.AssemblyReference.cache
+C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\lab3Affinis\obj\Debug\lab3Affinis.Form1.resources
+C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\lab3Affinis\obj\Debug\lab3Affinis.Properties.Resources.resources
+C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\lab3Affinis\obj\Debug\lab3Affinis.csproj.GenerateResource.cache
+C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\lab3Affinis\obj\Debug\lab3Affinis.csproj.CoreCompileInputs.cache
+C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\lab3Affinis\obj\Debug\lab3Affinis.exe
+C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\lab3Affinis\obj\Debug\lab3Affinis.pdb

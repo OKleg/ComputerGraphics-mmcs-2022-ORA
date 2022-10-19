@@ -81,7 +81,7 @@ namespace lab5
             return new PointF((float)x, (float)y);
 
         }
-        private void drawcurveBy4pts(PointF p1, PointF p2, PointF p3, PointF p4)
+        private void drawCubeBez(PointF p1, PointF p2, PointF p3, PointF p4)
 
         {
 
@@ -185,6 +185,7 @@ namespace lab5
                 g.DrawEllipse(Pens.Blue, e.p1.X - 1, e.p1.Y - 1, 3, 3);
                 g.DrawEllipse(Pens.Blue, e.p2.X - 1, e.p2.Y - 1, 3, 3);
                 g.DrawLine(Pens.Red, e.p1, e.p2);
+
                 if (bPoints.Count > 1 )
                 {
                     
@@ -193,7 +194,7 @@ namespace lab5
                         BezierPoint br1 = q.Dequeue();
                         BezierPoint br2 = q.Peek();
 
-                        drawcurveBy4pts(br1.r,br1.p2,br2.p1,br2.r);
+                        drawCubeBez(br1.r,br1.p2,br2.p1,br2.r);
                     }
                 }
             }
@@ -366,7 +367,7 @@ namespace lab5
             radioBezier.Checked = radioBezier.Checked ? false : true;
         }
 
-      
+        
         int SelectedId;
         int SelectedNum;
         bool rotaeBPoint = false, moveBPoint = false;
