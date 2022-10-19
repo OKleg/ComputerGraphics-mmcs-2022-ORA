@@ -366,10 +366,7 @@ namespace lab5
             radioBezier.Checked = radioBezier.Checked ? false : true;
         }
 
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-            label5.Visible = (!double.TryParse(textBox2.Text, out tb) || (!(tb >= 0) || !(tb <= 1))) ? true : false;
-        }
+      
         int SelectedId;
         int SelectedNum;
         bool rotaeBPoint = false, moveBPoint = false;
