@@ -417,6 +417,15 @@ namespace lab5
             }
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (bPoints.Count > 0)
+            {
+                bPoints.Remove(bPoints.Last());
+                DrawBPoint();
+            }
+        }
+
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
             if (!rotaeBPoint && !moveBPoint)
