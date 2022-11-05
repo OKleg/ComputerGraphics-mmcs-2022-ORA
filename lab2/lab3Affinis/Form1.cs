@@ -625,40 +625,61 @@ namespace lab3Affinis
         //
         LinkedListNode<Point> Start(LinkedList<Point> p1, LinkedList<Point> p2, out bool who)
         {
-            int len = (p1.Count < p2.Count) ? p2.Count : p1.Count;
             var node1 = p1.First;
             var node2 = p2.First;
-
-            for (int i = 0; i < len; i++)
+            while (isPointInner(node1.Value, p2) && isPointInner(node2.Value, p1))
             {
-                if ( i < p1.Count && !isPointInner(node1.Value, p2))
-                {
-                    who = true;
-                    return node1;
-                }
-                if (i < p2.Count && !isPointInner(node2.Value, p1))
-                {
-                    who = false;
-                 
-                    return node2;
-                }
-               node1 = node1.Next;
-               node2 = node2.Next;
+                node1 = node1.Next;
+                node2 = node2.Next;
+            }
+            if (!isPointInner(node1.Value, p2))
+            {
+                who = true;
+                return node1;
+            }
+            if (!isPointInner(node2.Value, p1))
+            {
+                who = false;
+                return node2;
             }
             who = true;
             return p1.First;
         }
-       
+        LinkedListNode<Point> StartLeft(LinkedList<Point> p1, LinkedList<Point> p2, out bool who)
+        {
+            var node1 = p1.First;
+            var node2 = p2.First;
+            who = true;
+            LinkedListNode<Point> node = p1.First;
+            while (node1 != null)
+            {
+                if (node1.Value.X < node.Value.X)
+                {
+                    node = node1;
+                }
+                node1 = node1.Next;
+            }
+            while (node2 != null)
+            {
+                if (node2.Value.X < node.Value.X)
+                {
+                    who = false;
+                    node = node2;
+                }
+                node2 = node2.Next;
+            }
+            return node;
+        }
 
-       
-         public Point[] unionPoligons(Point[] p1, Point[] p2)
+
+        public Point[] unionPoligons(Point[] p1, Point[] p2)
         {
             List<Point> ps = new List<Point>();
             LinkedList<Point> p1new = Intersection(p1, p2);
             LinkedList<Point> p2new = Intersection(p2, p1);
             bool u = true;
             
-            var start = Start(p1new, p2new, out u);
+            var start = StartLeft(p1new, p2new, out u);
             if (u)
             {
                 while (isPointInner(start.Value,p2new))
@@ -753,7 +774,7 @@ namespace lab3Affinis
         private void button6_Click_1(object sender, EventArgs e)
         {
             if (poligons.Count >= 2)
-             Draw(unionPoligons(poligons[0], poligons[1]));
+             Draw(unionPoligons(poligons[poligons.Count-2], poligons[poligons.Count - 1]));
         }
     }
 
