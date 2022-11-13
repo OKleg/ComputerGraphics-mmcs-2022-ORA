@@ -318,6 +318,8 @@ namespace lab3Affinis
             }
             return list;
         }
+       
+
         static public List<Point> Intersection(Point A, Point B, List<Point> polig)
         {
             List<Point> ps = new List<Point>();
@@ -353,6 +355,86 @@ namespace lab3Affinis
                    a.AddLast(ps[i]);
                }*/
             return ps;
+        }
+        static public List<Point> IntersectionTwo(Point A, Point B, Point[] polig, ref LinkedList<Point> ps, ref LinkedList<Point> ps2)
+        {
+            List<Point> list = new List<Point>(); 
+           
+            if (polig.Length > 0)
+            {
+                Point p0 = polig[polig.Length - 1];
+                for (int i = 0; i < polig.Length; i++)
+                {
+                    Point t = Intersection(A, B, p0, polig[i]);
+                    if (t.X != -1)
+                    {
+                        list.Add(t);
+                        ps.AddLast(t);
+                        ps2.AddAfter(ps2.Find(p0), t);
+                    }
+                    p0 = polig[i];
+                }
+                /* if (list.Count > 0)
+                 {
+                     Point res = NearInersect(list, A);
+                     ps.AddLast(res);
+                 }*/
+            }
+            return list;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="p1"></param>
+        /// <param name="p2"></param>
+        /// <returns></returns>
+        static public void IntersectionTwo(Point[] p1, Point[] p2,out LinkedList<Point> ps1,out LinkedList<Point> ps2)
+        {
+            ps1 = new LinkedList<Point>();
+            ps2 = new LinkedList<Point>();
+           foreach (var item in p2)
+            {
+                ps2.AddLast(item);
+            }
+            if (p1.Length - 1 < 0 || p2.Length - 1 < 0) return;// ps;
+            Point p0 = p1[p1.Length - 1];
+            ps1.AddLast(p0);
+            for (int i = 0; i < p1.Length; i++)
+            {
+                IntersectionTwo(p0, p1[i], p2, ref ps1, ref ps2);
+
+                p0 = p1[i];
+                ps1.AddLast(p0);
+            }
+          //  return ps;
+        }
+
+        static public void Intersection(Point[] p1, Point[] p2,out LinkedList<Point> ps1,out LinkedList<Point> ps2)
+        {
+            ps1 = new LinkedList<Point>();
+            ps2 = new LinkedList<Point>();
+
+            if (p1.Length - 1 < 0 || p2.Length - 1 < 0) return ;
+            Point pp0 = p1[p1.Length - 1];
+            Point pp1 = p1[p1.Length - 1];
+            ps1.AddLast(pp0);
+            ps2.AddLast(pp1);
+
+            for (int i = 0; i < p1.Length; i++)
+            {
+                Intersection(pp0, p1[i], p2, ref ps1);
+                Intersection(pp1, p2[i], p1, ref ps2);
+                pp0 = p1[i];
+                ps1.AddLast(pp0);
+                ps1.AddLast(pp1);
+
+            }
+            /*   LinkedList<Point> a = new LinkedList<Point>();
+               for (int i = 0; i < ps.Count; i++)
+               {
+                   a.AddLast(ps[i]);
+               }*/
         }
         bool DinamicPoint = false;
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
@@ -763,8 +845,9 @@ namespace lab3Affinis
         public LinkedList<Point> Normalize(LinkedList<Point> list)
         {
             LinkedListNode<Point> start = LeftPoint(list);
-            LinkedListNode<Point> down = DownPoint(list);
-            if (CountNodeNext(start,down)> CountNodePrevious(start, down))
+            LinkedListNode<Point> down = DownPoint(list); 
+            LinkedListNode<Point> top = TopPoint(list);
+            if (CountNodeNext(start,down)> CountNodePrevious(start, down)  && CountNodeNext(start, top) < CountNodePrevious(start, top))
             {
                 return Reverse(list);
             }
@@ -794,8 +877,14 @@ namespace lab3Affinis
         {
 
             List<Point> ps = new List<Point>();
-            LinkedList<Point> p1new = Normalize(Intersection(p1, p2));
-            LinkedList<Point> p2new = Normalize(Intersection(p2, p1));
+
+            LinkedList<Point> p1new;// = Normalize(Intersection(p1, p2));
+            LinkedList<Point> p2new;// = Normalize(Intersection(p2, p1));
+            IntersectionTwo(p1, p2, out p1new,out p2new);
+            //   Intersection(p1, p2, out p1new,out p2new);
+            p1new =  Normalize(p1new);
+            p2new = Normalize(p2new);
+
             bool u = true;
             
             var start = StartLeft(p1new, p2new, out u);
@@ -821,15 +910,16 @@ namespace lab3Affinis
             Pen pen4 = new Pen(Color.Aqua, 6f);
 
             g.DrawEllipse(pen,node.Value.X-2,node.Value.Y-2,4,4);
-            g.DrawEllipse(pen2, node.Next.Value.X - 2, node.Next.Value.Y - 2, 4, 4);
-            g.DrawEllipse(pen4, p1new.First.Next.Value.X - 2, p1new.First.Next.Value.Y - 2, 4, 4);
             g.DrawEllipse(pen3, p2new.First.Next.Value.X - 2, p2new.First.Next.Value.Y - 2, 4, 4);
+            g.DrawEllipse(pen4, p1new.First.Next.Value.X - 2, p1new.First.Next.Value.Y - 2, 4, 4);
+          
+            g.DrawEllipse(pen2, node.Next.Value.X - 2, node.Next.Value.Y - 2, 4, 4);
             pictureBox1.Invalidate();
             //---//
 
             ps.Add(node.Value);
             node = node.Next;
-            while (node != start && (ps.Count<p1new.Count+p2new.Count || !ps.Contains(node.Value)))
+            while (node != start )//&& (ps.Count<p1new.Count+p2new.Count || !ps.Contains(node.Value))
             {
                 
                 if (u)
@@ -843,12 +933,12 @@ namespace lab3Affinis
                     }
                     else
                     {
-                        if (!isPointInner(node.Value, p2new))
+                     //   if (!isPointInner(node.Value, p2new))
                         {
                             ps.Add(node.Value);
                             node = NextOrFirst(node);
                         }
-                        else node = NextOrFirst(node);
+                     //   else node = NextOrFirst(node);
                     }
                 }
                 else
@@ -862,12 +952,12 @@ namespace lab3Affinis
                     }
                     else
                     {
-                        if (!isPointInner(node.Value, p1new))
+                       // if (!isPointInner(node.Value, p1new))
                         {
                             ps.Add(node.Value);
                             node = NextOrFirst(node);
                         }
-                        else node = NextOrFirst(node);
+                       // else node = NextOrFirst(node);
                     }
                     
                 }
@@ -878,6 +968,7 @@ namespace lab3Affinis
             {
                 a[i] = ps[i];
             }
+            //poligons.Add(a);
             return a;
         }
 
