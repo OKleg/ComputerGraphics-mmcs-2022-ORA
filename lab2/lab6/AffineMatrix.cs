@@ -6,125 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-
-namespace lab3Affinis
+namespace lab6
 {
     internal class AffineMatrix
     {
-        /*public double M00, M01, M02;
-        public double M10, M11, M12;
-        public double M20, M21, M22;
-
-        public AffineMatrix(
-            double m00,
-            double m01,
-            double m02,
-            double m10,
-            double m11,
-            double m12,
-            double m20,
-            double m21,
-            double m22)
-        {
-            M00 = m00;
-            M01 = m01;
-            M02 = m02;
-            M10 = m10;
-            M11 = m11;
-            M12 = m12;
-            M20 = m20;
-            M21 = m21;
-            M22 = m22;
-        }
-
-        public AffineMatrix()
-        {
-            (this.M00,this.M11,this.M22) = (1,1,1);
-            (this.M01, this.M02, this.M10, this.M12, this.M20, this.M21) = (0, 0, 0, 0, 0, 0);
-        }
-
-
-        public AffineMatrix Multiply(AffineMatrix m)
-        {
-            double[] pp = new double[3] { p.X, p.Y, 1 };
-            double[] result = new double[3] { 0, 0, 0 };
-            for (int i = 0; i < 3; i++)//i < 2
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    result[i] += pp[j] * m[i, j];
-                }
-            }
-            return new Point((int)Math.Round(result[0]), (int)Math.Round(result[1]));
-        }
-        public double this[int i, int j]
-        {
-            get
-            {
-                switch (i*10 + j) // (:
-                {
-                    case 0:
-                        return this.M00;
-                    case 1:
-                        return this.M01;
-                    case 2:
-                        return this.M02;
-                    case 10:
-                        return this.M10;
-                    case 11:
-                        return this.M11;
-                    case 12:
-                        return this.M12;
-                    case 20:
-                        return this.M20;
-                    case 21:
-                        return this.M21;
-                    case 22:
-                        return this.M22;
-                    default:
-                        return this.M00;
-                }
-            }
-            set
-            {
-                switch (i * 10 + j) // (:
-                {
-                    case 0:
-                        this.M00 = value;
-                        break;
-                    case 1:
-                        this.M01 = value;
-                        break;
-                    case 2:
-                        this.M02 = value;
-                        break;
-                    case 10:
-                        this.M10 = value;
-                        break;
-                    case 11:
-                        this.M11 = value;
-                        break;
-                    case 12:
-                        this.M12 = value;
-                        break;
-                    case 20:
-                        this.M20 = value;
-                        break;
-                    case 21:
-                        this.M21 = value;
-                        break;
-                    case 22:
-                        this.M22 = value;
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-        public static MyMatrix operator *(MyMatrix a, MyMatrix b)
-        {
-            return a.Multiply(b);
-        }*/
 
         private int rows;
         private int cols;
@@ -133,11 +18,12 @@ namespace lab3Affinis
         public AffineMatrix()
         {
             (rows, cols) = (3, 3);
-            mass = new double[3, 3]
+            mass = new double[4, 4]
                 {
-                    {1,0,0 },
-                    {0,1,0 },
-                    {0,0,1 }
+                    {1,0,0,0},
+                    {0,1,0,0},
+                    {0,0,1,0},
+                    {0,0,0,1}
                 };
         }
         public AffineMatrix(int n,int m)
@@ -146,10 +32,10 @@ namespace lab3Affinis
             this.Cols = m;
             mass = new double[this.Rows, this.Cols];
         }
-        public AffineMatrix(Point p)
+        public AffineMatrix(myPoint3D p)
         {
             (rows, cols) = (1, 3);
-            mass = new double[1, 3] { { p.X, p.Y, 1 } };
+            mass = new double[1, 3] { { p.X, p.Y, p.Z } };
         }
         public int Rows
         {
@@ -190,71 +76,90 @@ namespace lab3Affinis
         }
 
         // ----------- Shift ----------- 
-        public void SetShift(int dx,int dy)
+        public void SetShift(int dx,int dy, int dz )
         {
-            this[2, 0] = dx;
-            this[2, 1] = dy;
+            this[3, 0] = dx;
+            this[3, 1] = dy;
+            this[3, 2] = dz;
+
         }
-       
-        public void Shift(Point[] p,int dx,int dy)
+
+        public void Shift(myPoint3D[] p,int dx,int dy, int dz )
         {
-            this.SetShift(dx, dy);
+            this.SetShift(dx, dy, dz);
             Transform(p);
-            this.SetShift(0, 0);
+            this.SetShift(0, 0,0);
         }
         // =========== Shift =========== 
 
-        private void Transform(Point[] p)
+        private void Transform(myPoint3D[] p )
         {
             for (int i = 0; i < p.Length; i++)
             {
                 //p[i] = MultMatrix(p[i], mat);// перемножаем матрицу на точку и получаем новое положение точки
                 AffineMatrix res = new AffineMatrix(p[i]) * this;
-                p[i] = new Point((int)Math.Round(res[0, 0]), (int)Math.Round(res[0, 1]));
+                p[i] = new myPoint3D((int)Math.Round(res[0, 0]), (int)Math.Round(res[0, 1]), (int)Math.Round(res[0, 2]));//......
             }
         }
 
         // ----------- Rotate ----------- 
-        public void SetRotateAngle(double angle, Point c)
+        public void SetRotateAngleX(double angle, myPoint3D c)
         {
             double sin = Math.Sin(angle);
             double cos = Math.Cos(angle);
-            (this[0, 0], this[1, 1]) = (cos, cos);
-            (this[0, 1], this[1, 0]) = (sin, -sin);
-            (this[2, 0], this[2, 1]) = (-c.X*cos + c.Y*sin + c.X, -c.X * sin - c.Y * cos + c.Y);
+            (this[1, 1], this[1, 2]) = (cos, sin);
+            (this[2, 1], this[2, 3]) = (-sin, cos);
+           // (this[2, 0], this[2, 1]) = (-c.X*cos + c.Y*sin + c.X, -c.X * sin - c.Y * cos + c.Y);
+        }
+        public void SetRotateAngleY(double angle, myPoint3D c)
+        {
+            double sin = Math.Sin(angle);
+            double cos = Math.Cos(angle);
+            (this[0, 0], this[0, 2]) = (cos, -sin);
+            (this[0, 2], this[2, 2]) = (sin, cos);
+            // (this[2, 0], this[2, 1]) = (-c.X*cos + c.Y*sin + c.X, -c.X * sin - c.Y * cos + c.Y);
+        }
+        public void SetRotateAngleZ(double angle, myPoint3D c)
+        {
+            double sin = Math.Sin(angle);
+            double cos = Math.Cos(angle);
+            (this[0, 0], this[0, 1]) = (cos, sin);
+            (this[1, 0], this[1, 2]) = (-sin, cos);
+            //(this[3, 0], this[3, 1]) = (-c.X*cos + c.Y*sin + c.X, -c.X * sin - c.Y * cos + c.Y);
         }
         public  void ResetRotateAngle()
         {
-            (this[0, 0], this[1, 1]) = (1, 1);
+            (this[0, 0], this[1, 1],this[2,2]) = (1, 1,1);
             (this[0, 1], this[1, 0]) = (0, 0);
-            (this[2, 0], this[2, 1]) = (0, 0);
+            (this[2, 0], this[2, 0]) = (0, 0);
+            (this[2, 1], this[2, 1]) = (0, 0);
         }
 
-        internal void Rotate(Point[] p, Point c, double angle)
+        internal void Rotate(myPoint3D[] p, myPoint3D c, double angle)
         {
             //this.SetRotateAngle(angle);
            // this.Shift(p, -c.X, -c.Y);
-            this.SetRotateAngle(angle,c);
+        /*    this.SetRotateAngle(angle,c);
             Transform(p);
-            this.ResetRotateAngle();
+            this.ResetRotateAngle();*/
            // this.Shift(p, c.X, c.Y);
         }
         // =========== Rotate =========== 
 
         // ----------- Scale ----------- 
-        public void SetScaleCoef(double kx, double ky,Point c)
+        public void SetScaleCoef(double kx, double ky, double kz, myPoint3D c)
         {
-            (this[0, 0], this[1, 1]) = (kx, ky);
-            (this[2, 0], this[2, 1]) = ((1-kx) * c.X, (1 - ky) * c.Y);
+            (this[0, 0], this[1, 1],this[2,2]) = (kx, ky,kz);
+            (this[3, 0], this[3, 1], this[3, 2]) = ((1-kx) * c.X, (1 - ky) * c.Y, (1 - kz) * c.Z);
         }
         public void ReSetScaleCoef()
         {
-            (this[0, 0], this[1, 1]) = (1, 1);
-            (this[2, 0], this[2, 1]) = (0,0);
+            (this[0, 0], this[1, 1], this[2, 2]) = (1, 1, 1);
+            (this[3, 0], this[3, 1], this[3, 2]) = (0,0,0);
         }
-        internal void Scale(Point[] p, Point c, double kx, double ky)
+        internal void Scale(myPoint3D[] p, myPoint3D c, double kx, double ky, double kz = 1)
         {
-            this.SetScaleCoef(kx, ky,c);
+            this.SetScaleCoef(kx, ky, kz, c);
             Transform(p);
             ReSetScaleCoef();
         }

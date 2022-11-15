@@ -39,7 +39,8 @@ namespace lab3Affinis
         }
         List<Point> points = new List<Point>(); // лист вершин полигона
         List<Point> intersect = new List<Point>();
-        List<Point[]> poligons = new List<Point[]>();
+        List<Point[]> polygons = new List<Point[]>();
+        LinkedList<Point> poligon = new LinkedList<Point>();
         Point[] p;
         Point center;
 
@@ -119,15 +120,16 @@ namespace lab3Affinis
             /*g.DrawEllipse(Pens.Red, point.X-2, point.Y - 2, 4, 4);
             pictureBox1.Invalidate();*/
             int[] countIntersect = new int[4] { 0, 0, 0, 0 };
+            int count = 0;
+            bool wasnt = true;
             if (p != null && p.Count > 2)
             {
                 Point p1 = p.Last.Value;
-                Point shine;
+                Point shine = new Point(point.X, 0);
                 var node = p.First;
-                for (int j = 0; j < 4; j++)
-                {
+                //for (int j = 0; j < 4; j++)  {
                     int x, y;
-                    shine = fourWay(j, point.X, point.Y);
+                    //shine = fourWay(j, point.X, point.Y);
                     //for (int i = 0; i < p.Count; i++){
                     while (node != null)
                     {
@@ -146,9 +148,16 @@ namespace lab3Affinis
                             if ((Math.Abs(x1 - x2) == Math.Abs(x1 - Intersect.X) + Math.Abs(x2 - Intersect.X)
                                 && Math.Abs(y1 - y2) == Math.Abs(y1 - Intersect.Y) + Math.Abs(y2 - Intersect.Y))
                                  && (Math.Abs(x3 - x4) == Math.Abs(x3 - Intersect.X) + Math.Abs(x4 - Intersect.X)
-                                && Math.Abs(y3 - y4) == Math.Abs(y3 - Intersect.Y) + Math.Abs(y4 - Intersect.Y)))
+                                && Math.Abs(y3 - y4) == Math.Abs(y3 - Intersect.Y) + Math.Abs(y4 - Intersect.Y))
+                                 && wasnt
+                                )
                             {
-                                countIntersect[j]++;
+                            if (Intersect == p1 || Intersect == p2)
+                            {
+                                wasnt = false;
+                            }
+                               // countIntersect[j]++;
+                                count++;
                                 /*g.DrawEllipse(Pens.Red, Intersect.X - 2, Intersect.Y - 2, 4, 4);
                                 pictureBox1.Invalidate();*/
                             }
@@ -156,10 +165,10 @@ namespace lab3Affinis
                         p1 = p2;
                         node = node.Next;
                     }
-                }
+                //}
             }
 
-            return countIntersect[0] % 2 != 0 && countIntersect[1] % 2 != 0 && countIntersect[2] % 2 != 0 && countIntersect[3] % 2 != 0;
+            return count % 2 != 0;// countIntersect[0] % 2 != 0 && countIntersect[1] % 2 != 0 && countIntersect[2] % 2 != 0 && countIntersect[3] % 2 != 0;
         }
         private void Draw()
         {
@@ -529,6 +538,7 @@ namespace lab3Affinis
         private void button1_Click(object sender, EventArgs e)
         {
             // g.Clear(Color.White);
+            poligon.Clear();
             RadioPointPos.Checked = false;
             var bmp = (pictureBox1.Image as Bitmap);
             p = new Point[points.Count];
@@ -537,6 +547,7 @@ namespace lab3Affinis
                 for (int i = 0; i < points.Count; i++)
                 {
                     //g.DrawLine(pen, points.ElementAt(i), points.ElementAt(i + 1));
+                    poligon.AddLast(points[i]);
                     p[i] = points[i];
                 }
                 //g.DrawLine(pen, points.ElementAt(points.Count-1), points.ElementAt(0));
@@ -549,7 +560,7 @@ namespace lab3Affinis
             g = Graphics.FromImage(pictureBox1.Image);
             pictureBox1.Invalidate();
             //center =                        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            poligons.Add(p);
+            polygons.Add(p);
             points.Clear();
             if (p.Length != 0)
             {
@@ -649,7 +660,7 @@ namespace lab3Affinis
         //Clear
         private void button4_Click(object sender, EventArgs e)
         {
-            poligons.Clear();
+            polygons.Clear();
             g.Clear(pictureBox1.BackColor);
             points.Clear();
             center = AffinePoint;
@@ -899,7 +910,7 @@ namespace lab3Affinis
                 return new Point(-1, -1);
             }
         }
-        public Point[] unionPoligons(Point[] p1, Point[] p2)
+        public Point[] unionpolygons(Point[] p1, Point[] p2)
         {
 
             List<Point> ps = new List<Point>();
@@ -967,7 +978,7 @@ namespace lab3Affinis
             {
                 a[i] = ps[i];
             }
-            poligons.Add(a);
+            polygons.Add(a);
             p = a;
             return a;
         }
@@ -975,8 +986,8 @@ namespace lab3Affinis
      
             private void button6_Click_1(object sender, EventArgs e)
         {
-            if (poligons.Count >= 2 && poligons[poligons.Count - 2].Length>2 && poligons[poligons.Count - 1].Length>2)
-             Draw(unionPoligons(poligons[poligons.Count-2], poligons[poligons.Count - 1]));
+            if (polygons.Count >= 2 && polygons[polygons.Count - 2].Length>2 && polygons[polygons.Count - 1].Length>2)
+             Draw(unionpolygons(polygons[polygons.Count-2], polygons[polygons.Count - 1]));
         }
     }
 

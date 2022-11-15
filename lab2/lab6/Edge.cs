@@ -6,45 +6,39 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms.VisualStyles;
 
-namespace lab5
+namespace lab6
 {
     internal class Edge
     {
-        public Point left;
-        public Point right;
+        public myPoint3D left;
+        public myPoint3D right;
 
-        public Edge(Point left, Point right)
+        public Edge(myPoint3D p1, myPoint3D p2)
         {
-            this.left = left;
-            this.right = right;
+            this.left = p1;
+            this.right = p2;
         }
 
-        public int MidX()
+        public double MidX()
         {
-            return (left.X + right.X)/2;
+            return (left.X + right.X) /2;
         }
 
-        public int MidY()
+        public double MidY()
         {
-            return ((left.Y + right.Y)/2);
+            return ((left.Y + right.Y) /2);
         }
- 
-       /* public int Shift(double R)
+        public double MidZ()
         {
-            Random rnd = new Random();
-            return rnd.Next((int)Math.Round(-R * Lenght()), (int)Math.Round(R * Lenght()));
-        }*/
-        public Point Mid()
+            return ((left.Z + right.Z) / 2);
+        }
+        public myPoint3D Mid()
         {
-            return new Point(this.MidX(), this.MidY());
+            return new myPoint3D(this.MidX(), this.MidY(), this.MidZ());
         }
 
-        public Point Mid(double R)
-        {
-            return new Point(this.MidX(), this.MidY()); //+ Shift(R));
-        }
-
-
-        public double Lenght() => Math.Sqrt((right.X - left.X) * (right.X - left.X) + (right.Y - left.Y) * (right.Y - left.Y));
+        public double Lenght() => Math.Sqrt((right.X - left.X) * (right.X - left.X)
+                    + (right.Y - left.Y) * (right.Y - left.Y)
+                    + (right.Z - left.Z) * (right.Z - left.Z));
     }
 }

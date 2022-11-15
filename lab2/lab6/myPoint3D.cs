@@ -8,11 +8,17 @@ namespace lab6
 {
     class myPoint3D
     {
-        
+
         public double X { get; set; }
         public double Y { get; set; }
         public double Z { get; set; }
-        public myPoint3D(int x,int y, int z)
+        public myPoint3D(int x, int y, int z)
+        {
+            X = x;
+            Y = y;
+            Z = z;
+        }
+        public myPoint3D(double x, double y, double z)
         {
             X = x;
             Y = y;
