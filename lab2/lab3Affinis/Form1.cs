@@ -916,38 +916,11 @@ namespace lab3Affinis
             var start = StartLeft(p1new, p2new, out u);
           
             var node = start;
-            //---//
-            Pen pen = new Pen(Color.DarkGreen, 6f);
-            Pen pen2 = new Pen(Color.Purple, 6f);
-            Pen pen3 = new Pen(Color.DarkGoldenrod, 6f);
-            Pen pen4 = new Pen(Color.Aqua, 6f);
-            Pen red = new Pen(Color.Red, 6f);
-            Pen orange = new Pen(Color.Orange, 6f);
-            Pen yellow = new Pen(Color.Yellow, 6f);
-            Pen green = new Pen(Color.LightGreen, 6f);
-            Pen blue = new Pen(Color.Blue, 6f);
-            Pen black = new Pen(Color.Black, 6f);
-
-           
-            //  g.DrawEllipse(pen,node.Value.X-2,node.Value.Y-2,4,4);
-            g.DrawEllipse(pen3, p2new.First.Next.Value.X - 2, p2new.First.Next.Value.Y - 2, 4, 4);
-            // g.DrawEllipse(pen4, p2new.First.Next.Value.X - 2, p2new.First.Next.Value.Y - 2, 4, 4);
-            //
-       /*     g.DrawEllipse(black, p2new.First.Value.X - 2, p2new.First.Value.Y - 2, 4, 4);
-            g.DrawEllipse(red, p2new.First.Next.Next.Value.X - 2, p2new.First.Next.Next.Value.Y - 2, 4, 4);
-            g.DrawEllipse(orange, p2new.First.Next.Next.Next.Value.X - 2, p2new.First.Next.Next.Next.Value.Y - 2, 4, 4);
-            g.DrawEllipse(yellow, p2new.First.Next.Next.Next.Next.Value.X - 2, p2new.First.Next.Next.Next.Next.Value.Y - 2, 4, 4);
-            g.DrawEllipse(green, p2new.First.Next.Next.Next.Next.Next.Value.X - 2, p2new.First.Next.Next.Next.Next.Next.Value.Y - 2, 4, 4);
-            g.DrawEllipse(pen4, p2new.First.Next.Next.Next.Next.Next.Next.Value.X - 2, p2new.First.Next.Next.Next.Next.Next.Next.Value.Y - 2, 4, 4);
-            g.DrawEllipse(blue, p2new.First.Next.Next.Next.Next.Next.Next.Next.Value.X - 2, p2new.First.Next.Next.Next.Next.Next.Next.Next.Value.Y - 2, 4, 4);
-         */   //
-            //  g.DrawEllipse(pen2, node.Next.Value.X - 2, node.Next.Value.Y - 2, 4, 4);
-            pictureBox1.Invalidate();
-            //---//
+        
 
             ps.Add(node.Value);
-            node = node.Next;
-            while (node != start )//&& (ps.Count<p1new.Count+p2new.Count || !ps.Contains(node.Value))
+            node = NextOrFirst(node);
+            while (node != start )//&& node != null )//&& (ps.Count<p1new.Count+p2new.Count || !ps.Contains(node.Value))
             {
                 if (u)
                 {
@@ -994,7 +967,8 @@ namespace lab3Affinis
             {
                 a[i] = ps[i];
             }
-            //poligons.Add(a);
+            poligons.Add(a);
+            p = a;
             return a;
         }
 
