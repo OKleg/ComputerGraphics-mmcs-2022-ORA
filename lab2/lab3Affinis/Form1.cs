@@ -358,8 +358,8 @@ namespace lab3Affinis
         }
         static public List<Point> IntersectionTwo(Point A, Point B, Point[] polig, ref LinkedList<Point> ps, ref LinkedList<Point> ps2)
         {
-            List<Point> list = new List<Point>(); 
-           
+            List<Point> list = new List<Point>();
+            Stack<Point> ind = new Stack<Point>();
             if (polig.Length > 0)
             {
                 Point p0 = polig[polig.Length - 1];
@@ -369,11 +369,19 @@ namespace lab3Affinis
                     if (t.X != -1)
                     {
                         list.Add(t);
-                        ps.AddLast(t);
-                        ps2.AddAfter(ps2.Find(p0), t);
+                        ind.Push(p0);
                     }
                     p0 = polig[i];
                 }
+                while (list.Count>0)
+                {
+                    Point add = NearInersect(A,ref list);
+                    ps.AddLast(add);
+                    ps2.AddAfter(ps2.Find(ind.Pop()), add );
+
+                }
+              
+
                 /* if (list.Count > 0)
                  {
                      Point res = NearInersect(list, A);
@@ -796,7 +804,7 @@ namespace lab3Affinis
                 return node.Next;
             }
         }
-        LinkedListNode<Point> PrevOrFirst(LinkedListNode<Point> node)
+        LinkedListNode<Point> PrevOrLast(LinkedListNode<Point> node)
         {
             if (node.Previous == null)
             {
@@ -826,7 +834,7 @@ namespace lab3Affinis
             while (start != down)
             {
                 count++;
-                start = PrevOrFirst(start);
+                start = PrevOrLast(start);
             }
 
             return count;
@@ -847,26 +855,27 @@ namespace lab3Affinis
             LinkedListNode<Point> start = LeftPoint(list);
             LinkedListNode<Point> down = DownPoint(list); 
             LinkedListNode<Point> top = TopPoint(list);
-            if (CountNodeNext(start,down)> CountNodePrevious(start, down)  && CountNodeNext(start, top) < CountNodePrevious(start, top))
+            if (CountNodeNext(start,down)> CountNodePrevious(start, down)  || CountNodeNext(start, top) < CountNodePrevious(start, top))
             {
                 return Reverse(list);
             }
             return list;
         }
-        public static Point NearInersect(List<Point> p1, Point p)
+        public static Point NearInersect(Point p,ref List<Point> p1)
         {
             if (p1.Count > 0)
             {
-                Point res = p1[0];
+                Point r = p1[0];
                 foreach (var i in p1)
                 {
-                    if (Math.Pow(Math.Abs(i.X - p.X), 2) + Math.Pow(Math.Abs(i.Y - p.Y), 2) <
-                       Math.Pow(Math.Abs(res.X - p.X), 2) + Math.Pow(Math.Abs(res.Y - p.Y), 2))
+                    if (Math.Sqrt(Math.Pow(Math.Abs(i.X - p.X), 2) + Math.Pow(Math.Abs(i.Y - p.Y), 2)) <
+                        Math.Sqrt(Math.Pow(Math.Abs(r.X - p.X), 2) + Math.Pow(Math.Abs(r.Y - p.Y), 2)) )
                     {
-                        res = i;
+                        r = i;
                     }
                 }
-                return res;
+                p1.Remove(r);
+                return r;
             }
             else
             {
@@ -882,38 +891,38 @@ namespace lab3Affinis
             LinkedList<Point> p2new;// = Normalize(Intersection(p2, p1));
             IntersectionTwo(p1, p2, out p1new,out p2new);
             //   Intersection(p1, p2, out p1new,out p2new);
-            p1new =  Normalize(p1new);
+            p1new = Normalize(p1new);
             p2new = Normalize(p2new);
 
             bool u = true;
             
             var start = StartLeft(p1new, p2new, out u);
-            if (u)
-            {
-                while (isPointInner(start.Value,p2new))
-                {
-                    start = start.Next;
-                }
-            }
-            else
-            {
-                while (isPointInner(start.Value, p1new))
-                {
-                    start = start.Next;
-                }
-            }
+          
             var node = start;
             //---//
             Pen pen = new Pen(Color.DarkGreen, 6f);
             Pen pen2 = new Pen(Color.Purple, 6f);
             Pen pen3 = new Pen(Color.DarkGoldenrod, 6f);
             Pen pen4 = new Pen(Color.Aqua, 6f);
+            Pen red = new Pen(Color.Red, 6f);
+            Pen orange = new Pen(Color.Orange, 6f);
+            Pen yellow = new Pen(Color.Yellow, 6f);
+            Pen green = new Pen(Color.LightGreen, 6f);
+            Pen blue = new Pen(Color.Blue, 6f);
+            Pen black = new Pen(Color.Black, 6f);
+            //  g.DrawEllipse(pen,node.Value.X-2,node.Value.Y-2,4,4);
+             g.DrawEllipse(pen3, p1new.First.Next.Value.X - 2, p1new.First.Next.Value.Y - 2, 4, 4);
+            // g.DrawEllipse(pen4, p1new.First.Next.Value.X - 2, p1new.First.Next.Value.Y - 2, 4, 4);
+            //
+            g.DrawEllipse(black, p1new.First.Value.X - 2, p1new.First.Value.Y - 2, 4, 4);
+            g.DrawEllipse(red, p1new.First.Next.Next.Value.X - 2, p1new.First.Next.Next.Value.Y - 2, 4, 4);
+                  g.DrawEllipse(orange, p1new.First.Next.Next.Next.Value.X - 2, p1new.First.Next.Next.Next.Value.Y - 2, 4, 4);
+                  g.DrawEllipse(yellow, p1new.First.Next.Next.Next.Next.Value.X - 2, p1new.First.Next.Next.Next.Next.Value.Y - 2, 4, 4);
+                  g.DrawEllipse(green, p1new.First.Next.Next.Next.Next.Next.Value.X - 2, p1new.First.Next.Next.Next.Next.Next.Value.Y - 2, 4, 4);
+                  g.DrawEllipse(blue, p1new.First.Next.Next.Next.Next.Next.Next.Value.X - 2, p1new.First.Next.Next.Next.Next.Next.Next.Value.Y - 2, 4, 4);
 
-            g.DrawEllipse(pen,node.Value.X-2,node.Value.Y-2,4,4);
-            g.DrawEllipse(pen3, p2new.First.Next.Value.X - 2, p2new.First.Next.Value.Y - 2, 4, 4);
-            g.DrawEllipse(pen4, p1new.First.Next.Value.X - 2, p1new.First.Next.Value.Y - 2, 4, 4);
-          
-            g.DrawEllipse(pen2, node.Next.Value.X - 2, node.Next.Value.Y - 2, 4, 4);
+            //
+          //  g.DrawEllipse(pen2, node.Next.Value.X - 2, node.Next.Value.Y - 2, 4, 4);
             pictureBox1.Invalidate();
             //---//
 
@@ -921,7 +930,6 @@ namespace lab3Affinis
             node = node.Next;
             while (node != start )//&& (ps.Count<p1new.Count+p2new.Count || !ps.Contains(node.Value))
             {
-                
                 if (u)
                 {
                     var t = p2new.Find(node.Value);
@@ -962,7 +970,6 @@ namespace lab3Affinis
                     
                 }
             }
-
             Point[] a = new Point[ps.Count];
             for (int i = 0; i < ps.Count; i++)
             {
