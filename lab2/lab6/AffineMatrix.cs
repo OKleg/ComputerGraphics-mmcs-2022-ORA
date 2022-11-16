@@ -32,7 +32,7 @@ namespace lab6
             this.Cols = m;
             mass = new double[this.Rows, this.Cols];
         }
-        public AffineMatrix(myPoint3D p)
+        public AffineMatrix(Point3D p)
         {
             (rows, cols) = (1, 3);
             mass = new double[1, 3] { { p.X, p.Y, p.Z } };
@@ -84,7 +84,7 @@ namespace lab6
 
         }
 
-        public void Shift(myPoint3D[] p,int dx,int dy, int dz )
+        public void Shift(Point3D[] p,int dx,int dy, int dz )
         {
             this.SetShift(dx, dy, dz);
             Transform(p);
@@ -92,18 +92,18 @@ namespace lab6
         }
         // =========== Shift =========== 
 
-        private void Transform(myPoint3D[] p )
+        private void Transform(Point3D[] p )
         {
             for (int i = 0; i < p.Length; i++)
             {
                 //p[i] = MultMatrix(p[i], mat);// перемножаем матрицу на точку и получаем новое положение точки
                 AffineMatrix res = new AffineMatrix(p[i]) * this;
-                p[i] = new myPoint3D((int)Math.Round(res[0, 0]), (int)Math.Round(res[0, 1]), (int)Math.Round(res[0, 2]));//......
+                p[i] = new Point3D((int)Math.Round(res[0, 0]), (int)Math.Round(res[0, 1]), (int)Math.Round(res[0, 2]));//......
             }
         }
 
         // ----------- Rotate ----------- 
-        public void SetRotateAngleX(double angle, myPoint3D c)
+        public void SetRotateAngleX(double angle, Point3D c)
         {
             double sin = Math.Sin(angle);
             double cos = Math.Cos(angle);
@@ -111,7 +111,7 @@ namespace lab6
             (this[2, 1], this[2, 3]) = (-sin, cos);
            // (this[2, 0], this[2, 1]) = (-c.X*cos + c.Y*sin + c.X, -c.X * sin - c.Y * cos + c.Y);
         }
-        public void SetRotateAngleY(double angle, myPoint3D c)
+        public void SetRotateAngleY(double angle, Point3D c)
         {
             double sin = Math.Sin(angle);
             double cos = Math.Cos(angle);
@@ -119,7 +119,7 @@ namespace lab6
             (this[0, 2], this[2, 2]) = (sin, cos);
             // (this[2, 0], this[2, 1]) = (-c.X*cos + c.Y*sin + c.X, -c.X * sin - c.Y * cos + c.Y);
         }
-        public void SetRotateAngleZ(double angle, myPoint3D c)
+        public void SetRotateAngleZ(double angle, Point3D c)
         {
             double sin = Math.Sin(angle);
             double cos = Math.Cos(angle);
@@ -135,7 +135,7 @@ namespace lab6
             (this[2, 1], this[2, 1]) = (0, 0);
         }
 
-        internal void Rotate(myPoint3D[] p, myPoint3D c, double angle)
+        internal void Rotate(Point3D[] p, Point3D c, double angle)
         {
             //this.SetRotateAngle(angle);
            // this.Shift(p, -c.X, -c.Y);
@@ -147,7 +147,7 @@ namespace lab6
         // =========== Rotate =========== 
 
         // ----------- Scale ----------- 
-        public void SetScaleCoef(double kx, double ky, double kz, myPoint3D c)
+        public void SetScaleCoef(double kx, double ky, double kz, Point3D c)
         {
             (this[0, 0], this[1, 1],this[2,2]) = (kx, ky,kz);
             (this[3, 0], this[3, 1], this[3, 2]) = ((1-kx) * c.X, (1 - ky) * c.Y, (1 - kz) * c.Z);
@@ -157,7 +157,7 @@ namespace lab6
             (this[0, 0], this[1, 1], this[2, 2]) = (1, 1, 1);
             (this[3, 0], this[3, 1], this[3, 2]) = (0,0,0);
         }
-        internal void Scale(myPoint3D[] p, myPoint3D c, double kx, double ky, double kz = 1)
+        internal void Scale(Point3D[] p, Point3D c, double kx, double ky, double kz = 1)
         {
             this.SetScaleCoef(kx, ky, kz, c);
             Transform(p);

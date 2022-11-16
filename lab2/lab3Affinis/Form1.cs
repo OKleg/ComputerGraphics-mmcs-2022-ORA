@@ -76,7 +76,7 @@ namespace lab3Affinis
             pictureBox1.Invalidate();*/
             //int[] countIntersect = new int[4] { 0, 0, 0, 0 };
             int count = 0;
-            int wasnt = 0;
+           
             if (p != null && p.Length > 2)
             {
                 Point p1 = p[p.Length - 1];
@@ -107,21 +107,26 @@ namespace lab3Affinis
 
                             )
                         {
-                            if (Intersect == p1 || Intersect == p2)
-                            {
-                                wasnt++;
-                            }
+
+                          
                             count++;
                             /*g.DrawEllipse(Pens.Red, Intersect.X - 2, Intersect.Y - 2, 4, 4);
                             pictureBox1.Invalidate();*/
                         }
+
+                      /*  if (Intersect == p1 || Intersect == p2)
+                        {
+                            p2 = p[i+1];
+                            i++;
+                        }*/
+
                     }
                     p1 = p2;
                 }
                 //}
             }
 
-            return count - (wasnt / 2) % 2 != 0;// countIntersect[0] % 2 != 0 && countIntersect[1] % 2 != 0 && countIntersect[2] % 2 != 0 && countIntersect[3] % 2 != 0;
+            return count  % 2 != 0;// countIntersect[0] % 2 != 0 && countIntersect[1] % 2 != 0 && countIntersect[2] % 2 != 0 && countIntersect[3] % 2 != 0;
         }
         private bool isPointInner(Point point, LinkedList<Point> p)
         {
@@ -129,7 +134,7 @@ namespace lab3Affinis
             pictureBox1.Invalidate();*/
            // int[] countIntersect = new int[4] { 0, 0, 0, 0 };
             int count = 0;
-            int wasnt = 0;
+           
             if (p != null && p.Count > 2)
             {
                 Point p1 = p.Last.Value;
@@ -161,13 +166,13 @@ namespace lab3Affinis
 
                             )
                         {
-                            if (Intersect == p1 || Intersect == p2)
-                            {
-                                wasnt++;
-                            }
                             count++;
                             /*g.DrawEllipse(Pens.Red, Intersect.X - 2, Intersect.Y - 2, 4, 4);
                             pictureBox1.Invalidate();*/
+                        }
+                        if (Intersect == p1 || Intersect == p2)
+                        {
+                            node = node.Next;
                         }
                     }
                     p1 = p2;
@@ -176,7 +181,7 @@ namespace lab3Affinis
                 //}
             }
 
-            return count - (wasnt / 2) % 2 != 0;// countIntersect[0] % 2 != 0 && countIntersect[1] % 2 != 0 && countIntersect[2] % 2 != 0 && countIntersect[3] % 2 != 0;
+            return count % 2 != 0;// countIntersect[0] % 2 != 0 && countIntersect[1] % 2 != 0 && countIntersect[2] % 2 != 0 && countIntersect[3] % 2 != 0;
         }
         private void Draw()
         {
