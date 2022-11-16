@@ -74,101 +74,109 @@ namespace lab3Affinis
         {
             /*g.DrawEllipse(Pens.Red, point.X-2, point.Y - 2, 4, 4);
             pictureBox1.Invalidate();*/
-            int[] countIntersect = new int[4] { 0, 0, 0, 0 };
+            //int[] countIntersect = new int[4] { 0, 0, 0, 0 };
+            int count = 0;
+            int wasnt = 0;
             if (p != null && p.Length > 2)
             {
                 Point p1 = p[p.Length - 1];
                 Point shine;
 
-                for (int j = 0; j < 4; j++)
+                //for (int j = 0; j < 4; j++){
+                int x, y;
+                shine = new Point(point.X, 0); //fourWay(j, point.X, point.Y);
+                for (int i = 0; i < p.Length; i++)
                 {
-                    int x, y;
-                    shine = fourWay(j, point.X, point.Y);
-                    for (int i = 0; i < p.Length; i++)
-                    {
-                        Point p2 = p[i];
-                        int x1 = p1.X, y1 = p1.Y, x2 = p2.X, y2 = p2.Y;
-                        int x3 = point.X, y3 = point.Y, x4 = shine.X, y4 = shine.Y;
-                        double k1 = 0, k2 = 0;
-                        if ((y2 - y1) != 0)
-                            k1 = 1.0 * (x2 - x1) / (y2 - y1);
-                        if ((y4 - y3) != 0)
-                            k2 = 1.0 * (x4 - x3) / (y4 - y3);
+                    Point p2 = p[i];
+                    int x1 = p1.X, y1 = p1.Y, x2 = p2.X, y2 = p2.Y;
+                    int x3 = point.X, y3 = point.Y, x4 = shine.X, y4 = shine.Y;
+                    double k1 = 0, k2 = 0;
+                    if ((y2 - y1) != 0)
+                        k1 = 1.0 * (x2 - x1) / (y2 - y1);
+                    if ((y4 - y3) != 0)
+                        k2 = 1.0 * (x4 - x3) / (y4 - y3);
 
-                        if (Math.Abs(k1 - k2) > 0.001)
+                    if (Math.Abs(k1 - k2) > 0.001)
+                    {
+                        Point Intersect = Intersection(p1, p2, point, shine);
+
+                        if ((Math.Abs(x1 - x2) == Math.Abs(x1 - Intersect.X) + Math.Abs(x2 - Intersect.X)
+                            && Math.Abs(y1 - y2) == Math.Abs(y1 - Intersect.Y) + Math.Abs(y2 - Intersect.Y))
+                             && (Math.Abs(x3 - x4) == Math.Abs(x3 - Intersect.X) + Math.Abs(x4 - Intersect.X)
+                            && Math.Abs(y3 - y4) == Math.Abs(y3 - Intersect.Y) + Math.Abs(y4 - Intersect.Y))
+
+                            )
                         {
-                            Point Intersect = Intersection(p1, p2, point, shine);
-                            if ((Math.Abs(x1 - x2) == Math.Abs(x1 - Intersect.X) + Math.Abs(x2 - Intersect.X)
-                                && Math.Abs(y1 - y2) == Math.Abs(y1 - Intersect.Y) + Math.Abs(y2 - Intersect.Y))
-                                 && (Math.Abs(x3 - x4) == Math.Abs(x3 - Intersect.X) + Math.Abs(x4 - Intersect.X)
-                                && Math.Abs(y3 - y4) == Math.Abs(y3 - Intersect.Y) + Math.Abs(y4 - Intersect.Y)))
+                            if (Intersect == p1 || Intersect == p2)
                             {
-                                countIntersect[j]++;
-                                /*g.DrawEllipse(Pens.Red, Intersect.X - 2, Intersect.Y - 2, 4, 4);
-                                pictureBox1.Invalidate();*/
+                                wasnt++;
                             }
+                            count++;
+                            /*g.DrawEllipse(Pens.Red, Intersect.X - 2, Intersect.Y - 2, 4, 4);
+                            pictureBox1.Invalidate();*/
                         }
-                        p1 = p2;
                     }
+                    p1 = p2;
                 }
+                //}
             }
 
-            return countIntersect[0] % 2 != 0 && countIntersect[1] % 2 != 0 && countIntersect[2] % 2 != 0 && countIntersect[3] % 2 != 0;
+            return count - (wasnt / 2) % 2 != 0;// countIntersect[0] % 2 != 0 && countIntersect[1] % 2 != 0 && countIntersect[2] % 2 != 0 && countIntersect[3] % 2 != 0;
         }
         private bool isPointInner(Point point, LinkedList<Point> p)
         {
             /*g.DrawEllipse(Pens.Red, point.X-2, point.Y - 2, 4, 4);
             pictureBox1.Invalidate();*/
-            int[] countIntersect = new int[4] { 0, 0, 0, 0 };
+           // int[] countIntersect = new int[4] { 0, 0, 0, 0 };
             int count = 0;
-            bool wasnt = true;
+            int wasnt = 0;
             if (p != null && p.Count > 2)
             {
                 Point p1 = p.Last.Value;
                 Point shine = new Point(point.X, 0);
                 var node = p.First;
                 //for (int j = 0; j < 4; j++)  {
-                    int x, y;
-                    //shine = fourWay(j, point.X, point.Y);
-                    //for (int i = 0; i < p.Count; i++){
-                    while (node != null)
-                    {
-                        Point p2 = node.Value;
-                        int x1 = p1.X, y1 = p1.Y, x2 = p2.X, y2 = p2.Y;
-                        int x3 = point.X, y3 = point.Y, x4 = shine.X, y4 = shine.Y;
-                        double k1 = 0, k2 = 0;
-                        if ((y2 - y1) != 0)
-                            k1 = 1.0 * (x2 - x1) / (y2 - y1);
-                        if ((y4 - y3) != 0)
-                            k2 = 1.0 * (x4 - x3) / (y4 - y3);
+                int x, y;
+                //shine = fourWay(j, point.X, point.Y);
+                //for (int i = 0; i < p.Count; i++){
+                while (node != null)
+                {
+                    Point p2 = node.Value;
+                    int x1 = p1.X, y1 = p1.Y, x2 = p2.X, y2 = p2.Y;
+                    int x3 = point.X, y3 = point.Y, x4 = shine.X, y4 = shine.Y;
+                    double k1 = 0, k2 = 0;
+                    if ((y2 - y1) != 0)
+                        k1 = 1.0 * (x2 - x1) / (y2 - y1);
+                    if ((y4 - y3) != 0)
+                        k2 = 1.0 * (x4 - x3) / (y4 - y3);
 
-                        if (Math.Abs(k1 - k2) > 0.001)
+                    if (Math.Abs(k1 - k2) > 0.001)
+                    {
+                        Point Intersect = Intersection(p1, p2, point, shine);
+
+                        if ((Math.Abs(x1 - x2) == Math.Abs(x1 - Intersect.X) + Math.Abs(x2 - Intersect.X)
+                            && Math.Abs(y1 - y2) == Math.Abs(y1 - Intersect.Y) + Math.Abs(y2 - Intersect.Y))
+                             && (Math.Abs(x3 - x4) == Math.Abs(x3 - Intersect.X) + Math.Abs(x4 - Intersect.X)
+                            && Math.Abs(y3 - y4) == Math.Abs(y3 - Intersect.Y) + Math.Abs(y4 - Intersect.Y))
+
+                            )
                         {
-                            Point Intersect = Intersection(p1, p2, point, shine);
-                            if ((Math.Abs(x1 - x2) == Math.Abs(x1 - Intersect.X) + Math.Abs(x2 - Intersect.X)
-                                && Math.Abs(y1 - y2) == Math.Abs(y1 - Intersect.Y) + Math.Abs(y2 - Intersect.Y))
-                                 && (Math.Abs(x3 - x4) == Math.Abs(x3 - Intersect.X) + Math.Abs(x4 - Intersect.X)
-                                && Math.Abs(y3 - y4) == Math.Abs(y3 - Intersect.Y) + Math.Abs(y4 - Intersect.Y))
-                                 && wasnt
-                                )
-                            {
                             if (Intersect == p1 || Intersect == p2)
                             {
-                                wasnt = false;
+                                wasnt++;
                             }
-                               // countIntersect[j]++;
-                                count++;
-                                /*g.DrawEllipse(Pens.Red, Intersect.X - 2, Intersect.Y - 2, 4, 4);
-                                pictureBox1.Invalidate();*/
-                            }
+                            count++;
+                            /*g.DrawEllipse(Pens.Red, Intersect.X - 2, Intersect.Y - 2, 4, 4);
+                            pictureBox1.Invalidate();*/
                         }
-                        p1 = p2;
-                        node = node.Next;
                     }
+                    p1 = p2;
+                    node = node.Next;
+                }
                 //}
             }
 
-            return count % 2 != 0;// countIntersect[0] % 2 != 0 && countIntersect[1] % 2 != 0 && countIntersect[2] % 2 != 0 && countIntersect[3] % 2 != 0;
+            return count - (wasnt / 2) % 2 != 0;// countIntersect[0] % 2 != 0 && countIntersect[1] % 2 != 0 && countIntersect[2] % 2 != 0 && countIntersect[3] % 2 != 0;
         }
         private void Draw()
         {
