@@ -6,19 +6,13 @@ using System.Threading.Tasks;
 
 namespace lab6
 {
-    class myPoint3D
+    class Point3D
     {
 
         public float X { get; set; }
         public float Y { get; set; }
         public float Z { get; set; }
-        public myPoint3D(int x, int y, int z)
-        {
-            X = x;
-            Y = y;
-            Z = z;
-        }
-        public myPoint3D(float x, float y, float z)
+        public Point3D(float x, float y, float z)
         {
             X = x;
             Y = y;

@@ -8,5 +8,12 @@ namespace lab6
 {
     class Polyhedron
     {
+        List<Face> faces;
+
+        public Polyhedron(List<Face> polyhedron)
+        {
+            this.faces = polyhedron;
+           
+        }
     }
 }

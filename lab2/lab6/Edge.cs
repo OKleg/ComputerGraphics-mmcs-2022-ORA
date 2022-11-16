@@ -10,10 +10,10 @@ namespace lab6
 {
     internal class Edge
     {
-        public myPoint3D left;
-        public myPoint3D right;
+        public Point3D left;
+        public Point3D right;
 
-        public Edge(myPoint3D p1, myPoint3D p2)
+        public Edge(Point3D p1, Point3D p2)
         {
             this.left = p1;
             this.right = p2;
@@ -32,9 +32,9 @@ namespace lab6
         {
             return ((left.Z + right.Z) / 2);
         }
-        public myPoint3D Mid()
+        public Point3D Mid()
         {
-            return new myPoint3D(this.MidX(), this.MidY(), this.MidZ());
+            return new Point3D(this.MidX(), this.MidY(), this.MidZ());
         }
         
         public double Lenght() => Math.Sqrt((
