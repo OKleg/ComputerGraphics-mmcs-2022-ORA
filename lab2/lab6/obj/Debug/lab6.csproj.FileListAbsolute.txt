@@ -1,0 +1,4 @@
+C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\lab6\obj\Debug\lab6.csproj.AssemblyReference.cache
+C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\lab6\obj\Debug\lab6.Properties.Resources.resources
+C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\lab6\obj\Debug\lab6.csproj.GenerateResource.cache
+C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\lab6\obj\Debug\lab6.csproj.CoreCompileInputs.cache

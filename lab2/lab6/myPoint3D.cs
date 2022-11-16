@@ -9,20 +9,25 @@ namespace lab6
     class myPoint3D
     {
 
-        public double X { get; set; }
-        public double Y { get; set; }
-        public double Z { get; set; }
+        public float X { get; set; }
+        public float Y { get; set; }
+        public float Z { get; set; }
         public myPoint3D(int x, int y, int z)
         {
             X = x;
             Y = y;
             Z = z;
         }
-        public myPoint3D(double x, double y, double z)
+        public myPoint3D(float x, float y, float z)
         {
             X = x;
             Y = y;
             Z = z;
+        }
+
+        public string ToString()
+        {
+            return  " [x=" + X + ",y=" + Y + "z=" + Z + "] "; 
         }
     }
 }

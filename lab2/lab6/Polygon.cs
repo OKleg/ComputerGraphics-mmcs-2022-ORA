@@ -12,7 +12,7 @@ namespace lab6
         LinkedList<myPoint3D> points;
         LinkedList<Edge> edges;
 
-        myPoint3D center;
+       // myPoint3D center;
 
         public Polygon(LinkedList<myPoint3D> polygon)
         {
@@ -34,7 +34,7 @@ namespace lab6
         {
             if (points.Count > 1)
             {
-                myPoint3D res = new myPoint3D((int)Math.Round(points.Average(p => p.X)), (int)Math.Round(points.Average(p => p.Y)), (int)Math.Round(points.Average(p => p.Z)));
+                myPoint3D res = new myPoint3D((float)Math.Round(points.Average(p => p.X)), (float)Math.Round(points.Average(p => p.Y)), (float)Math.Round(points.Average(p => p.Z)));
                 return res;
             }
             else return new myPoint3D(0,0,0);

@@ -19,16 +19,16 @@ namespace lab6
             this.right = p2;
         }
 
-        public double MidX()
+        public float MidX()
         {
             return (left.X + right.X) /2;
         }
 
-        public double MidY()
+        public float MidY()
         {
             return ((left.Y + right.Y) /2);
         }
-        public double MidZ()
+        public float MidZ()
         {
             return ((left.Z + right.Z) / 2);
         }
@@ -36,9 +36,10 @@ namespace lab6
         {
             return new myPoint3D(this.MidX(), this.MidY(), this.MidZ());
         }
-
-        public double Lenght() => Math.Sqrt((right.X - left.X) * (right.X - left.X)
+        
+        public double Lenght() => Math.Sqrt((
+                      (right.X - left.X) * (right.X - left.X)
                     + (right.Y - left.Y) * (right.Y - left.Y)
-                    + (right.Z - left.Z) * (right.Z - left.Z));
+                    + (right.Z - left.Z) * (right.Z - left.Z)));
     }
 }
