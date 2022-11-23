@@ -107,18 +107,15 @@ namespace lab3Affinis
 
                             )
                         {
-
-                          
                             count++;
                             /*g.DrawEllipse(Pens.Red, Intersect.X - 2, Intersect.Y - 2, 4, 4);
                             pictureBox1.Invalidate();*/
                         }
 
-                      /*  if (Intersect == p1 || Intersect == p2)
+                        if ( Intersect == p1)
                         {
-                            p2 = p[i+1];
-                            i++;
-                        }*/
+                            count--;
+                        }
 
                     }
                     p1 = p2;
@@ -126,7 +123,7 @@ namespace lab3Affinis
                 //}
             }
 
-            return count  % 2 != 0;// countIntersect[0] % 2 != 0 && countIntersect[1] % 2 != 0 && countIntersect[2] % 2 != 0 && countIntersect[3] % 2 != 0;
+            return count % 2 != 0;// countIntersect[0] % 2 != 0 && countIntersect[1] % 2 != 0 && countIntersect[2] % 2 != 0 && countIntersect[3] % 2 != 0;
         }
         private bool isPointInner(Point point, LinkedList<Point> p)
         {
@@ -170,9 +167,9 @@ namespace lab3Affinis
                             /*g.DrawEllipse(Pens.Red, Intersect.X - 2, Intersect.Y - 2, 4, 4);
                             pictureBox1.Invalidate();*/
                         }
-                        if (Intersect == p1 || Intersect == p2)
+                        if (Intersect == p1)
                         {
-                            node = node.Next;
+                            count--;
                         }
                     }
                     p1 = p2;
@@ -925,13 +922,11 @@ namespace lab3Affinis
         }
         public Point[] unionpolygons(Point[] p1, Point[] p2)
         {
-
             List<Point> ps = new List<Point>();
-
-            LinkedList<Point> p1new;// = Normalize(Intersection(p1, p2));
-            LinkedList<Point> p2new;// = Normalize(Intersection(p2, p1));
+            LinkedList<Point> p1new;
+            LinkedList<Point> p2new;
             IntersectionTwo(p1, p2, out p1new,out p2new);
-            //   Intersection(p1, p2, out p1new,out p2new);
+
             p1new = Normalize(p1new);
             p2new = Normalize(p2new);
 
@@ -940,7 +935,6 @@ namespace lab3Affinis
             var start = StartLeft(p1new, p2new, out u);
           
             var node = start;
-        
 
             ps.Add(node.Value);
             node = NextOrFirst(node);
@@ -957,12 +951,10 @@ namespace lab3Affinis
                     }
                     else
                     {
-                     //   if (!isPointInner(node.Value, p2new))
                         {
                             ps.Add(node.Value);
                             node = NextOrFirst(node);
                         }
-                     //   else node = NextOrFirst(node);
                     }
                 }
                 else
@@ -976,14 +968,11 @@ namespace lab3Affinis
                     }
                     else
                     {
-                       // if (!isPointInner(node.Value, p1new))
                         {
                             ps.Add(node.Value);
                             node = NextOrFirst(node);
                         }
-                       // else node = NextOrFirst(node);
                     }
-                    
                 }
             }
             Point[] a = new Point[ps.Count];
@@ -996,7 +985,6 @@ namespace lab3Affinis
             return a;
         }
 
-     
             private void button6_Click_1(object sender, EventArgs e)
         {
             if (polygons.Count >= 2 && polygons[polygons.Count - 2].Length>2 && polygons[polygons.Count - 1].Length>2)

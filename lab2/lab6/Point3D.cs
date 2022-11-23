@@ -23,5 +23,14 @@ namespace lab6
         {
             return  " [x=" + X + ",y=" + Y + "z=" + Z + "] "; 
         }
+        public override int GetHashCode()// ?
+        {
+            int hash = 5381;
+            hash = ((hash << 5) + (int)X);
+            hash = ((hash << 5) + (int)Y);
+            hash = ((hash << 5) + (int)Z);
+
+            return hash;
+        }
     }
 }
