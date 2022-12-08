@@ -8,3 +8,4 @@ C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\lab6\bin\Debug\lab6.pdb
 C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\lab6\obj\Debug\lab6.Form1.resources
 C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\lab6\obj\Debug\lab6.exe
 C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\lab6\obj\Debug\lab6.pdb
+C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\lab6\obj\Debug\lab6.csproj.SuggestedBindingRedirects.cache

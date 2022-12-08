@@ -8,8 +8,15 @@ namespace lab6
 {
     class Polyhedron
     {
-        public List<Face> faces;
-        public HashSet <Point3D> points;
+        public List<Face> faces = new List<Face>();
+        public List <Vector> vertices = new List<Vector>() ;
+        public List<Edge> edges = new List<Edge>();
+        public Polyhedron(List<Vector> vertices, List<Edge> edges)
+        {
+            this.vertices = vertices;
+            this.edges = edges;
+
+        }
         public Polyhedron(List<Face> polyhedron)
         {
             this.faces = polyhedron;
@@ -17,9 +24,13 @@ namespace lab6
             {
                 foreach (var point in polig.points)
                 {
-                    this.points.Add(point);
+                    if (!vertices.Contains(point))
+                    {
+                        this.vertices.Add(point);
+                    }
                 }
             }
         }
+      
     }
 }

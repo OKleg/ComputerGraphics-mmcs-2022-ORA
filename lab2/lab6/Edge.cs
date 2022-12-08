@@ -6,40 +6,41 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms.VisualStyles;
 
+
 namespace lab6
 {
     internal class Edge
     {
-        public Point3D left;
-        public Point3D right;
+        public int p1;
+        public int p2;
 
-        public Edge(Point3D p1, Point3D p2)
+        public Edge(int p1, int p2)
         {
-            this.left = p1;
-            this.right = p2;
+            this.p1 = p1;
+            this.p2 = p2;
         }
 
-        public float MidX()
+       /* public float MidX()
         {
-            return (left.X + right.X) /2;
+            return (p1.x + p2.x) /2;
         }
 
         public float MidY()
         {
-            return ((left.Y + right.Y) /2);
+            return ((p1.y + p2.y) /2);
         }
         public float MidZ()
         {
-            return ((left.Z + right.Z) / 2);
+            return ((p1.z + p2.z) / 2);
         }
-        public Point3D Mid()
+        public Vector Mid()
         {
-            return new Point3D(this.MidX(), this.MidY(), this.MidZ());
+            return new Vector(this.MidX(), this.MidY(), this.MidZ());
         }
         
         public double Lenght() => Math.Sqrt((
-                      (right.X - left.X) * (right.X - left.X)
-                    + (right.Y - left.Y) * (right.Y - left.Y)
-                    + (right.Z - left.Z) * (right.Z - left.Z)));
+                      (p2.x - p1.x) * (p2.x - p1.x)
+                    + (p2.y - p1.y) * (p2.y - p1.y)
+                    + (p2.z - p1.z) * (p2.z - p1.z)));*/
     }
 }

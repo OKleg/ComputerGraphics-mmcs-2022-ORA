@@ -9,36 +9,22 @@ namespace lab6
 {
     class Face
     {
-        List<Edge> edges;
-        List<Point3D> points;
+        public List<Edge> edges;
+        public List<Vector> points;
 
-        public Face(List<Point3D> polygon)
+        public Face(List<Vector> points, List<Edge> edges)
         {
-            this.points = polygon;
-            edges = new List<Edge>();
-            for (int i = 0; i < polygon.Count-1; i++)
-            {
-                edges.Add(new Edge(polygon[i], polygon[i+1]));
-            }
+            this.points = points;
+            this.edges = edges;
         }
-        public Face(List<Edge> polygon)
-        {
-            this.edges = polygon;
-            points = new List<Point3D>();
-            for (int i = 0; i < polygon.Count - 1; i++)
-            {
-                points.Add(polygon[i].left);
-            }
-            points.Add(polygon[polygon.Count-1].right);
-        }
-        private Point3D FindCentroid()
+        private Vector FindCentroid()
         {
             if (points.Count > 1)
             {
-                Point3D res = new Point3D((float)Math.Round(points.Average(p => p.X)), (float)Math.Round(points.Average(p => p.Y)), (float)Math.Round(points.Average(p => p.Z)));
+                Vector res = new Vector((float)Math.Round(points.Average(p => p.x)), (float)Math.Round(points.Average(p => p.y)), (float)Math.Round(points.Average(p => p.z)));
                 return res;
             }
-            else return new Point3D(0,0,0);
+            else return new Vector(0,0,0);
         }
     }
 }

@@ -48,8 +48,12 @@ namespace lab6
             this.button4 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.trackBar2 = new System.Windows.Forms.TrackBar();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.textBox5 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -83,15 +87,17 @@ namespace lab6
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
             "Тетраэдр",
+            "Куб",
             "Гексаэдр",
             "Октаэдр",
             "Икосаэдр*",
             "Додекаэдр*"});
-            this.comboBox1.Location = new System.Drawing.Point(519, 13);
+            this.comboBox1.Location = new System.Drawing.Point(568, 13);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(269, 21);
+            this.comboBox1.Size = new System.Drawing.Size(220, 21);
             this.comboBox1.TabIndex = 3;
             this.comboBox1.Text = "Тетраэдр";
+            this.comboBox1.SelectionChangeCommitted += new System.EventHandler(this.comboBox1_SelectionChangeCommitted);
             // 
             // comboBox2
             // 
@@ -101,7 +107,7 @@ namespace lab6
             "Ox",
             "Oy",
             "Oz"});
-            this.comboBox2.Location = new System.Drawing.Point(519, 520);
+            this.comboBox2.Location = new System.Drawing.Point(519, 521);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(53, 21);
             this.comboBox2.TabIndex = 4;
@@ -180,7 +186,7 @@ namespace lab6
             "xy",
             "yz",
             "xz"});
-            this.comboBox3.Location = new System.Drawing.Point(519, 471);
+            this.comboBox3.Location = new System.Drawing.Point(519, 544);
             this.comboBox3.Name = "comboBox3";
             this.comboBox3.Size = new System.Drawing.Size(53, 21);
             this.comboBox3.TabIndex = 12;
@@ -188,7 +194,7 @@ namespace lab6
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(581, 471);
+            this.button3.Location = new System.Drawing.Point(684, 471);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(104, 21);
             this.button3.TabIndex = 13;
@@ -211,16 +217,16 @@ namespace lab6
             // textBox3
             // 
             this.textBox3.Enabled = false;
-            this.textBox3.Location = new System.Drawing.Point(577, 39);
+            this.textBox3.Location = new System.Drawing.Point(623, 39);
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(92, 20);
+            this.textBox3.Size = new System.Drawing.Size(84, 20);
             this.textBox3.TabIndex = 15;
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(675, 39);
+            this.button4.Location = new System.Drawing.Point(713, 39);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(113, 20);
+            this.button4.Size = new System.Drawing.Size(75, 72);
             this.button4.TabIndex = 16;
             this.button4.Text = "смещение";
             this.button4.UseVisualStyleBackColor = true;
@@ -228,26 +234,55 @@ namespace lab6
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(519, 43);
+            this.label3.Location = new System.Drawing.Point(599, 43);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(52, 13);
+            this.label3.Size = new System.Drawing.Size(18, 65);
             this.label3.TabIndex = 17;
-            this.label3.Text = "hx, hy, hz";
+            this.label3.Text = "hx\r\n\r\nhy\r\n\r\nhz";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(13, 552);
+            this.label4.Location = new System.Drawing.Point(552, 236);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(35, 13);
             this.label4.TabIndex = 18;
             this.label4.Text = "label4";
+            // 
+            // trackBar2
+            // 
+            this.trackBar2.Location = new System.Drawing.Point(517, 13);
+            this.trackBar2.Maximum = 359;
+            this.trackBar2.Name = "trackBar2";
+            this.trackBar2.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.trackBar2.Size = new System.Drawing.Size(45, 500);
+            this.trackBar2.TabIndex = 20;
+            this.trackBar2.Scroll += new System.EventHandler(this.trackBar2_Scroll);
+            // 
+            // textBox4
+            // 
+            this.textBox4.Enabled = false;
+            this.textBox4.Location = new System.Drawing.Point(623, 65);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(84, 20);
+            this.textBox4.TabIndex = 21;
+            // 
+            // textBox5
+            // 
+            this.textBox5.Enabled = false;
+            this.textBox5.Location = new System.Drawing.Point(623, 91);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new System.Drawing.Size(84, 20);
+            this.textBox5.TabIndex = 22;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 593);
+            this.Controls.Add(this.textBox5);
+            this.Controls.Add(this.textBox4);
+            this.Controls.Add(this.trackBar2);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.button4);
@@ -271,6 +306,7 @@ namespace lab6
             this.Text = "3D";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -297,6 +333,9 @@ namespace lab6
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TrackBar trackBar2;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox textBox5;
     }
 }
 

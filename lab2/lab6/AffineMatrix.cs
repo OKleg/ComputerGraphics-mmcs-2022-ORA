@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -13,12 +13,12 @@ namespace lab6
 
         private int rows;
         private int cols;
-        private double[,] mass;
+        private float[,] mass;
         
         public AffineMatrix()
         {
-            (rows, cols) = (3, 3);
-            mass = new double[4, 4]
+            (rows, cols) = (4, 4);
+            mass = new float[4, 4]
                 {
                     {1,0,0,0},
                     {0,1,0,0},
@@ -30,12 +30,12 @@ namespace lab6
         {
             this.Rows = n;
             this.Cols = m;
-            mass = new double[this.Rows, this.Cols];
+            mass = new float[this.Rows, this.Cols];
         }
-        public AffineMatrix(Point3D p)
+        public AffineMatrix(Vector p)
         {
-            (rows, cols) = (1, 3);
-            mass = new double[1, 3] { { p.X, p.Y, p.Z } };
+            (rows, cols) = (4, 1);//(1, 4);?
+            mass = new float[1, 4] { { p.x, p.y, p.z, p.w } };
         }
         public int Rows
         {
@@ -49,7 +49,7 @@ namespace lab6
         }
 
         
-        public double this[int i, int j]
+        public float this[int i, int j]
         {
             get
             {
@@ -62,7 +62,7 @@ namespace lab6
         }
 
         // Умножение матрицы А на матрицу Б
-        public static AffineMatrix umn(AffineMatrix a, AffineMatrix b)
+        public static AffineMatrix mult(AffineMatrix a, AffineMatrix b)
         {
             AffineMatrix resMass = new AffineMatrix(a.Rows, b.Cols);
             if (a.Cols == b.Rows)
@@ -75,56 +75,65 @@ namespace lab6
             return resMass;
         }
 
-        // ----------- Shift ----------- 
-        public void SetShift(int dx,int dy, int dz )
+        // ----------- Translation ----------- 
+        /*множив матрицу перемещения на вектор (местоположение)
+         * он сместится на указанное число единиц в пространстве.*/
+        public AffineMatrix getTranslation(float dx,float dy, float dz )
         {
             this[3, 0] = dx;
             this[3, 1] = dy;
             this[3, 2] = dz;
-
+            return this;
         }
-
-        public void Shift(Point3D[] p,int dx,int dy, int dz )
+        public void setTranslation(float dx, float dy, float dz)
         {
-            this.SetShift(dx, dy, dz);
+            this[3, 0] = dx;
+            this[3, 1] = dy;
+            this[3, 2] = dz;
+        }
+        public List<Vector> Translation(List<Vector> p,float dx,float dy, float dz )
+        {
+            this.setTranslation(dx, dy, dz);
             Transform(p);
-            this.SetShift(0, 0,0);
+            this.setTranslation(0, 0,0);
+            return p;
         }
-        // =========== Shift =========== 
+        // =========== Translation =========== 
 
-        private void Transform(Point3D[] p )
+        private void Transform(List<Vector> p )
         {
-            for (int i = 0; i < p.Length; i++)
+            List<Vector> resVectors = new List<Vector>();
+            for (int i = 0; i < p.Count; i++)
             {
                 //p[i] = MultMatrix(p[i], mat);// перемножаем матрицу на точку и получаем новое положение точки
                 AffineMatrix res = new AffineMatrix(p[i]) * this;
-                p[i] = new Point3D((int)Math.Round(res[0, 0]), (int)Math.Round(res[0, 1]), (int)Math.Round(res[0, 2]));//......
+                p[i] = new Vector((float)Math.Round(res[0, 0]), (float)Math.Round(res[0, 1]), (float)Math.Round(res[0, 2]));//......
             }
         }
 
         // ----------- Rotate ----------- 
-        public void SetRotateAngleX(double angle, Point3D c)
+        public void SetRotateAngleX(double angle, Vector c)
         {
             double sin = Math.Sin(angle);
             double cos = Math.Cos(angle);
-            (this[1, 1], this[1, 2]) = (cos, sin);
-            (this[2, 1], this[2, 3]) = (-sin, cos);
+            (this[1, 1], this[1, 2]) = ((float)cos, (float)sin);
+            (this[2, 1], this[2, 3]) = ((float)-sin, (float)cos);
            // (this[2, 0], this[2, 1]) = (-c.X*cos + c.Y*sin + c.X, -c.X * sin - c.Y * cos + c.Y);
         }
-        public void SetRotateAngleY(double angle, Point3D c)
+        public void SetRotateAngleY(double angle, Vector c)
         {
             double sin = Math.Sin(angle);
             double cos = Math.Cos(angle);
-            (this[0, 0], this[0, 2]) = (cos, -sin);
-            (this[0, 2], this[2, 2]) = (sin, cos);
+            (this[0, 0], this[0, 2]) = ((float)cos, (float)-sin);
+            (this[0, 2], this[2, 2]) = ((float)sin, (float)cos);
             // (this[2, 0], this[2, 1]) = (-c.X*cos + c.Y*sin + c.X, -c.X * sin - c.Y * cos + c.Y);
         }
-        public void SetRotateAngleZ(double angle, Point3D c)
+        public void SetRotateAngleZ(double angle, Vector c)
         {
             double sin = Math.Sin(angle);
             double cos = Math.Cos(angle);
-            (this[0, 0], this[0, 1]) = (cos, sin);
-            (this[1, 0], this[1, 2]) = (-sin, cos);
+            (this[0, 0], this[0, 1]) = ((float)cos, (float)sin);
+            (this[1, 0], this[1, 2]) = ((float)-sin, (float)cos);
             //(this[3, 0], this[3, 1]) = (-c.X*cos + c.Y*sin + c.X, -c.X * sin - c.Y * cos + c.Y);
         }
         public  void ResetRotateAngle()
@@ -135,7 +144,7 @@ namespace lab6
             (this[2, 1], this[2, 1]) = (0, 0);
         }
 
-        internal void Rotate(Point3D[] p, Point3D c, double angle)
+        internal void Rotate(List<Vector> p, Vector c, double angle)
         {
             //this.SetRotateAngle(angle);
            // this.Shift(p, -c.X, -c.Y);
@@ -147,30 +156,33 @@ namespace lab6
         // =========== Rotate =========== 
 
         // ----------- Scale ----------- 
-        public void SetScaleCoef(double kx, double ky, double kz, Point3D c)
+        public void GetScale(float kx, float ky, float kz, Vector c = null)
         {
+            if (c == null) c = new Vector(0, 0, 0);
             (this[0, 0], this[1, 1],this[2,2]) = (kx, ky,kz);
-            (this[3, 0], this[3, 1], this[3, 2]) = ((1-kx) * c.X, (1 - ky) * c.Y, (1 - kz) * c.Z);
+            (this[3, 0], this[3, 1], this[3, 2]) = ((1-kx) * c.x, (1 - ky) * c.y, (1 - kz) * c.z);
         }
         public void ReSetScaleCoef()
         {
             (this[0, 0], this[1, 1], this[2, 2]) = (1, 1, 1);
             (this[3, 0], this[3, 1], this[3, 2]) = (0,0,0);
         }
-        internal void Scale(Point3D[] p, Point3D c, double kx, double ky, double kz = 1)
+        internal List<Vector> Scale(List<Vector> p, float kx, float ky, float kz = 1, Vector c = null)
         {
-            this.SetScaleCoef(kx, ky, kz, c);
+            if (c == null) c = new Vector(0, 0, 0);
+            this.GetScale(kx, ky, kz, c);
             Transform(p);
             ReSetScaleCoef();
+            return p;
         }
         // =========== Scale =========== 
 
         // перегрузка оператора умножения
-        public static AffineMatrix operator *(AffineMatrix a, AffineMatrix b)
+        public static AffineMatrix operator *(AffineMatrix am1, AffineMatrix am2)
         {
-            return AffineMatrix.umn(a, b);
-        }  
+            return AffineMatrix.mult(am1, am2);
+        }
+       
 
-        
     }
 }
