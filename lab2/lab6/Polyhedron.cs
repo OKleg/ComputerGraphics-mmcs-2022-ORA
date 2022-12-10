@@ -10,6 +10,7 @@ namespace lab6
     {
         public List<Face> faces = new List<Face>();
         public List <Vector> vertices = new List<Vector>() ;
+        public Vector center;
         public List<Edge> edges = new List<Edge>();
         public List<AffineMatrix> matrices = new List<AffineMatrix>() ;
         public Polyhedron(){ }

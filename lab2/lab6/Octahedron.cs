@@ -11,7 +11,7 @@ namespace lab6
 
         public Octahedron() : base()
         {
-           
+            this.center = new Vector(0, 0, 0);
             this.vertices = new List<Vector>(){
                   new Vector(0, 50, 0), // 0 вершина
 
@@ -22,6 +22,7 @@ namespace lab6
 
                   new Vector(0, -50, 0), // 5 вершина
         };
+            vertices.Add(center);
             this.edges = new List<Edge>{
                     new Edge(0, 1),
                     new Edge(0, 2),

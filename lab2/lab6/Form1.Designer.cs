@@ -92,7 +92,6 @@ namespace lab6
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
             "Тетраэдр",
-            "Куб",
             "Гексаэдр",
             "Октаэдр",
             "Икосаэдр*",

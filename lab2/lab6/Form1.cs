@@ -56,24 +56,28 @@ namespace lab6
             }
             pictureBox1.Invalidate();
         }
-       
+       private void SetZero(List<Vector> v, out float dx,out float  dy,out float dz)
+        {
+            dx = polyhedrons[polyhedrons.Count - 1].vertices.Last().x;
+            dy = polyhedrons[polyhedrons.Count - 1].vertices.Last().y;
+            dz = polyhedrons[polyhedrons.Count - 1].vertices.Last().z;
+
+            Matrix.Transform(v, Matrix.getTranslation(-dx, -dy, -dz));
+        }
+        private void ReSetZero(List<Vector> v, float dx,  float dy,  float dz)
+        {
+            Matrix.Transform(v, Matrix.getTranslation(dx, dy, dz));
+
+        }
         private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
         {
             (hx.Enabled, hy.Enabled, hz.Enabled,button4.Enabled) 
                 = (true, true, true, true);
-            if (comboBox1.SelectedItem.ToString() == "Куб")
+            if (comboBox1.SelectedItem.ToString() == "Гексаэдр")
             {
                 polyhedrons.Add(new Cube());
-               // AffineMatrix m = new AffineMatrix();
-                Matrix matr = 
-                      Matrix.getRotationX(20)
-                    * Matrix.getRotationY(20)
-                    * Matrix.getTranslation(pictureBox1.Width / 2, pictureBox1.Height / 2, 0);
+                Matrix matr = Matrix.getTranslation(pictureBox1.Width / 2, pictureBox1.Height / 2, 0);
                 Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, matr);
-                // m.Rotate(polyhedrons[polyhedrons.Count - 1].vertices, 180, 0, 0);
-                //m.Rotate(polyhedrons[polyhedrons.Count - 1].vertices, 20, 20, 0);
-                /*m.Translation(polyhedrons[polyhedrons.Count - 1].vertices,
-                    pictureBox1.Width / 2, pictureBox1.Height / 2, 0);*/
 
                 Draw(polyhedrons[polyhedrons.Count - 1]);
             }
@@ -102,7 +106,10 @@ namespace lab6
             label4.Text = trackBar2.Value.ToString();
             List<Vector> sceneVertices = new List<Vector>(polyhedrons[polyhedrons.Count - 1].vertices);
             Matrix m = Matrix.getRotationX(trackBar2.Value);
+            float dx, dy, dz;
+            SetZero(sceneVertices,out dx, out dy, out dz);
             Matrix.Transform(sceneVertices, m);
+            ReSetZero(sceneVertices, dx,  dy,  dz);
             Draw(new Polyhedron(sceneVertices, polyhedrons[polyhedrons.Count - 1].edges));
 
         }
@@ -113,7 +120,11 @@ namespace lab6
             label1.Text = trackBar1.Value.ToString();
             List<Vector> sceneVertices = new List<Vector>(polyhedrons[polyhedrons.Count - 1].vertices);
             Matrix m = Matrix.getRotationY(trackBar1.Value);
+            float dx, dy, dz;
+            SetZero(sceneVertices, out dx, out dy, out dz);
             Matrix.Transform(sceneVertices, m);
+            ReSetZero(sceneVertices, dx, dy, dz);
+
             Draw(new Polyhedron(sceneVertices, polyhedrons[polyhedrons.Count - 1].edges));
         }
         private void trackBar1_MouseUp(object sender, MouseEventArgs e)
@@ -121,7 +132,11 @@ namespace lab6
             // AffineMatrix m = new AffineMatrix();
             // m.Rotate(polyhedrons[polyhedrons.Count - 1].vertices, trackBar2.Value, trackBar1.Value,  0);
             Matrix m = Matrix.getRotationY(trackBar1.Value);
-            Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, m); 
+            float dx, dy, dz;
+            SetZero(polyhedrons[polyhedrons.Count - 1].vertices, out dx, out dy, out dz);
+            Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, m);
+            ReSetZero(polyhedrons[polyhedrons.Count - 1].vertices, dx, dy, dz);
+
             Draw(polyhedrons[polyhedrons.Count - 1]);
             trackBar1.Value = 0;
             label1.Text = trackBar1.Value.ToString();
@@ -131,11 +146,16 @@ namespace lab6
             /*  AffineMatrix m = new AffineMatrix();
               m.Rotate(polyhedrons[polyhedrons.Count - 1].vertices, trackBar2.Value, trackBar1.Value,  0);*/
             Matrix m = Matrix.getRotationX(trackBar2.Value);
+            float dx, dy, dz;
+            SetZero(polyhedrons[polyhedrons.Count - 1].vertices, out dx, out dy, out dz);
             Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, m);
+            ReSetZero(polyhedrons[polyhedrons.Count - 1].vertices, dx, dy, dz);
+
             Draw(polyhedrons[polyhedrons.Count - 1]);
             trackBar2.Value = 0;
             label4.Text = trackBar2.Value.ToString();
         }
+        //Color
         private void button5_Click(object sender, EventArgs e)
         {
             colorDialog1.ShowDialog();
@@ -143,20 +163,25 @@ namespace lab6
             button5.BackColor = color;
             pen = new Pen(color);
         }
-
+        //Scale
         private void button1_Click(object sender, EventArgs e)
         {
-            AffineMatrix m = new AffineMatrix();
-            List<Vector> sceneVertices = new List<Vector>(polyhedrons[polyhedrons.Count - 1].vertices);
-            sceneVertices = m.Scale(sceneVertices, 2, 2, 2);
-            //Draw(new Polyhedron(sceneVertices, polyhedrons[polyhedrons.Count - 1].edges));
+            Matrix m = Matrix.getScale(2,2,2);
+            float dx, dy, dz;
+            SetZero(polyhedrons[polyhedrons.Count - 1].vertices, out dx, out dy, out dz);
+            Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, m);
+            ReSetZero(polyhedrons[polyhedrons.Count - 1].vertices, dx, dy, dz);
+            Draw(polyhedrons[polyhedrons.Count - 1]);
         }
-
+        
         private void button2_Click(object sender, EventArgs e)
         {
-            AffineMatrix m = new AffineMatrix(); 
-            m.Scale(polyhedrons[polyhedrons.Count - 1].vertices, 0.5f, 0.5f, 0.5f);
-           // Draw(polyhedrons[polyhedrons.Count - 1]);
+            Matrix m = Matrix.getScale(0.5f, 0.5f, 0.5f);
+            float dx, dy, dz;
+            SetZero(polyhedrons[polyhedrons.Count - 1].vertices, out dx, out dy, out dz);
+            Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, m);
+            ReSetZero(polyhedrons[polyhedrons.Count - 1].vertices, dx, dy, dz);
+            Draw(polyhedrons[polyhedrons.Count - 1]);
         }
 
         
@@ -165,9 +190,12 @@ namespace lab6
         {
             if (hx.Text!="" && hy.Text != "" && hz.Text != "" )
             {
-                AffineMatrix m = new AffineMatrix();
-                m.Translation(polyhedrons[polyhedrons.Count - 1].vertices,int.Parse(hx.Text), int.Parse(hy.Text), int.Parse(hz.Text));
-              //  Draw(polyhedrons[polyhedrons.Count - 1]);
+                /* AffineMatrix m = new AffineMatrix();
+                 m.Translation(polyhedrons[polyhedrons.Count - 1].vertices,int.Parse(hx.Text), int.Parse(hy.Text), int.Parse(hz.Text));
+              */ //  Draw(polyhedrons[polyhedrons.Count - 1]);
+                Matrix m = Matrix.getTranslation(int.Parse(hx.Text), int.Parse(hy.Text), int.Parse(hz.Text));
+                Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, m);
+                Draw(polyhedrons[polyhedrons.Count - 1]);
             }
         }
 

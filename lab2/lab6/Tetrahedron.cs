@@ -18,7 +18,8 @@ namespace lab6
                   new Vector(-50, -50, 50), // 1 вершина
                   new Vector(-50, -50, -50), // 2 вершина
                   new Vector(50, -50, -50), // 3 вершина
-                  new Vector(50, -50, 50) // 4 вершина
+                  new Vector(50, -50, 50), // 4 вершина
+                  new Vector(0, 0, 0) // center
         };
             this.edges = new List<Edge>{
 

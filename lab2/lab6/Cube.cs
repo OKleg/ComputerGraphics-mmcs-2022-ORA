@@ -11,6 +11,7 @@ namespace lab6
         
         public Cube():base()
         {
+            this.center = new Vector(0, 0, 0);
             this.vertices = new List<Vector>(){
                 new Vector(-50,  50,  50), // 0 вершина
                 new Vector(-50,  50, -50), // 1 вершина
@@ -21,6 +22,7 @@ namespace lab6
                 new Vector(50, -50, -50), // 6 вершина
                 new Vector(50, -50, 50)  // 7 вершина
         };
+            vertices.Add(center);
             this.edges = new List<Edge>{
                     new Edge(0, 1), //  0 - 1,3,4
                     new Edge(1, 2), //  1 - 0,2,5
