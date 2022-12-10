@@ -82,11 +82,10 @@ namespace lab6
 
         private void trackBar2_Scroll(object sender, EventArgs e)
         {
-            label4.Text = trackBar2.Value.ToString();
             // AffineMatrix m = new AffineMatrix();
-          
+           // m.Rotate(sceneVertices, trackBar2.Value, trackBar1.Value, 0);
+            label4.Text = trackBar2.Value.ToString();
             List<Vector> sceneVertices = new List<Vector>(polyhedrons[polyhedrons.Count - 1].vertices);
-            // m.Rotate(sceneVertices, trackBar2.Value, trackBar1.Value, 0);
             Matrix m = Matrix.getRotationX(trackBar2.Value);
             Matrix.Transform(sceneVertices, m);
             Draw(new Polyhedron(sceneVertices, polyhedrons[polyhedrons.Count - 1].edges));
@@ -94,22 +93,23 @@ namespace lab6
         }
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-            label1.Text = trackBar1.Value.ToString();
-            List<Vector> sceneVertices = new List<Vector>(polyhedrons[polyhedrons.Count - 1].vertices);
-            Matrix m = Matrix.getRotationY(trackBar2.Value);
-            Matrix.Transform(sceneVertices, m);
             //AffineMatrix m = new AffineMatrix();
             // m.Rotate(sceneVertices, trackBar2.Value, trackBar1.Value, 0);
+            label1.Text = trackBar1.Value.ToString();
+            List<Vector> sceneVertices = new List<Vector>(polyhedrons[polyhedrons.Count - 1].vertices);
+            Matrix m = Matrix.getRotationY(trackBar1.Value);
+            Matrix.Transform(sceneVertices, m);
             Draw(new Polyhedron(sceneVertices, polyhedrons[polyhedrons.Count - 1].edges));
         }
         private void trackBar1_MouseUp(object sender, MouseEventArgs e)
         {
             // AffineMatrix m = new AffineMatrix();
             // m.Rotate(polyhedrons[polyhedrons.Count - 1].vertices, trackBar2.Value, trackBar1.Value,  0);
-            Matrix m = Matrix.getRotationY(trackBar2.Value);
+            Matrix m = Matrix.getRotationY(trackBar1.Value);
             Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, m); 
             Draw(polyhedrons[polyhedrons.Count - 1]);
             trackBar1.Value = 0;
+            label1.Text = trackBar1.Value.ToString();
         }
         private void trackBar2_MouseUp(object sender, MouseEventArgs e)
         {
@@ -119,6 +119,7 @@ namespace lab6
             Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, m);
             Draw(polyhedrons[polyhedrons.Count - 1]);
             trackBar2.Value = 0;
+            label4.Text = trackBar2.Value.ToString();
         }
         private void button5_Click(object sender, EventArgs e)
         {
