@@ -81,7 +81,7 @@ namespace lab6
             {
                 polyhedrons.Add(new Tetrahedron());
                 Matrix matr =  Matrix.getTranslation(pictureBox1.Width / 2, pictureBox1.Height / 2, 0);
-                Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, matr);
+                 Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, matr);
                 Draw(polyhedrons[polyhedrons.Count - 1]);
             }
 

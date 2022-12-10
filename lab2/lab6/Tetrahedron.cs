@@ -13,7 +13,7 @@ namespace lab6
         {
 
             this.vertices = new List<Vector>(){
-                  new Vector(-(float)Math.Sqrt(50), (float)Math.Sqrt(50), (float)Math.Sqrt(50)), // 0 вершина
+                  new Vector(0, (float)Math.Sqrt(50), 0), // 0 вершина
 
                   new Vector(-50, -50, 50), // 1 вершина
                   new Vector(-50, -50, -50), // 2 вершина
