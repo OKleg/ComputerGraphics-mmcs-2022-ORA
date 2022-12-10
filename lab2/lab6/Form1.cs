@@ -84,6 +84,13 @@ namespace lab6
                  Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, matr);
                 Draw(polyhedrons[polyhedrons.Count - 1]);
             }
+            else if (comboBox1.SelectedItem.ToString() == "Октаэдр")
+            {
+                polyhedrons.Add(new Octahedron());
+                Matrix matr = Matrix.getTranslation(pictureBox1.Width / 2, pictureBox1.Height / 2, 0);
+                Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, matr);
+                Draw(polyhedrons[polyhedrons.Count - 1]);
+            }
 
 
         }

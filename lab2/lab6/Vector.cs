@@ -91,5 +91,40 @@ namespace lab6
                         v1.z * v2.z
                         );
         }
+        public static Vector operator *(Vector v1, int i)
+        {
+            return new Vector(
+                        v1.x * i,
+                        v1.y * i,
+                        v1.z * i
+                        );
+        }
+        public static Vector operator *( int i,Vector v1)
+        {
+            return new Vector(
+                        v1.x * i,
+                        v1.y * i,
+                        v1.z * i
+                        );
+        }
+
+
+         public static float MidX(Vector v1, Vector v2)
+         {
+             return (v1.x + v2.x) /2;
+         }
+
+        public static float MidY(Vector v1, Vector v2)
+         {
+             return ((v1.y + v2.y) /2);
+         }
+         public static float MidZ(Vector v1, Vector v2)
+         {
+             return ((v1.z + v2.z) / 2);
+         }
+         public static Vector Mid(Vector v1, Vector v2)
+         {
+             return new Vector(MidX(v1,v2), MidY(v1, v2), MidZ(v1, v2));
+         }
     }
 }
