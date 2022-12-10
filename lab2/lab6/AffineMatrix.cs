@@ -5,16 +5,16 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 namespace lab6
 {
-    internal class AffineMatrix
+    public class AffineMatrix
     {
 
         private int rows;
         private int cols;
         private float[,] mass;
-        
         public AffineMatrix()
         {
             (rows, cols) = (4, 4);
@@ -26,6 +26,11 @@ namespace lab6
                     {0,0,0,1}
                 };
         }
+        public AffineMatrix(float[,] m)
+        {
+            (rows, cols) = (4, 4);
+            mass = m;
+        }
         public AffineMatrix(int n,int m)
         {
             this.Rows = n;
@@ -35,7 +40,7 @@ namespace lab6
         public AffineMatrix(Vector p)
         {
             (rows, cols) = (4, 1);//(1, 4);?
-            mass = new float[1, 4] { { p.x, p.y, p.z, p.w } };
+            mass = new float[4, 1] { { p.x }, { p.y }, { p.z }, { p.w } };
         }
         public int Rows
         {
@@ -74,67 +79,122 @@ namespace lab6
             }
             return resMass;
         }
-
+        private static AffineMatrix multiplyMat(AffineMatrix a, AffineMatrix b)
+        {
+            AffineMatrix m = new AffineMatrix();
+            Parallel.For(0, 4, (i) =>
+            {
+                Parallel.For(0, 4, (j) =>
+                {
+                    m[i, j] = a[i, 0] * b[0, j] +
+                      a[i, 1] * b[1, j] +
+                      a[i, 2] * b[2, j] +
+                      a[i, 3] * b[3, j];
+                });
+            });
+            return m;
+        }
+        private static Vector multiplyVector(AffineMatrix m, Vector v)
+        {
+            return new Vector(
+              m[0, 0] * v.x + m[0, 1] * v.y + m[0, 2] * v.z + m[0, 3] * v.w,
+              m[1, 0] * v.x + m[1, 1] * v.y + m[1, 2] * v.z + m[1, 3] * v.w,
+              m[2, 0] * v.x + m[2, 1] * v.y + m[2, 2] * v.z + m[2, 3] * v.w,
+              m[3, 0] * v.x + m[3, 1] * v.y + m[3, 2] * v.z + m[3, 3] * v.w
+            );
+}
         // ----------- Translation ----------- 
         /*множив матрицу перемещения на вектор (местоположение)
          * он сместится на указанное число единиц в пространстве.*/
-        public AffineMatrix getTranslation(float dx,float dy, float dz )
+        public AffineMatrix getTranslation(float dx, float dy, float dz)
         {
-            this[3, 0] = dx;
-            this[3, 1] = dy;
-            this[3, 2] = dz;
-            return this;
+            this[0, 3] = dx;
+            this[1, 3] = dy;
+            this[2, 3] = dz;
+            AffineMatrix m = this;
+            setTranslation(0,0,0);
+            return m;
         }
         public void setTranslation(float dx, float dy, float dz)
         {
-            this[3, 0] = dx;
-            this[3, 1] = dy;
-            this[3, 2] = dz;
+            this[0, 3] = dx;
+            this[1, 3] = dy;
+            this[2, 3] = dz;
         }
-        public List<Vector> Translation(List<Vector> p,float dx,float dy, float dz )
-        {
+        public void Translation(List<Vector> p,float dx,float dy, float dz )
+        { 
             this.setTranslation(dx, dy, dz);
-            Transform(p);
-            this.setTranslation(0, 0,0);
-            return p;
+            Transform(p,this);
+            this.setTranslation(0, 0,0); 
         }
         // =========== Translation =========== 
 
-        private void Transform(List<Vector> p )
+        static private void Transform(List<Vector> p, AffineMatrix matrix)
         {
-            List<Vector> resVectors = new List<Vector>();
-            for (int i = 0; i < p.Count; i++)
+            Parallel.For(0, p.Count, (i) =>
             {
-                //p[i] = MultMatrix(p[i], mat);// перемножаем матрицу на точку и получаем новое положение точки
-                AffineMatrix res = new AffineMatrix(p[i]) * this;
-                p[i] = new Vector((float)Math.Round(res[0, 0]), (float)Math.Round(res[0, 1]), (float)Math.Round(res[0, 2]));//......
-            }
+                p[i] = matrix * p[i];
+            });
         }
 
-        // ----------- Rotate ----------- 
-        public void SetRotateAngleX(double angle, Vector c)
+        // ----------- Rotate -----------
+        public AffineMatrix getRotateAngleX(int angle, Vector c = null)
         {
-            double sin = Math.Sin(angle);
-            double cos = Math.Cos(angle);
-            (this[1, 1], this[1, 2]) = ((float)cos, (float)sin);
-            (this[2, 1], this[2, 3]) = ((float)-sin, (float)cos);
-           // (this[2, 0], this[2, 1]) = (-c.X*cos + c.Y*sin + c.X, -c.X * sin - c.Y * cos + c.Y);
+            if (angle != 0)
+            {
+                var angleRad = Math.PI / 180 * angle;
+                float sin = (float)Math.Sin(angleRad);
+                float cos = (float)Math.Cos(angleRad);
+                (this[1, 1], this[1, 2]) = (cos, -sin);
+                (this[2, 1], this[2, 2]) = (sin, cos);
+            }
+                AffineMatrix m = this;
+                ResetRotateAngle();
+                return m;
+          
         }
-        public void SetRotateAngleY(double angle, Vector c)
+      /*  static public AffineMatrix getRotateAngleX(int angle, Vector c = null)
         {
-            double sin = Math.Sin(angle);
-            double cos = Math.Cos(angle);
-            (this[0, 0], this[0, 2]) = ((float)cos, (float)-sin);
-            (this[0, 2], this[2, 2]) = ((float)sin, (float)cos);
-            // (this[2, 0], this[2, 1]) = (-c.X*cos + c.Y*sin + c.X, -c.X * sin - c.Y * cos + c.Y);
+            var angleRad = Math.PI / 180 * angle;
+            float sin = (float)Math.Sin(angleRad);
+            float cos = (float)Math.Cos(angleRad);
+             AffineMatrix m = new AffineMatrix(
+               new float[4, 4]
+               {
+                    {1, 0, 0, 0},
+                    {0,cos, -sin, 0},
+                    {0, cos, cos, 0},
+                    {0, 0, 0, 1},
+                });
+            return m;
+        }*/
+        public AffineMatrix getRotateAngleY(int angle, Vector c = null)
+        {
+            if (angle != 0)
+            {
+                var angleRad = Math.PI / 180 * angle;
+                float sin = (float)Math.Sin(angleRad);
+                float cos = (float)Math.Cos(angleRad);
+                (this[0, 0], this[0, 2]) = (cos, sin);
+                (this[2, 0], this[2, 2]) = (-sin, cos);
+            }
+            AffineMatrix m = this;
+            ResetRotateAngle();
+            return m;
         }
-        public void SetRotateAngleZ(double angle, Vector c)
+        public AffineMatrix getRotateAngleZ(int angle, Vector c = null)
         {
-            double sin = Math.Sin(angle);
-            double cos = Math.Cos(angle);
-            (this[0, 0], this[0, 1]) = ((float)cos, (float)sin);
-            (this[1, 0], this[1, 2]) = ((float)-sin, (float)cos);
-            //(this[3, 0], this[3, 1]) = (-c.X*cos + c.Y*sin + c.X, -c.X * sin - c.Y * cos + c.Y);
+            if (angle != 0)
+            {
+                var angleRad = Math.PI / 180 * angle;
+                float sin = (float)Math.Sin(angleRad);
+                float cos = (float)Math.Cos(angleRad);
+                (this[0, 0], this[0, 1]) = (cos, -sin);
+                (this[1, 0], this[1, 1]) = (sin, cos);
+            }
+            AffineMatrix m = this;
+            ResetRotateAngle();
+            return m;
         }
         public  void ResetRotateAngle()
         {
@@ -144,45 +204,52 @@ namespace lab6
             (this[2, 1], this[2, 1]) = (0, 0);
         }
 
-        internal void Rotate(List<Vector> p, Vector c, double angle)
+         public void Rotate(List<Vector> p, int angleX, int angleY, int angleZ)
         {
-            //this.SetRotateAngle(angle);
-           // this.Shift(p, -c.X, -c.Y);
-        /*    this.SetRotateAngle(angle,c);
-            Transform(p);
-            this.ResetRotateAngle();*/
-           // this.Shift(p, c.X, c.Y);
+            AffineMatrix matrix =  getRotateAngleX(angleX) * getRotateAngleY(angleY) * getRotateAngleZ(angleZ);
+            Transform(p, matrix);
+            ResetRotateAngle();
         }
         // =========== Rotate =========== 
 
         // ----------- Scale ----------- 
-        public void GetScale(float kx, float ky, float kz, Vector c = null)
+        public void SetScale(float kx, float ky, float kz, Vector c = null)
         {
-            if (c == null) c = new Vector(0, 0, 0);
+            
             (this[0, 0], this[1, 1],this[2,2]) = (kx, ky,kz);
-            (this[3, 0], this[3, 1], this[3, 2]) = ((1-kx) * c.x, (1 - ky) * c.y, (1 - kz) * c.z);
+            if (c != null) (this[3, 0], this[3, 1], this[3, 2]) = ((1-kx) * c.x, (1 - ky) * c.y, (1 - kz) * c.z);
         }
         public void ReSetScaleCoef()
         {
-            (this[0, 0], this[1, 1], this[2, 2]) = (1, 1, 1);
+            (this[0, 0], this[1, 1], this[2, 2], this[3, 3]) = (1, 1, 1,1);
             (this[3, 0], this[3, 1], this[3, 2]) = (0,0,0);
+            (this[0, 3], this[1, 3], this[2, 3]) = (0,0,0);
         }
         internal List<Vector> Scale(List<Vector> p, float kx, float ky, float kz = 1, Vector c = null)
         {
-            if (c == null) c = new Vector(0, 0, 0);
-            this.GetScale(kx, ky, kz, c);
-            Transform(p);
+            List<Vector> resVectors = new List<Vector>(p);
             ReSetScaleCoef();
-            return p;
+            SetScale(kx, ky, kz,c);
+            Transform(resVectors,this);
+            ReSetScaleCoef();
+            return resVectors;
         }
         // =========== Scale =========== 
 
         // перегрузка оператора умножения
-        public static AffineMatrix operator *(AffineMatrix am1, AffineMatrix am2)
+        public static AffineMatrix operator *(AffineMatrix a, AffineMatrix b)
         {
-            return AffineMatrix.mult(am1, am2);
+            return multiplyMat(a, b);
+            //return AffineMatrix.mult(a, b);
         }
-       
 
+        public static Vector operator *(AffineMatrix m, Vector v)
+        {
+            return multiplyVector(m, v);
+        }
+        public static Vector operator *( Vector v,AffineMatrix m)
+        {
+            return multiplyVector(m, v);
+        }
     }
 }

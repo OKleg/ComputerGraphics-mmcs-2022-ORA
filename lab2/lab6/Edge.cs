@@ -9,7 +9,7 @@ using System.Windows.Forms.VisualStyles;
 
 namespace lab6
 {
-    internal class Edge
+    public class Edge
     {
         public int p1;
         public int p2;

@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace lab6
 {
-    class Polyhedron
+    public class Polyhedron
     {
         public List<Face> faces = new List<Face>();
         public List <Vector> vertices = new List<Vector>() ;
         public List<Edge> edges = new List<Edge>();
+        public List<AffineMatrix> matrices = new List<AffineMatrix>() ;
+        public Polyhedron(){ }
         public Polyhedron(List<Vector> vertices, List<Edge> edges)
         {
             this.vertices = vertices;

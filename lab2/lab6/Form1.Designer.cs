@@ -44,13 +44,15 @@ namespace lab6
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.button3 = new System.Windows.Forms.Button();
             this.comboBox4 = new System.Windows.Forms.ComboBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.hx = new System.Windows.Forms.TextBox();
             this.button4 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.trackBar2 = new System.Windows.Forms.TrackBar();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.hy = new System.Windows.Forms.TextBox();
+            this.hz = new System.Windows.Forms.TextBox();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.button5 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
@@ -68,15 +70,18 @@ namespace lab6
             // trackBar1
             // 
             this.trackBar1.Location = new System.Drawing.Point(13, 520);
-            this.trackBar1.Maximum = 359;
+            this.trackBar1.Maximum = 180;
+            this.trackBar1.Minimum = -180;
             this.trackBar1.Name = "trackBar1";
             this.trackBar1.Size = new System.Drawing.Size(500, 45);
             this.trackBar1.TabIndex = 1;
+            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            this.trackBar1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.trackBar1_MouseUp);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(251, 552);
+            this.label1.Location = new System.Drawing.Point(257, 550);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(13, 13);
             this.label1.TabIndex = 2;
@@ -168,6 +173,7 @@ namespace lab6
             this.button1.TabIndex = 10;
             this.button1.Text = "+";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -177,6 +183,7 @@ namespace lab6
             this.button2.TabIndex = 11;
             this.button2.Text = "-";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // comboBox3
             // 
@@ -214,22 +221,25 @@ namespace lab6
             this.comboBox4.TabIndex = 14;
             this.comboBox4.Text = "перспективная";
             // 
-            // textBox3
+            // hx
             // 
-            this.textBox3.Enabled = false;
-            this.textBox3.Location = new System.Drawing.Point(623, 39);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(84, 20);
-            this.textBox3.TabIndex = 15;
+            this.hx.Enabled = false;
+            this.hx.Location = new System.Drawing.Point(623, 39);
+            this.hx.Name = "hx";
+            this.hx.Size = new System.Drawing.Size(84, 20);
+            this.hx.TabIndex = 15;
+            this.hx.Text = "0";
             // 
             // button4
             // 
+            this.button4.Enabled = false;
             this.button4.Location = new System.Drawing.Point(713, 39);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 72);
             this.button4.TabIndex = 16;
             this.button4.Text = "смещение";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // label3
             // 
@@ -243,50 +253,66 @@ namespace lab6
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(552, 236);
+            this.label4.Location = new System.Drawing.Point(551, 258);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(35, 13);
+            this.label4.Size = new System.Drawing.Size(16, 13);
             this.label4.TabIndex = 18;
-            this.label4.Text = "label4";
+            this.label4.Text = "0 ";
             // 
             // trackBar2
             // 
             this.trackBar2.Location = new System.Drawing.Point(517, 13);
-            this.trackBar2.Maximum = 359;
+            this.trackBar2.Maximum = 180;
+            this.trackBar2.Minimum = -180;
             this.trackBar2.Name = "trackBar2";
             this.trackBar2.Orientation = System.Windows.Forms.Orientation.Vertical;
             this.trackBar2.Size = new System.Drawing.Size(45, 500);
             this.trackBar2.TabIndex = 20;
             this.trackBar2.Scroll += new System.EventHandler(this.trackBar2_Scroll);
+            this.trackBar2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.trackBar2_MouseUp);
             // 
-            // textBox4
+            // hy
             // 
-            this.textBox4.Enabled = false;
-            this.textBox4.Location = new System.Drawing.Point(623, 65);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(84, 20);
-            this.textBox4.TabIndex = 21;
+            this.hy.Enabled = false;
+            this.hy.Location = new System.Drawing.Point(623, 65);
+            this.hy.Name = "hy";
+            this.hy.Size = new System.Drawing.Size(84, 20);
+            this.hy.TabIndex = 21;
+            this.hy.Text = "0";
             // 
-            // textBox5
+            // hz
             // 
-            this.textBox5.Enabled = false;
-            this.textBox5.Location = new System.Drawing.Point(623, 91);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(84, 20);
-            this.textBox5.TabIndex = 22;
+            this.hz.Enabled = false;
+            this.hz.Location = new System.Drawing.Point(623, 91);
+            this.hz.Name = "hz";
+            this.hz.Size = new System.Drawing.Size(84, 20);
+            this.hz.TabIndex = 22;
+            this.hz.Text = "0";
+            // 
+            // button5
+            // 
+            this.button5.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.button5.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.button5.Location = new System.Drawing.Point(713, 117);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(32, 32);
+            this.button5.TabIndex = 23;
+            this.button5.UseVisualStyleBackColor = false;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 593);
-            this.Controls.Add(this.textBox5);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.trackBar2);
             this.Controls.Add(this.label4);
+            this.Controls.Add(this.button5);
+            this.Controls.Add(this.hz);
+            this.Controls.Add(this.hy);
+            this.Controls.Add(this.trackBar2);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.button4);
-            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.hx);
             this.Controls.Add(this.comboBox4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.comboBox3);
@@ -329,13 +355,15 @@ namespace lab6
         private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.ComboBox comboBox4;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox hx;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TrackBar trackBar2;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox hy;
+        private System.Windows.Forms.TextBox hz;
+        private System.Windows.Forms.ColorDialog colorDialog1;
+        private System.Windows.Forms.Button button5;
     }
 }
 

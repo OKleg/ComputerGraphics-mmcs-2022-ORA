@@ -2,7 +2,7 @@
 
 namespace lab6
 {
-    class Vector
+    public class Vector
     {
 
         public float x { get; set; }
@@ -47,7 +47,7 @@ namespace lab6
 
              );
          }*/
-        public static Vector operator *(AffineMatrix m, Vector v)
+       /* public static Vector operator *(AffineMatrix m, Vector v)
         {
             return new Vector(
               m[0, 0] * v.x + m[0, 1] * v.y + m[0, 2] * v.z + m[0, 3] * v.w,
@@ -56,7 +56,7 @@ namespace lab6
               m[3, 0] * v.x + m[3, 1] * v.y + m[3, 2] * v.z + m[3, 3] * v.w
 
             );
-        }
+        }*/
         Vector normalize()
         {
             float length = this.getLength();

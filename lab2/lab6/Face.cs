@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace lab6
 {
-    class Face
+    public class Face
     {
         public List<Edge> edges;
         public List<Vector> points;
