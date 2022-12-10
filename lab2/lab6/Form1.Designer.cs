@@ -53,6 +53,7 @@ namespace lab6
             this.hz = new System.Windows.Forms.TextBox();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.button5 = new System.Windows.Forms.Button();
+            this.comboBox5 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
@@ -206,6 +207,7 @@ namespace lab6
             this.button3.TabIndex = 13;
             this.button3.Text = "отражение";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // comboBox4
             // 
@@ -299,11 +301,25 @@ namespace lab6
             this.button5.UseVisualStyleBackColor = false;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
+            // comboBox5
+            // 
+            this.comboBox5.FormattingEnabled = true;
+            this.comboBox5.Items.AddRange(new object[] {
+            "Oxy",
+            "Oyz",
+            "Oxz"});
+            this.comboBox5.Location = new System.Drawing.Point(617, 472);
+            this.comboBox5.Name = "comboBox5";
+            this.comboBox5.Size = new System.Drawing.Size(53, 21);
+            this.comboBox5.TabIndex = 24;
+            this.comboBox5.Text = "Ox";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 593);
+            this.Controls.Add(this.comboBox5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.hz);
@@ -363,6 +379,7 @@ namespace lab6
         private System.Windows.Forms.TextBox hz;
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.ComboBox comboBox5;
     }
 }
 

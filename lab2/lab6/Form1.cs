@@ -18,7 +18,10 @@ namespace lab6
         Graphics g;
         Color color = Color.Black;
         Pen pen = new Pen(Color.Black);
-        PaintEventArgs ev;
+        Pen penX = new Pen(Color.IndianRed);
+        Pen penY = new Pen(Color.LightGreen);
+        Pen penZ = new Pen(Color.LightBlue);
+
 
         List<Polyhedron> polyhedrons;
         public Form1()
@@ -28,32 +31,54 @@ namespace lab6
             g = Graphics.FromImage(pictureBox1.Image);
             color = Color.Black;
             pen = new Pen(color);
-            PaintEventArgs ev = new PaintEventArgs(g, pictureBox1.ClientRectangle);
             polyhedrons = new List<Polyhedron>();
         }
         private void Draw(Polyhedron polyhedron)
         {
             g.Clear(Color.White);
             List<Edge> edges = polyhedron.edges;
+            float HY = pictureBox1.Height;
             //AffineMatrix m = new AffineMatrix();
+            List<Vector> sceneVertices = new List<Vector>(polyhedron.vertices);
+            Matrix matr = Matrix.getTranslation(pictureBox1.Width / 2, pictureBox1.Height / 2, 0);
+            Matrix.Transform(sceneVertices, matr);
+            /*g.DrawLine(penX,
+                    sceneVertices[sceneVertices.Count-1].x,
+                    sceneVertices[sceneVertices.Count - 1].y,
+                    sceneVertices[sceneVertices.Count - 1].x+ 150,
+                    sceneVertices[sceneVertices.Count - 1].y);
+            g.DrawLine(penY,
+                    sceneVertices[sceneVertices.Count - 1].x,
+                    sceneVertices[sceneVertices.Count - 1].y,
+                    sceneVertices[sceneVertices.Count - 1].x,
+                    sceneVertices[sceneVertices.Count - 1].y + 150);
+            Vector zVector = new Vector(-1, -1, 0);
+            Vector zCoords = sceneVertices[sceneVertices.Count - 1] + (zVector.normalize() * 150);
             
+            g.DrawLine(penZ,
+               sceneVertices[sceneVertices.Count - 1].x,
+               sceneVertices[sceneVertices.Count - 1].y,
+              zCoords.x, 
+              zCoords.y
+            );*/
             foreach (var e in edges)
             {
                 if (e.p1 == 0 || e.p2 == 0)
                 {
-                    pen = Pens.Red;
+                    pen = new Pen(Color.Red);
                 }
                 else if (e.p1 == 6 || e.p2 == 6)
                 {
-                    pen = Pens.Blue;
+                    pen = new Pen(Color.Blue);
                 }
                 else   pen = new Pen(color); 
                 g.DrawLine(pen,
-                     polyhedron.vertices[e.p1].x,
-                     polyhedron.vertices[e.p1].y,
-                     polyhedron.vertices[e.p2].x,
-                     polyhedron.vertices[e.p2].y);
+                     sceneVertices[e.p1].x,
+                     sceneVertices[e.p1].y,
+                     sceneVertices[e.p2].x,
+                     sceneVertices[e.p2].y);
             }
+           
             pictureBox1.Invalidate();
         }
        private void SetZero(List<Vector> v, out float dx,out float  dy,out float dz)
@@ -76,23 +101,17 @@ namespace lab6
             if (comboBox1.SelectedItem.ToString() == "Гексаэдр")
             {
                 polyhedrons.Add(new Cube());
-                Matrix matr = Matrix.getTranslation(pictureBox1.Width / 2, pictureBox1.Height / 2, 0);
-                Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, matr);
 
                 Draw(polyhedrons[polyhedrons.Count - 1]);
             }
             else if (comboBox1.SelectedItem.ToString() == "Тетраэдр")
             {
                 polyhedrons.Add(new Tetrahedron());
-                Matrix matr =  Matrix.getTranslation(pictureBox1.Width / 2, pictureBox1.Height / 2, 0);
-                 Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, matr);
                 Draw(polyhedrons[polyhedrons.Count - 1]);
             }
             else if (comboBox1.SelectedItem.ToString() == "Октаэдр")
             {
                 polyhedrons.Add(new Octahedron());
-                Matrix matr = Matrix.getTranslation(pictureBox1.Width / 2, pictureBox1.Height / 2, 0);
-                Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, matr);
                 Draw(polyhedrons[polyhedrons.Count - 1]);
             }
 
@@ -199,6 +218,30 @@ namespace lab6
             }
         }
 
-      
+        //Отражение
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (comboBox5.SelectedItem != null)
+            {
+                if (comboBox5.SelectedItem.ToString() == "Oxy")
+                {
+                    Matrix m = Matrix.getScale(1, 1, -1);
+                    Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, m);
+                    Draw(polyhedrons[polyhedrons.Count - 1]);
+                }
+                else if (comboBox5.SelectedItem.ToString() == "Oyz")
+                {
+                    Matrix m = Matrix.getScale(-1, 1, 1);
+                    Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, m);
+                    Draw(polyhedrons[polyhedrons.Count - 1]);
+                }
+                else if (comboBox5.SelectedItem.ToString() == "Oxz")
+                {
+                    Matrix m = Matrix.getScale(1, -1, 1) ;
+                    Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, m);
+                    Draw(polyhedrons[polyhedrons.Count - 1]);
+                }
+            }
+        }
     }
 }
