@@ -71,16 +71,37 @@ namespace lab6
               {0, 0, 0, 1},
             });
         }
+        public static Matrix getСonvergingLtoZ(float l, float m, float n)
+        {
+            double d = Math.Sqrt(Math.Pow(m, 2) + Math.Pow(n, 2));
 
+            float sin = (float)(m / d);
+            float cos = (float)(n / d);
+            Matrix matr1 = new  Matrix(new float[4, 4]{
+              {1, 0, 0, 0},
+              {0, cos, -sin, 0},
+              {0, sin, cos, 0},
+              {0, 0, 0, 1},
+            });
+            cos = l;
+            sin = (float)- d;
+            Matrix matr2 = new Matrix(new float[4, 4]{
+                  { cos, 0  , sin, 0  },
+                  {  0 , 1  , 0  , 0  },
+                  {-sin, 0  , cos, 0  },
+                  {  0 , 0  , 0  , 1  },
+             });
+            return matr1 * matr2;
+        }
         public static Matrix  getRotationY(int angle)
         {
             double rad = (Math.PI / 180 * angle);
             float sin = (float)Math.Sin(rad);
             float cos = (float)Math.Cos(rad);
             return new Matrix(new float[4, 4]{
-                  { cos, 0  , sin, 0  },
+                  { cos, 0  , -sin, 0  },
                   {  0 , 1  , 0  , 0  },
-                  {-sin, 0  , cos, 0  },
+                  {sin, 0  , cos, 0  },
                   {  0 , 0  , 0  , 1  },
              });
         }

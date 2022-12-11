@@ -42,25 +42,25 @@ namespace lab6
             List<Vector> sceneVertices = new List<Vector>(polyhedron.vertices);
             Matrix matr = Matrix.getTranslation(pictureBox1.Width / 2, pictureBox1.Height / 2, 0);
             Matrix.Transform(sceneVertices, matr);
-            /*g.DrawLine(penX,
-                    sceneVertices[sceneVertices.Count-1].x,
+            g.DrawLine(penX,
+                    sceneVertices[sceneVertices.Count - 1].x,
                     sceneVertices[sceneVertices.Count - 1].y,
-                    sceneVertices[sceneVertices.Count - 1].x+ 150,
+                    sceneVertices[sceneVertices.Count - 1].x + 150,
                     sceneVertices[sceneVertices.Count - 1].y);
             g.DrawLine(penY,
                     sceneVertices[sceneVertices.Count - 1].x,
                     sceneVertices[sceneVertices.Count - 1].y,
                     sceneVertices[sceneVertices.Count - 1].x,
-                    sceneVertices[sceneVertices.Count - 1].y + 150);
-            Vector zVector = new Vector(-1, -1, 0);
+                    sceneVertices[sceneVertices.Count - 1].y - 150);
+            Vector zVector = new Vector(-1, 1, 0);
             Vector zCoords = sceneVertices[sceneVertices.Count - 1] + (zVector.normalize() * 150);
-            
+
             g.DrawLine(penZ,
                sceneVertices[sceneVertices.Count - 1].x,
                sceneVertices[sceneVertices.Count - 1].y,
-              zCoords.x, 
+              zCoords.x,
               zCoords.y
-            );*/
+            );
             foreach (var e in edges)
             {
                 if (e.p1 == 0 || e.p2 == 0)
@@ -117,14 +117,11 @@ namespace lab6
 
 
         }
-
-        private void trackBar2_Scroll(object sender, EventArgs e)
+        private void trackBarOX_Scroll(object sender, EventArgs e)
         {
-            // AffineMatrix m = new AffineMatrix();
-           // m.Rotate(sceneVertices, trackBar2.Value, trackBar1.Value, 0);
-            label4.Text = trackBar2.Value.ToString();
+            labelOX.Text = trackBarOY.Value.ToString();
             List<Vector> sceneVertices = new List<Vector>(polyhedrons[polyhedrons.Count - 1].vertices);
-            Matrix m = Matrix.getRotationX(trackBar2.Value);
+            Matrix m = Matrix.getRotationX(trackBarOY.Value);
             float dx, dy, dz;
             SetZero(sceneVertices,out dx, out dy, out dz);
             Matrix.Transform(sceneVertices, m);
@@ -132,47 +129,120 @@ namespace lab6
             Draw(new Polyhedron(sceneVertices, polyhedrons[polyhedrons.Count - 1].edges));
 
         }
-        private void trackBar1_Scroll(object sender, EventArgs e)
+         private void trackBarOY_Scroll(object sender, EventArgs e)
         {
-            //AffineMatrix m = new AffineMatrix();
-            // m.Rotate(sceneVertices, trackBar2.Value, trackBar1.Value, 0);
-            label1.Text = trackBar1.Value.ToString();
+            labelOY.Text = trackBarOX.Value.ToString();
             List<Vector> sceneVertices = new List<Vector>(polyhedrons[polyhedrons.Count - 1].vertices);
-            Matrix m = Matrix.getRotationY(trackBar1.Value);
+            Matrix m = Matrix.getRotationY(trackBarOX.Value);
             float dx, dy, dz;
             SetZero(sceneVertices, out dx, out dy, out dz);
             Matrix.Transform(sceneVertices, m);
             ReSetZero(sceneVertices, dx, dy, dz);
-
             Draw(new Polyhedron(sceneVertices, polyhedrons[polyhedrons.Count - 1].edges));
         }
-        private void trackBar1_MouseUp(object sender, MouseEventArgs e)
+       
+        private void trackBarOZ_Scroll(object sender, EventArgs e)
         {
-            // AffineMatrix m = new AffineMatrix();
-            // m.Rotate(polyhedrons[polyhedrons.Count - 1].vertices, trackBar2.Value, trackBar1.Value,  0);
-            Matrix m = Matrix.getRotationY(trackBar1.Value);
+            labelOZ.Text = trackBarOZ.Value.ToString();
+            List<Vector> sceneVertices = new List<Vector>(polyhedrons[polyhedrons.Count - 1].vertices);
+            Matrix m = Matrix.getRotationZ(trackBarOZ.Value);
             float dx, dy, dz;
-            SetZero(polyhedrons[polyhedrons.Count - 1].vertices, out dx, out dy, out dz);
-            Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, m);
-            ReSetZero(polyhedrons[polyhedrons.Count - 1].vertices, dx, dy, dz);
+            SetZero(sceneVertices, out dx, out dy, out dz);
+            Matrix.Transform(sceneVertices, m);
+            ReSetZero(sceneVertices, dx, dy, dz);
+            Draw(new Polyhedron(sceneVertices, polyhedrons[polyhedrons.Count - 1].edges));
+        }  
+        private void trackBarL_Scroll(object sender, EventArgs e)
+        {
+            if (A.Text != "" && B.Text != "" && C.Text != "" &&
+                tBoxl.Text != "" && tBoxm.Text != "" && tBoxn.Text != ""    )
+            {
 
-            Draw(polyhedrons[polyhedrons.Count - 1]);
-            trackBar1.Value = 0;
-            label1.Text = trackBar1.Value.ToString();
+                labelL.Text = trackBarL.Value.ToString();
+                List<Vector> sceneVertices = new List<Vector>(polyhedrons[polyhedrons.Count - 1].vertices);
+                float a = float.Parse(A.Text);
+                float b = float.Parse(B.Text);
+                float c = float.Parse(C.Text);
+                float l = float.Parse(tBoxl.Text);
+                float m = float.Parse(tBoxm.Text);
+                float n = float.Parse(tBoxn.Text);
+                g.DrawLine(Pens.Beige, a - 1000, b - 1000, l + 1000, m + 1000);
+                Matrix mat1 = Matrix.getTranslation(-a, -b, -c);
+                Matrix mat2 = Matrix.getСonvergingLtoZ(l, m, n);
+                Matrix mat3 = Matrix.getRotationZ(trackBarL.Value);
+                Matrix mat4 = Matrix.getСonvergingLtoZ(-l, -m, -n);
+                Matrix mat5 = Matrix.getTranslation(a, b, c);
+                
+                Matrix.Transform(sceneVertices, mat1*mat2*mat3*mat4*mat5);
+
+                Draw(new Polyhedron(sceneVertices, polyhedrons[polyhedrons.Count - 1].edges));
+            }
         }
-        private void trackBar2_MouseUp(object sender, MouseEventArgs e)
+
+        private void trackBarOX_MouseUp(object sender, MouseEventArgs e)
         {
             /*  AffineMatrix m = new AffineMatrix();
               m.Rotate(polyhedrons[polyhedrons.Count - 1].vertices, trackBar2.Value, trackBar1.Value,  0);*/
-            Matrix m = Matrix.getRotationX(trackBar2.Value);
+            Matrix m = Matrix.getRotationX(trackBarOY.Value);
             float dx, dy, dz;
             SetZero(polyhedrons[polyhedrons.Count - 1].vertices, out dx, out dy, out dz);
             Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, m);
             ReSetZero(polyhedrons[polyhedrons.Count - 1].vertices, dx, dy, dz);
 
             Draw(polyhedrons[polyhedrons.Count - 1]);
-            trackBar2.Value = 0;
-            label4.Text = trackBar2.Value.ToString();
+            trackBarOY.Value = 0;
+            labelOX.Text = trackBarOY.Value.ToString();
+        }
+        private void trackBarOY_MouseUp(object sender, MouseEventArgs e)
+        {
+            // AffineMatrix m = new AffineMatrix();
+            // m.Rotate(polyhedrons[polyhedrons.Count - 1].vertices, trackBar2.Value, trackBar1.Value,  0);
+            Matrix m = Matrix.getRotationY(trackBarOX.Value);
+            float dx, dy, dz;
+            SetZero(polyhedrons[polyhedrons.Count - 1].vertices, out dx, out dy, out dz);
+            Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, m);
+            ReSetZero(polyhedrons[polyhedrons.Count - 1].vertices, dx, dy, dz);
+
+            Draw(polyhedrons[polyhedrons.Count - 1]);
+            trackBarOX.Value = 0;
+            labelOY.Text = trackBarOX.Value.ToString();
+        }
+        private void trackBarOZ_MouseUp(object sender, MouseEventArgs e)
+        {
+            Matrix m = Matrix.getRotationZ(trackBarOZ.Value);
+            float dx, dy, dz;
+            SetZero(polyhedrons[polyhedrons.Count - 1].vertices, out dx, out dy, out dz);
+            Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, m);
+            ReSetZero(polyhedrons[polyhedrons.Count - 1].vertices, dx, dy, dz);
+
+            Draw(polyhedrons[polyhedrons.Count - 1]);
+            trackBarOZ.Value = 0;
+            labelOZ.Text = trackBarOZ.Value.ToString();
+        }
+      
+        private void trackBarL_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (A.Text != "" && B.Text != "" && C.Text != "" &&
+               tBoxl.Text != "" && tBoxm.Text != "" && tBoxn.Text != "")
+            {
+                float a = float.Parse(A.Text);
+                float b = float.Parse(B.Text);
+                float c = float.Parse(C.Text);
+                float l = float.Parse(tBoxl.Text);
+                float m = float.Parse(tBoxm.Text);
+                float n = float.Parse(tBoxn.Text);
+                g.DrawLine(Pens.Beige, a-1000, b-1000, l+1000, m+1000);
+                Matrix mat1 = Matrix.getTranslation(-a, -b, -c);
+                Matrix mat2 = Matrix.getСonvergingLtoZ(l, m, n);
+                Matrix mat3 = Matrix.getRotationZ(trackBarL.Value);
+                Matrix mat4 = Matrix.getСonvergingLtoZ(-l, -m, -n);
+                Matrix mat5 = Matrix.getTranslation(a, b, c);
+
+                Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, mat1 * mat2 * mat3 * mat4 * mat5);
+                Draw(polyhedrons[polyhedrons.Count - 1]);
+                trackBarL.Value = 0;
+                labelL.Text = trackBarL.Value.ToString();
+            }
         }
         //Color
         private void button5_Click(object sender, EventArgs e)
@@ -243,5 +313,7 @@ namespace lab6
                 }
             }
         }
+
+      
     }
 }

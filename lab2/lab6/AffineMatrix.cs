@@ -225,7 +225,7 @@ namespace lab6
             (this[3, 0], this[3, 1], this[3, 2]) = (0,0,0);
             (this[0, 3], this[1, 3], this[2, 3]) = (0,0,0);
         }
-        internal List<Vector> Scale(List<Vector> p, float kx, float ky, float kz = 1, Vector c = null)
+        public List<Vector> Scale(List<Vector> p, float kx, float ky, float kz = 1, Vector c = null)
         {
             List<Vector> resVectors = new List<Vector>(p);
             ReSetScaleCoef();
@@ -235,6 +235,23 @@ namespace lab6
             return resVectors;
         }
         // =========== Scale =========== 
+        public AffineMatrix getСonvergingLtoZ(Vector v1,Vector v2)
+        {
+            
+                float l = v2.x;
+                float m = v2.y;
+                float n = v2.z;
+                double d = Math.Sqrt(Math.Pow(m, 2) + Math.Pow(n, 2));
+
+                float sin = (float)(m /d);
+                float cos = (float)(n /d);
+            (this[1, 1], this[1, 2]) = (cos, -sin);
+            (this[2, 1], this[2, 2]) = (sin, cos);
+
+            AffineMatrix matr = this;
+            ResetRotateAngle();
+            return matr;
+        }
 
         // перегрузка оператора умножения
         public static AffineMatrix operator *(AffineMatrix a, AffineMatrix b)
