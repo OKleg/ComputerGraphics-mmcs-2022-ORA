@@ -39,6 +39,14 @@ namespace lab6
                     new Edge(6, 7),
                     new Edge(7, 4),
         };
+            this.faces = new List<Face>(){
+                new Face(new List<int>() { 0, 1, 2, 3 }),
+                new Face(new List<int>() { 0, 1, 5, 4 }),
+                new Face(new List<int>() { 0, 3, 7, 4 }),
+                new Face(new List<int>() { 3, 2, 6, 7 }),
+                new Face(new List<int>() { 1, 5, 6, 2 }),
+                new Face(new List<int>() { 4, 7, 6, 5 })
+            };
         }
 
     }

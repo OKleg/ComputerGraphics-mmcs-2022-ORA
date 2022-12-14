@@ -56,8 +56,10 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Icosahedron.cs" />
     <Compile Include="Matrix.cs" />
     <Compile Include="Octahedron.cs" />
+    <Compile Include="Pyramid .cs" />
     <Compile Include="Tetrahedron.cs" />
     <Compile Include="Vector.cs" />
     <Compile Include="Face.cs" />

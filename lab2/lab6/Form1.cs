@@ -122,17 +122,27 @@ namespace lab6
                 polyhedrons.Add(new Tetrahedron());
                 Draw(polyhedrons[polyhedrons.Count - 1]);
             }
+            else if (comboBox1.SelectedItem.ToString() == "Пирамида")
+            {
+                polyhedrons.Add(new Pyramid());
+                Draw(polyhedrons[polyhedrons.Count - 1]);
+            }
             else if (comboBox1.SelectedItem.ToString() == "Октаэдр")
             {
                 polyhedrons.Add(new Octahedron());
                 Draw(polyhedrons[polyhedrons.Count - 1]);
             }
+            
             else if (comboBox1.SelectedItem.ToString() == "Додекаэдр*")
             {
                 polyhedrons.Add(new Dodecahedron());
                 Draw(polyhedrons[polyhedrons.Count - 1]);
             }
-
+            else if (comboBox1.SelectedItem.ToString() == "Икосаэдр*")
+            {
+                polyhedrons.Add(new Icosahedron());
+                Draw(polyhedrons[polyhedrons.Count - 1]);
+            }
 
         }
         private void trackBarOX_Scroll(object sender, EventArgs e)
