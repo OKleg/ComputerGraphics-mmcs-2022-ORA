@@ -11,7 +11,16 @@ namespace lab6
     {
         public List<Edge> edges;
         public List<Vector> points;
-
+        public Face(List<Vector> points)
+        {
+            this.points = points;
+            edges = new List<Edge>();
+            edges.Add(new Edge(0, points.Count - 2));
+            for (int i = 0; i < points.Count-2; i++)
+            {
+                edges.Add(new Edge(i, i+1));
+            }
+        }
         public Face(List<Vector> points, List<Edge> edges)
         {
             this.points = points;

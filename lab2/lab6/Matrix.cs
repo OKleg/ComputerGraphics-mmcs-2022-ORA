@@ -58,7 +58,39 @@ namespace lab6
 
             return m;
         }
+        public static Matrix getView(Vector eye, Vector target, Vector up)
+        {
+            Vector vz = (eye - target).normalize();
+            Vector vx = Vector.cross(up, vz).normalize();
+            Vector vy = Vector.cross(vz, vx).normalize();
 
+            return Matrix.multiply(
+              Matrix.getTranslation(-eye.x, -eye.y, -eye.z), new Matrix(
+                new float[4,4]
+              {
+                {vx.x, vx.y, vx.z, 0},
+          
+                {vy.x, vy.y, vy.z, 0},
+          
+                {vz.x, vz.y, vz.z, 0},
+          
+                {   0,    0,    0, 1}
+              }));
+        }
+        public static Matrix getPerspectiveProjection(double fovy, double aspect, float n, float f)
+        {
+            float radians = (float)(Math.PI / 180 * fovy);
+            float sx = (float)((1 / Math.Tan(radians / 2)) / aspect);
+            float sy = (float)(1 / Math.Tan(radians / 2));
+            float sz = (f + n) / (f - n);
+            float dz = (-2 * f * n) / (f - n);
+            return new Matrix(  new float[4,4]{ 
+                {sx, 0, 0, 0},
+                {0, sy, 0, 0},
+                {0, 0, sz, dz},
+                {0, 0, -1, 0},
+  });
+}
         public static Matrix getRotationX(int angle)
         {
             double rad = (Math.PI / 180 * angle);
@@ -91,7 +123,7 @@ namespace lab6
                   {-sin, 0  , cos, 0  },
                   {  0 , 0  , 0  , 1  },
              });
-            return matr1 * matr2;
+            return matr2 * matr1 ;
         }
         public static Matrix getRotateL(Vector p1, Vector p2, float angle)
         {
@@ -186,6 +218,13 @@ namespace lab6
                   matrix,
                   vertices[i]
                 );
+                if (vertices[i].w != 1)
+                {
+                    vertices[i].x = vertices[i].x / vertices[i].w *250 ;
+                    vertices[i].y = vertices[i].y / vertices[i].w *250 ;
+                }
+                
+
             }
         }
         public static Matrix operator *(Matrix a, Matrix b)
