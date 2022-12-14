@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace lab6
 {
@@ -64,8 +65,14 @@ namespace lab6
             this.x /= length;
             this.y /= length;
             this.z /= length;
-
             return this;
+        }
+        public static void normalize(List<Vector> v)
+        {
+            for (int i = 0; i < v.Count-1; i++)
+            {
+                    v[i] = v[i].normalize();
+            };
         }
         Vector multiplyByScalar(int s)
         {
@@ -83,6 +90,14 @@ namespace lab6
                         v1.z + v2.z
                         );
         }
+        public static Vector operator -(Vector v1, Vector v2)
+        {
+            return new Vector(
+                        v1.x - v2.x,
+                        v1.y - v2.y,
+                        v1.z - v2.z
+                        );
+        }
         public static Vector operator *(Vector v1, Vector v2)
         {
             return new Vector(
@@ -91,12 +106,20 @@ namespace lab6
                         v1.z * v2.z
                         );
         }
-        public static Vector operator *(Vector v1, int i)
+        public static Vector operator *(Vector v1, float i)
         {
             return new Vector(
                         v1.x * i,
                         v1.y * i,
                         v1.z * i
+                        );
+        }
+        public static Vector operator /(Vector v1, float i)
+        {
+            return new Vector(
+                        v1.x / i,
+                        v1.y / i,
+                        v1.z / i
                         );
         }
         public static Vector operator *( int i,Vector v1)

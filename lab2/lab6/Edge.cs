@@ -19,7 +19,11 @@ namespace lab6
             this.p1 = p1;
             this.p2 = p2;
         }
-       
+        public bool Contains(int p)
+        {
+            return (p == p1 || p == p2);
+        }
+
         /* public float MidX()
          {
              return (p1.x + p2.x) /2;
@@ -41,6 +45,7 @@ namespace lab6
          public double Lenght() => Math.Sqrt((
                        (p2.x - p1.x) * (p2.x - p1.x)
                      + (p2.y - p1.y) * (p2.y - p1.y)
-                     + (p2.z - p1.z) * (p2.z - p1.z)));*/
+                     + (p2.z - p1.z) * (p2.z - p1.z)));
+        */
     }
 }

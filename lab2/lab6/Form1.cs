@@ -42,7 +42,7 @@ namespace lab6
             List<Vector> sceneVertices = new List<Vector>(polyhedron.vertices);
             Matrix matr = Matrix.getTranslation(pictureBox1.Width / 2, pictureBox1.Height / 2, 0);
             Matrix.Transform(sceneVertices, matr);
-            g.DrawLine(penX,
+          /*  g.DrawLine(penX,
                     sceneVertices[sceneVertices.Count - 1].x,
                     sceneVertices[sceneVertices.Count - 1].y,
                     sceneVertices[sceneVertices.Count - 1].x + 150,
@@ -60,7 +60,7 @@ namespace lab6
                sceneVertices[sceneVertices.Count - 1].y,
               zCoords.x,
               zCoords.y
-            );
+            );*/
             foreach (var e in edges)
             {
                 if (e.p1 == 0 || e.p2 == 0)
@@ -98,6 +98,8 @@ namespace lab6
         {
             (hx.Enabled, hy.Enabled, hz.Enabled,button4.Enabled) 
                 = (true, true, true, true);
+            (A.Enabled, B.Enabled, C.Enabled, tBoxl.Enabled, tBoxm.Enabled, tBoxn.Enabled)
+               = (true, true, true, true, true, true);
             if (comboBox1.SelectedItem.ToString() == "Гексаэдр")
             {
                 polyhedrons.Add(new Cube());
@@ -166,15 +168,18 @@ namespace lab6
                 float l = float.Parse(tBoxl.Text);
                 float m = float.Parse(tBoxm.Text);
                 float n = float.Parse(tBoxn.Text);
-                g.DrawLine(Pens.Beige, a - 1000, b - 1000, l + 1000, m + 1000);
-                Matrix mat1 = Matrix.getTranslation(-a, -b, -c);
+
+                /*Matrix mat1 = Matrix.getTranslation(-a, -b, -c);
                 Matrix mat2 = Matrix.getСonvergingLtoZ(l, m, n);
                 Matrix mat3 = Matrix.getRotationZ(trackBarL.Value);
                 Matrix mat4 = Matrix.getСonvergingLtoZ(-l, -m, -n);
-                Matrix mat5 = Matrix.getTranslation(a, b, c);
-                
-                Matrix.Transform(sceneVertices, mat1*mat2*mat3*mat4*mat5);
+                Matrix mat5 = Matrix.getTranslation(a, b, c);*/
 
+                //Matrix.Transform(sceneVertices, mat1*mat2*mat3*mat4*mat5);
+                Vector v1 = new Vector(a, b, c);
+                Vector v2 = new Vector(l, m, n);
+
+                Matrix.Transform(sceneVertices,Matrix.getRotateL(v1,v2, trackBarL.Value));
                 Draw(new Polyhedron(sceneVertices, polyhedrons[polyhedrons.Count - 1].edges));
             }
         }
@@ -238,7 +243,10 @@ namespace lab6
                 Matrix mat4 = Matrix.getСonvergingLtoZ(-l, -m, -n);
                 Matrix mat5 = Matrix.getTranslation(a, b, c);
 
-                Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, mat1 * mat2 * mat3 * mat4 * mat5);
+                // Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, mat1 * mat2 * mat3 * mat4 * mat5);
+                Vector v1 = new Vector(a, b, c);
+                Vector v2 = new Vector(l, m, n);
+                Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, Matrix.getRotateL(v1,v2, trackBarL.Value));
                 Draw(polyhedrons[polyhedrons.Count - 1]);
                 trackBarL.Value = 0;
                 labelL.Text = trackBarL.Value.ToString();

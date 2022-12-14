@@ -40,5 +40,6 @@ namespace lab6
                     new Edge(7, 4),
         };
         }
+
     }
 }

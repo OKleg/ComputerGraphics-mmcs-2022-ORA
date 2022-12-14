@@ -93,6 +93,45 @@ namespace lab6
              });
             return matr1 * matr2;
         }
+        public static Matrix getRotateL(Vector p1, Vector p2, float angle)
+        {
+            //double d = Math.Sqrt(Math.Pow(m, 2) + Math.Pow(n, 2));
+
+            //float sin = (float)(m / d);
+            //float cos = (float)(n / d);
+            /*            Matrix matr1 = new Matrix(new float[4, 4]{
+                          {1, 0, 0, 0},
+                          {0, cos, -sin, 0},
+                          {0, sin, cos, 0},
+                          {0, 0, 0, 1},
+                        });*/
+            //cos = l;
+            //sin = (float)-d;
+
+            /* Matrix matr2 = new Matrix(new float[4, 4]{
+                   { cos, 0  , sin, 0  },
+                   {  0 , 1  , 0  , 0  },
+                   {-sin, 0  , cos, 0  },
+                   {  0 , 0  , 0  , 1  },
+              });*/
+            Vector vec = p2 - p1;
+            vec = vec.normalize();
+            (float l, float m, float n) = (vec.x, vec.y, vec.z);
+
+            float l2 = (float)Math.Pow(l,2);
+            float m2 = (float)Math.Pow(m, 2);
+            float n2 = (float)Math.Pow(n, 2);
+            double rad = (Math.PI / 180 * angle);
+            float sin = (float)Math.Sin(rad);
+            float cos = (float)Math.Cos(rad);
+            Matrix matr = new Matrix(new float[4, 4]{
+                  { l*l*(1-cos) + cos  , l*(1-cos)*m - n*sin, l*(1-cos)*n + m*sin, 0  },
+                  { m*(1-cos)*l + n*sin, m*m*(1-cos) + cos  , m*(1-cos)*n - l*sin, 0  },
+                  { l*(1-cos)*n - m*sin, m*(1-cos)*n + l*sin, n*n*(1-cos) + cos  , 0  },
+                  { 0                  , 0                  , 0                  , 1  },
+             });
+            return matr;// matr1 * matr2;
+        }
         public static Matrix  getRotationY(int angle)
         {
             double rad = (Math.PI / 180 * angle);
