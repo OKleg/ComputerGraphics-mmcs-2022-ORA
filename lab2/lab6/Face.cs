@@ -10,23 +10,27 @@ namespace lab6
     public class Face
     {
         public List<Edge> edges;
-        public List<Vector> points;
-        public Face(List<Vector> points)
+        public List<int> points;
+        public Face(List<int> points)
         {
             this.points = points;
             edges = new List<Edge>();
-            edges.Add(new Edge(0, points.Count - 2));
-            for (int i = 0; i < points.Count-2; i++)
+            edges.Add(new Edge(points[0], points[points.Count-1]));
+            for (int i = 0; i < points.Count-1; i++)
             {
-                edges.Add(new Edge(i, i+1));
+                edges.Add(new Edge(points[i], points[i + 1]));
             }
         }
-        public Face(List<Vector> points, List<Edge> edges)
+        public List<Edge> GetEdges()
+        {
+            return edges;
+        }
+        public Face(List<int> points, List<Edge> edges)
         {
             this.points = points;
             this.edges = edges;
         }
-        private Vector FindCentroid()
+       static public Vector FindCentroid(List<Vector>  points)
         {
             if (points.Count > 1)
             {

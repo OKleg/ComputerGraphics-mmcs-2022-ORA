@@ -127,6 +127,11 @@ namespace lab6
                 polyhedrons.Add(new Octahedron());
                 Draw(polyhedrons[polyhedrons.Count - 1]);
             }
+            else if (comboBox1.SelectedItem.ToString() == "Додекаэдр*")
+            {
+                polyhedrons.Add(new Dodecahedron());
+                Draw(polyhedrons[polyhedrons.Count - 1]);
+            }
 
 
         }

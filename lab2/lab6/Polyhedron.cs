@@ -20,7 +20,7 @@ namespace lab6
             this.edges = edges;
 
         }
-        public Polyhedron(List<Face> polyhedron)
+      /*  public Polyhedron(List<Face> polyhedron)
         {
             this.faces = polyhedron;
             foreach (var polig in polyhedron)
@@ -33,7 +33,7 @@ namespace lab6
                     }
                 }
             }
-        }
+        }*/
       
     }
 }
