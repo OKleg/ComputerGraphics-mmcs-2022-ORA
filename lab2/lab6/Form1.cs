@@ -32,6 +32,7 @@ namespace lab6
             color = Color.Black;
             pen = new Pen(color);
             polyhedrons = new List<Polyhedron>();
+
         }
         private void Draw(Polyhedron polyhedron)
         {
@@ -40,16 +41,16 @@ namespace lab6
             //AffineMatrix m = new AffineMatrix();
             List<Vector> sceneVertices = new List<Vector>(polyhedron.vertices);
 
-              Matrix.Transform(sceneVertices, 
+            if (comboBox4.SelectedIndex == 0)
+            {
+                Matrix.Transform(sceneVertices,
+                    Matrix.getPerspectiveProjection(
+                        90, pictureBox1.Width / pictureBox1.Height,
+                        -1, -1000) * Matrix.getView(new Vector(0, 0, 100), new Vector(0, 0, -1), new Vector(0, -1, 0)));
+            }
+            else Matrix.Transform(sceneVertices, Matrix.getIsometricProjection());
 
-  Matrix.getPerspectiveProjection(
-    90, pictureBox1.Width / pictureBox1.Height,
-    -1, -1000) * Matrix.getView(
-    new Vector(0, 0, 100),
-    new Vector(0, 0, -1),
-    new Vector(0, -1, 0)
-  ) 
-   );
+
             //  Matrix matr = Matrix.getTranslation(pictureBox1.Width / 2, pictureBox1.Height / 2, 0);
             //  Matrix.Transform(sceneVertices, matr);
             /*  g.DrawLine(penX,
@@ -348,6 +349,15 @@ namespace lab6
             }
         }
 
-      
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (polyhedrons.Count >0) 
+                Draw(polyhedrons[polyhedrons.Count - 1]);
+        }
     }
 }

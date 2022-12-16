@@ -89,8 +89,29 @@ namespace lab6
                 {0, sy, 0, 0},
                 {0, 0, sz, dz},
                 {0, 0, -1, 0},
-  });
-}
+            });
+        }
+        public static Matrix getIsometricProjection()
+        {
+            float sqrt6 = (float)Math.Sqrt(6);
+            float sqrt3 = (float)Math.Sqrt(3);
+            float sqrt2 = (float)Math.Sqrt(2);
+
+            /*return new Matrix(new float[4, 4]
+            {
+                { (float)Math.Sqrt(0.5), 0, (float)-Math.Sqrt(0.5), 0 },
+                { 1 / (float)Math.Sqrt(6), 2 /(float) Math.Sqrt(6), 1 / (float)Math.Sqrt(6), 0 },
+                { 1 / (float)Math.Sqrt(3), -1 / (float)Math.Sqrt(3), 1 / (float)Math.Sqrt(3), 0 },
+                { 0, 0, 0, 1 }
+            });*/
+            return new Matrix(new float[4, 4]
+            {
+                { sqrt3/sqrt6, 0, -sqrt3/sqrt6,0},
+                {1/sqrt6, 2/ sqrt6, 1/sqrt6,0},
+                {sqrt2/sqrt6, - sqrt2/sqrt6, sqrt2/sqrt6, 0},
+                {0,0,0,1 }
+            });
+        }
         public static Matrix getRotationX(int angle)
         {
             double rad = (Math.PI / 180 * angle);

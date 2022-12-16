@@ -113,6 +113,7 @@ namespace lab6
             this.comboBox1.Size = new System.Drawing.Size(170, 21);
             this.comboBox1.TabIndex = 3;
             this.comboBox1.Text = "Тетраэдр";
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             this.comboBox1.SelectionChangeCommitted += new System.EventHandler(this.comboBox1_SelectionChangeCommitted);
             // 
             // A
@@ -170,16 +171,16 @@ namespace lab6
             // 
             // comboBox4
             // 
-            this.comboBox4.Enabled = false;
             this.comboBox4.FormattingEnabled = true;
             this.comboBox4.Items.AddRange(new object[] {
             "перспективная",
-            "аксонометрической"});
+            "аксонометрическая"});
             this.comboBox4.Location = new System.Drawing.Point(759, 560);
             this.comboBox4.Name = "comboBox4";
             this.comboBox4.Size = new System.Drawing.Size(108, 21);
             this.comboBox4.TabIndex = 14;
             this.comboBox4.Text = "перспективная";
+            this.comboBox4.SelectedIndexChanged += new System.EventHandler(this.comboBox4_SelectedIndexChanged);
             // 
             // hx
             // 
