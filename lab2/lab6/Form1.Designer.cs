@@ -62,6 +62,8 @@ namespace lab6
             this.trackBarL = new System.Windows.Forms.TrackBar();
             this.labelL = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
+            this.SaveBtn = new System.Windows.Forms.Button();
+            this.LoadBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarOX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarOY)).BeginInit();
@@ -408,11 +410,35 @@ namespace lab6
             this.label10.TabIndex = 38;
             this.label10.Text = "L";
             // 
+            // SaveBtn
+            // 
+            this.SaveBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.SaveBtn.Location = new System.Drawing.Point(697, 232);
+            this.SaveBtn.Name = "SaveBtn";
+            this.SaveBtn.Size = new System.Drawing.Size(79, 39);
+            this.SaveBtn.TabIndex = 39;
+            this.SaveBtn.Text = "Сохранить";
+            this.SaveBtn.UseVisualStyleBackColor = true;
+            this.SaveBtn.Click += new System.EventHandler(this.SaveBtn_Click);
+            // 
+            // LoadBtn
+            // 
+            this.LoadBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.LoadBtn.Location = new System.Drawing.Point(787, 232);
+            this.LoadBtn.Name = "LoadBtn";
+            this.LoadBtn.Size = new System.Drawing.Size(79, 39);
+            this.LoadBtn.TabIndex = 40;
+            this.LoadBtn.Text = "Загрузить";
+            this.LoadBtn.UseVisualStyleBackColor = true;
+            this.LoadBtn.Click += new System.EventHandler(this.LoadBtn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(874, 593);
+            this.Controls.Add(this.LoadBtn);
+            this.Controls.Add(this.SaveBtn);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.labelL);
             this.Controls.Add(this.trackBarL);
@@ -492,6 +518,8 @@ namespace lab6
         private System.Windows.Forms.TrackBar trackBarL;
         private System.Windows.Forms.Label labelL;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button SaveBtn;
+        private System.Windows.Forms.Button LoadBtn;
     }
 }
 

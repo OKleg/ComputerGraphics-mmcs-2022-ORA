@@ -24,6 +24,11 @@ namespace lab6
             return (p == p1 || p == p2);
         }
 
+        public Edge()
+        {
+        }
+
+
         /* public float MidX()
          {
              return (p1.x + p2.x) /2;

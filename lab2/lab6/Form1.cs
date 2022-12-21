@@ -4,12 +4,14 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
+using Newtonsoft.Json;
 
 namespace lab6
 {
@@ -21,9 +23,9 @@ namespace lab6
         Pen penX = new Pen(Color.IndianRed);
         Pen penY = new Pen(Color.LightGreen);
         Pen penZ = new Pen(Color.LightBlue);
+        String SelectedItemBox;
 
-
-        List<Polyhedron> polyhedrons;
+        Dictionary<String,Polyhedron> polyhedrons;
         public Form1()
         {
             InitializeComponent();
@@ -31,8 +33,8 @@ namespace lab6
             g = Graphics.FromImage(pictureBox1.Image);
             color = Color.Black;
             pen = new Pen(color);
-            polyhedrons = new List<Polyhedron>();
-
+            polyhedrons = new Dictionary<String,Polyhedron>();
+            SelectedItemBox = comboBox1.SelectedItem.ToString();
         }
         private void Draw(Polyhedron polyhedron)
         {
@@ -95,9 +97,9 @@ namespace lab6
         }
        private void SetZero(List<Vector> v, out float dx,out float  dy,out float dz)
         {
-            dx = polyhedrons[polyhedrons.Count - 1].vertices.Last().x;
-            dy = polyhedrons[polyhedrons.Count - 1].vertices.Last().y;
-            dz = polyhedrons[polyhedrons.Count - 1].vertices.Last().z;
+            dx = polyhedrons[SelectedItemBox].vertices.Last().x;
+            dy = polyhedrons[SelectedItemBox].vertices.Last().y;
+            dz = polyhedrons[SelectedItemBox].vertices.Last().z;
 
             Matrix.Transform(v, Matrix.getTranslation(-dx, -dy, -dz));
         }
@@ -112,11 +114,19 @@ namespace lab6
                 = (true, true, true, true);
             (A.Enabled, B.Enabled, C.Enabled, tBoxl.Enabled, tBoxm.Enabled, tBoxn.Enabled)
                = (true, true, true, true, true, true);
-            if (comboBox1.SelectedItem.ToString() == "Гексаэдр")
-            {
-                polyhedrons.Add(new Cube());
+            String ModelName = comboBox1.SelectedItem.ToString();
 
-                Draw(polyhedrons[polyhedrons.Count - 1]);
+            TryAddNewModel(ModelName);
+
+            /*if (comboBox1.SelectedItem.ToString() == "Гексаэдр")
+            {
+                *//*polyhedrons.Add(new Cube());
+
+                Draw(polyhedrons[polyhedrons.Count - 1]);*//*
+                if (!polyhedrons.ContainsKey(comboBox1.SelectedItem.ToString()))
+                {
+                    polyhedrons.Add(new Cube());
+                }
             }
             else if (comboBox1.SelectedItem.ToString() == "Тетраэдр")
             {
@@ -143,43 +153,92 @@ namespace lab6
             {
                 polyhedrons.Add(new Icosahedron());
                 Draw(polyhedrons[polyhedrons.Count - 1]);
-            }
+            }*/
+           /* else
+            {
+                polyhedrons.Add(new Polyhedron());
+                Draw(polyhedrons[polyhedrons.Count - 1]);
+            }*/
 
         }
+
+        private void TryAddNewModel(string modelName)
+        {
+            switch (modelName)
+            {
+                case "Гексаэдр":
+                    if (!polyhedrons.ContainsKey(modelName))
+                        polyhedrons.Add(modelName, new Cube());
+                    Draw(polyhedrons[modelName]); 
+                    break;
+                case "Тетраэдр":
+                    if (!polyhedrons.ContainsKey(modelName))
+                        polyhedrons.Add(modelName, new Tetrahedron());
+                    Draw(polyhedrons[modelName]);
+                    break;
+                case "Пирамида":
+                    if (!polyhedrons.ContainsKey(modelName))
+                        polyhedrons.Add(modelName, new Pyramid());
+                    Draw(polyhedrons[modelName]);
+                    break;
+                case "Октаэдр":
+                    if (!polyhedrons.ContainsKey(modelName))
+                        polyhedrons.Add(modelName, new Octahedron());
+                    Draw(polyhedrons[modelName]);
+                    break;
+                case "Додекаэдр*":
+                    if (!polyhedrons.ContainsKey(modelName))
+                        polyhedrons.Add(modelName, new Dodecahedron());
+                    Draw(polyhedrons[modelName]);
+                    break;
+                case "Икосаэдр*":
+                    if (!polyhedrons.ContainsKey(modelName))
+                        polyhedrons.Add(modelName, new Icosahedron());
+                    Draw(polyhedrons[modelName]);
+                    break;
+                default:
+                    if (!polyhedrons.ContainsKey(modelName))
+                        polyhedrons.Add(modelName, new Polyhedron());
+                    Draw(polyhedrons[modelName]);
+                    break;
+            }
+            SelectedItemBox = modelName;
+        }
+
         private void trackBarOX_Scroll(object sender, EventArgs e)
         {
             labelOX.Text = trackBarOY.Value.ToString();
-            List<Vector> sceneVertices = new List<Vector>(polyhedrons[polyhedrons.Count - 1].vertices);
+            List<Vector> sceneVertices = new List<Vector>(polyhedrons[SelectedItemBox].vertices);
             Matrix m = Matrix.getRotationX(trackBarOY.Value);
             float dx, dy, dz;
            // SetZero(sceneVertices,out dx, out dy, out dz);
             Matrix.Transform(sceneVertices, m);
            // ReSetZero(sceneVertices, dx,  dy,  dz);
-            Draw(new Polyhedron(sceneVertices, polyhedrons[polyhedrons.Count - 1].edges));
+            Draw(new Polyhedron(sceneVertices, polyhedrons[SelectedItemBox].edges));
 
         }
          private void trackBarOY_Scroll(object sender, EventArgs e)
         {
             labelOY.Text = trackBarOX.Value.ToString();
-            List<Vector> sceneVertices = new List<Vector>(polyhedrons[polyhedrons.Count - 1].vertices);
+            List<Vector> sceneVertices = new List<Vector>(polyhedrons[SelectedItemBox].vertices);
             Matrix m = Matrix.getRotationY(trackBarOX.Value);
             float dx, dy, dz;
           //  SetZero(sceneVertices, out dx, out dy, out dz);
             Matrix.Transform(sceneVertices, m);
            // ReSetZero(sceneVertices, dx, dy, dz);
-            Draw(new Polyhedron(sceneVertices, polyhedrons[polyhedrons.Count - 1].edges));
+            Draw(new Polyhedron(sceneVertices, polyhedrons[SelectedItemBox].edges));
         }
        
         private void trackBarOZ_Scroll(object sender, EventArgs e)
         {
             labelOZ.Text = trackBarOZ.Value.ToString();
-            List<Vector> sceneVertices = new List<Vector>(polyhedrons[polyhedrons.Count - 1].vertices);
+            List<Vector> sceneVertices = new List<Vector>(polyhedrons[SelectedItemBox].vertices);
             Matrix m = Matrix.getRotationZ(trackBarOZ.Value);
             float dx, dy, dz;
          //SetZero(sceneVertices, out dx, out dy, out dz);
             Matrix.Transform(sceneVertices, m);
          // ReSetZero(sceneVertices, dx, dy, dz);
-            Draw(new Polyhedron(sceneVertices, polyhedrons[polyhedrons.Count - 1].edges));
+            Draw(new Polyhedron(sceneVertices, polyhedrons[SelectedItemBox].edges));
         }  
         private void trackBarL_Scroll(object sender, EventArgs e)
         {
@@ -188,7 +247,7 @@ namespace lab6
             {
 
                 labelL.Text = trackBarL.Value.ToString();
-                List<Vector> sceneVertices = new List<Vector>(polyhedrons[polyhedrons.Count - 1].vertices);
+                List<Vector> sceneVertices = new List<Vector>(polyhedrons[SelectedItemBox].vertices);
                 float a = float.Parse(A.Text);
                 float b = float.Parse(B.Text);
                 float c = float.Parse(C.Text);
@@ -207,21 +266,21 @@ namespace lab6
                 Vector v2 = new Vector(l, m, n);
 
                 Matrix.Transform(sceneVertices,Matrix.getRotateL(v1,v2, trackBarL.Value));
-                Draw(new Polyhedron(sceneVertices, polyhedrons[polyhedrons.Count - 1].edges));
+                Draw(new Polyhedron(sceneVertices, polyhedrons[SelectedItemBox].edges));
             }
         }
 
         private void trackBarOX_MouseUp(object sender, MouseEventArgs e)
         {
             /*  AffineMatrix m = new AffineMatrix();
-              m.Rotate(polyhedrons[polyhedrons.Count - 1].vertices, trackBar2.Value, trackBar1.Value,  0);*/
+              m.Rotate(polyhedrons[SelectedItemBox].vertices, trackBar2.Value, trackBar1.Value,  0);*/
             Matrix m = Matrix.getRotationX(trackBarOY.Value);
             float dx, dy, dz;
          //SetZero(polyhedrons[polyhedrons.Count - 1].vertices, out dx, out dy, out dz);
-            Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, m);
+            Matrix.Transform(polyhedrons[SelectedItemBox].vertices, m);
          // ReSetZero(polyhedrons[polyhedrons.Count - 1].vertices, dx, dy, dz);
 
-            Draw(polyhedrons[polyhedrons.Count - 1]);
+            Draw(polyhedrons[SelectedItemBox]);
             trackBarOY.Value = 0;
             labelOX.Text = trackBarOY.Value.ToString();
         }
@@ -232,10 +291,10 @@ namespace lab6
             Matrix m = Matrix.getRotationY(trackBarOX.Value);
             float dx, dy, dz;
          //SetZero(polyhedrons[polyhedrons.Count - 1].vertices, out dx, out dy, out dz);
-            Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, m);
+            Matrix.Transform(polyhedrons[SelectedItemBox].vertices, m);
          // ReSetZero(polyhedrons[polyhedrons.Count - 1].vertices, dx, dy, dz);
 
-            Draw(polyhedrons[polyhedrons.Count - 1]);
+            Draw(polyhedrons[SelectedItemBox]);
             trackBarOX.Value = 0;
             labelOY.Text = trackBarOX.Value.ToString();
         }
@@ -244,10 +303,10 @@ namespace lab6
             Matrix m = Matrix.getRotationZ(trackBarOZ.Value);
             float dx, dy, dz;
          //SetZero(polyhedrons[polyhedrons.Count - 1].vertices, out dx, out dy, out dz);
-            Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, m);
-         // ReSetZero(polyhedrons[polyhedrons.Count - 1].vertices, dx, dy, dz);
+            Matrix.Transform(polyhedrons[SelectedItemBox].vertices, m);
+            // ReSetZero(polyhedrons[polyhedrons.Count - 1].vertices, dx, dy, dz);
 
-            Draw(polyhedrons[polyhedrons.Count - 1]);
+            Draw(polyhedrons[SelectedItemBox]);
             trackBarOZ.Value = 0;
             labelOZ.Text = trackBarOZ.Value.ToString();
         }
@@ -273,8 +332,8 @@ namespace lab6
                 // Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, mat1 * mat2 * mat3 * mat4 * mat5);
                 Vector v1 = new Vector(a, b, c);
                 Vector v2 = new Vector(l, m, n);
-                Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, Matrix.getRotateL(v1,v2, trackBarL.Value));
-                Draw(polyhedrons[polyhedrons.Count - 1]);
+                Matrix.Transform(polyhedrons[SelectedItemBox].vertices, Matrix.getRotateL(v1,v2, trackBarL.Value));
+                Draw(polyhedrons[SelectedItemBox]);
                 trackBarL.Value = 0;
                 labelL.Text = trackBarL.Value.ToString();
             }
@@ -293,9 +352,9 @@ namespace lab6
             Matrix m = Matrix.getScale(2,2,2);
             float dx, dy, dz;
          //SetZero(polyhedrons[polyhedrons.Count - 1].vertices, out dx, out dy, out dz);
-            Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, m);
+            Matrix.Transform(polyhedrons[SelectedItemBox].vertices, m);
          // ReSetZero(polyhedrons[polyhedrons.Count - 1].vertices, dx, dy, dz);
-            Draw(polyhedrons[polyhedrons.Count - 1]);
+            Draw(polyhedrons[SelectedItemBox]);
         }
         
         private void button2_Click(object sender, EventArgs e)
@@ -303,9 +362,9 @@ namespace lab6
             Matrix m = Matrix.getScale(0.5f, 0.5f, 0.5f);
             float dx, dy, dz;
          //SetZero(polyhedrons[polyhedrons.Count - 1].vertices, out dx, out dy, out dz);
-            Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, m);
+            Matrix.Transform(polyhedrons[SelectedItemBox].vertices, m);
          // ReSetZero(polyhedrons[polyhedrons.Count - 1].vertices, dx, dy, dz);
-            Draw(polyhedrons[polyhedrons.Count - 1]);
+            Draw(polyhedrons[SelectedItemBox]);
         }
 
         
@@ -318,8 +377,8 @@ namespace lab6
                  m.Translation(polyhedrons[polyhedrons.Count - 1].vertices,int.Parse(hx.Text), int.Parse(hy.Text), int.Parse(hz.Text));
               */ //  Draw(polyhedrons[polyhedrons.Count - 1]);
                 Matrix m = Matrix.getTranslation(-int.Parse(hx.Text), int.Parse(hy.Text), int.Parse(hz.Text));
-                Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, m);
-                Draw(polyhedrons[polyhedrons.Count - 1]);
+                Matrix.Transform(polyhedrons[SelectedItemBox].vertices, m);
+                Draw(polyhedrons[SelectedItemBox]);
             }
         }
 
@@ -331,20 +390,20 @@ namespace lab6
                 if (comboBox5.SelectedItem.ToString() == "Oxy")
                 {
                     Matrix m = Matrix.getScale(1, 1, -1);
-                    Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, m);
-                    Draw(polyhedrons[polyhedrons.Count - 1]);
+                    Matrix.Transform(polyhedrons[SelectedItemBox].vertices, m);
+                    Draw(polyhedrons[SelectedItemBox]);
                 }
                 else if (comboBox5.SelectedItem.ToString() == "Oyz")
                 {
                     Matrix m = Matrix.getScale(-1, 1, 1);
-                    Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, m);
-                    Draw(polyhedrons[polyhedrons.Count - 1]);
+                    Matrix.Transform(polyhedrons[SelectedItemBox].vertices, m);
+                    Draw(polyhedrons[SelectedItemBox]);
                 }
                 else if (comboBox5.SelectedItem.ToString() == "Oxz")
                 {
                     Matrix m = Matrix.getScale(1, -1, 1) ;
-                    Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, m);
-                    Draw(polyhedrons[polyhedrons.Count - 1]);
+                    Matrix.Transform(polyhedrons[SelectedItemBox].vertices, m);
+                    Draw(polyhedrons[SelectedItemBox]);
                 }
             }
         }
@@ -357,7 +416,40 @@ namespace lab6
         private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (polyhedrons.Count >0) 
-                Draw(polyhedrons[polyhedrons.Count - 1]);
+                Draw(polyhedrons[SelectedItemBox]);
+        }
+
+        private void SaveBtn_Click(object sender, EventArgs e)
+        {
+            using (SaveFileDialog SvFileDialog = new SaveFileDialog())
+            {
+                if (SvFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string fname = SvFileDialog.FileName;
+                    File.WriteAllText(fname, JsonConvert.SerializeObject(polyhedrons[SelectedItemBox], Formatting.Indented), Encoding.UTF8);
+                }
+            }
+        }
+
+        private void LoadBtn_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog OpFileDialog = new OpenFileDialog() )
+            {
+                if (OpFileDialog.ShowDialog() == DialogResult.Cancel)
+                    return;
+                string fname = OpFileDialog.FileName;
+                string fn = Path.GetFileName(fname);
+                Polyhedron tmp = JsonConvert.DeserializeObject<Polyhedron>(File.ReadAllText(fname, Encoding.UTF8));
+                polyhedrons.Add(fn, tmp);
+                SelectedItemBox = fn;
+                comboBox1.Items.Add(fn);
+                comboBox1.SelectedIndex = comboBox1.Items.Count - 1;
+                (hx.Enabled, hy.Enabled, hz.Enabled, button4.Enabled)
+                = (true, true, true, true);
+                (A.Enabled, B.Enabled, C.Enabled, tBoxl.Enabled, tBoxm.Enabled, tBoxn.Enabled)
+                   = (true, true, true, true, true, true);
+                Draw(polyhedrons[SelectedItemBox]);
+            }
         }
     }
 }

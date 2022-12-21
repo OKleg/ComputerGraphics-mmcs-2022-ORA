@@ -21,6 +21,11 @@ namespace lab6
                 edges.Add(new Edge(points[i], points[i + 1]));
             }
         }
+
+        public Face()
+        {
+        }
+
         public List<Edge> GetEdges()
         {
             return edges;

@@ -8,3 +8,21 @@ C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\lab6\bin\Debug\lab6.pdb
 C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\lab6\obj\Debug\lab6.Form1.resources
 C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\lab6\obj\Debug\lab6.exe
 C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\lab6\obj\Debug\lab6.pdb
+D:\CG\lab2\lab6\bin\Debug\lab6.exe.config
+D:\CG\lab2\lab6\bin\Debug\lab6.exe
+D:\CG\lab2\lab6\bin\Debug\lab6.pdb
+D:\CG\lab2\lab6\obj\Debug\lab6.csproj.AssemblyReference.cache
+D:\CG\lab2\lab6\obj\Debug\lab6.csproj.SuggestedBindingRedirects.cache
+D:\CG\lab2\lab6\obj\Debug\lab6.Form1.resources
+D:\CG\lab2\lab6\obj\Debug\lab6.Properties.Resources.resources
+D:\CG\lab2\lab6\obj\Debug\lab6.csproj.GenerateResource.cache
+D:\CG\lab2\lab6\obj\Debug\lab6.csproj.CoreCompileInputs.cache
+D:\CG\lab2\lab6\obj\Debug\lab6.exe
+D:\CG\lab2\lab6\obj\Debug\lab6.pdb
+D:\CG\lab2\lab6\bin\Debug\Newtonsoft.Json.Bson.dll
+D:\CG\lab2\lab6\bin\Debug\Newtonsoft.Json.dll
+D:\CG\lab2\lab6\bin\Debug\Newtonsoft.Json.pdb
+D:\CG\lab2\lab6\bin\Debug\Newtonsoft.Json.xml
+D:\CG\lab2\lab6\bin\Debug\Newtonsoft.Json.Bson.pdb
+D:\CG\lab2\lab6\bin\Debug\Newtonsoft.Json.Bson.xml
+D:\CG\lab2\lab6\obj\Debug\lab6.csproj.CopyComplete
