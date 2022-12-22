@@ -24,6 +24,8 @@ namespace lab6
         Pen penY = new Pen(Color.LightGreen);
         Pen penZ = new Pen(Color.LightBlue);
         String SelectedItemBox;
+        List<Vector> Generatrix;
+        int presCount;
 
         Dictionary<String,Polyhedron> polyhedrons;
         public Form1()
@@ -35,6 +37,8 @@ namespace lab6
             pen = new Pen(color);
             polyhedrons = new Dictionary<String,Polyhedron>();
             SelectedItemBox = comboBox1.SelectedItem.ToString();
+            Generatrix = new List<Vector>(); // образующая
+            presCount = 0;
         }
         private void Draw(Polyhedron polyhedron)
         {
@@ -51,7 +55,6 @@ namespace lab6
                         -1, -1000) * Matrix.getView(new Vector(0, 0, 100), new Vector(0, 0, -1), new Vector(0, -1, 0)));
             }
             else Matrix.Transform(sceneVertices, Matrix.getIsometricProjection());
-
 
             //  Matrix matr = Matrix.getTranslation(pictureBox1.Width / 2, pictureBox1.Height / 2, 0);
             //  Matrix.Transform(sceneVertices, matr);
@@ -450,6 +453,43 @@ namespace lab6
                    = (true, true, true, true, true, true);
                 Draw(polyhedrons[SelectedItemBox]);
             }
+        }
+
+        private void AddPointBtn_Click(object sender, EventArgs e)
+        {
+            float x = float.Parse(InputPointX.Text);
+            float y = float.Parse(InputPointY.Text);
+            float z = float.Parse(InputPointZ.Text);
+
+            var CenterX = pictureBox1.Width / 2;
+            var CenterY = pictureBox1.Height / 2;
+
+            Generatrix.Add(new Vector(x, y, z));
+
+            for (int i = 1; i < Generatrix.Count; i++)
+            {
+                g.DrawLine(pen, 
+                     CenterX + Generatrix[i - 1].x, CenterY + Generatrix[i - 1].y,
+                     CenterX + Generatrix[i].x, CenterY + Generatrix[i].y);
+            }
+            pictureBox1.Invalidate();
+        }
+
+        private void DrawRotateModelBtn_Click(object sender, EventArgs e)
+        {
+            presCount += 1;
+            int SplitRotateCount = int.Parse(SplitCountBox.Text);
+            string RotateAxis = RotateAxisSelector.Text;
+
+            RotateFigure RF = new RotateFigure(Generatrix, SplitRotateCount, RotateAxis);
+            polyhedrons.Add("rotateF"+presCount.ToString(), RF);
+            SelectedItemBox = "rotateF"+ presCount.ToString();
+            comboBox1.Items.Add("rotateF" + presCount.ToString());
+            (hx.Enabled, hy.Enabled, hz.Enabled, button4.Enabled)
+                = (true, true, true, true);
+            (A.Enabled, B.Enabled, C.Enabled, tBoxl.Enabled, tBoxm.Enabled, tBoxn.Enabled)
+               = (true, true, true, true, true, true);
+            Draw(polyhedrons[SelectedItemBox]);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace lab6
                     new Vector(-a / cs/3,-a * cs/3, a / 2),
                     new Vector(-a / cs/3,-a * cs/3, -a / 2 )
                   
-        };
+            };
             
             this.faces = new List<Face>(){
                 new Face(new List<int>() { 0, 1, 2 }),

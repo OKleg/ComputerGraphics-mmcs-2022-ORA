@@ -64,11 +64,25 @@ namespace lab6
             this.label10 = new System.Windows.Forms.Label();
             this.SaveBtn = new System.Windows.Forms.Button();
             this.LoadBtn = new System.Windows.Forms.Button();
+            this.RotateAxisSelector = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.SplitCountBox = new System.Windows.Forms.TextBox();
+            this.AddPointBtn = new System.Windows.Forms.Button();
+            this.InputPointX = new System.Windows.Forms.TextBox();
+            this.InputPointY = new System.Windows.Forms.TextBox();
+            this.InputPointZ = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.DrawRotateModelBtn = new System.Windows.Forms.Button();
+            this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarOX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarOY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarOZ)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarL)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -432,11 +446,140 @@ namespace lab6
             this.LoadBtn.UseVisualStyleBackColor = true;
             this.LoadBtn.Click += new System.EventHandler(this.LoadBtn_Click);
             // 
+            // RotateAxisSelector
+            // 
+            this.RotateAxisSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.RotateAxisSelector.FormattingEnabled = true;
+            this.RotateAxisSelector.Items.AddRange(new object[] {
+            "Ox",
+            "Oy",
+            "Oz"});
+            this.RotateAxisSelector.Location = new System.Drawing.Point(697, 298);
+            this.RotateAxisSelector.Name = "RotateAxisSelector";
+            this.RotateAxisSelector.Size = new System.Drawing.Size(80, 21);
+            this.RotateAxisSelector.TabIndex = 41;
+            this.RotateAxisSelector.Text = "Oz";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(694, 282);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(81, 13);
+            this.label1.TabIndex = 42;
+            this.label1.Text = "Ось вращения";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(800, 282);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(62, 13);
+            this.label4.TabIndex = 43;
+            this.label4.Text = "Разбиения";
+            // 
+            // SplitCountBox
+            // 
+            this.SplitCountBox.Location = new System.Drawing.Point(783, 298);
+            this.SplitCountBox.Name = "SplitCountBox";
+            this.SplitCountBox.Size = new System.Drawing.Size(83, 20);
+            this.SplitCountBox.TabIndex = 44;
+            this.SplitCountBox.Text = "8";
+            // 
+            // AddPointBtn
+            // 
+            this.AddPointBtn.Location = new System.Drawing.Point(697, 364);
+            this.AddPointBtn.Name = "AddPointBtn";
+            this.AddPointBtn.Size = new System.Drawing.Size(170, 25);
+            this.AddPointBtn.TabIndex = 45;
+            this.AddPointBtn.Text = "Добавить точку";
+            this.AddPointBtn.UseVisualStyleBackColor = true;
+            this.AddPointBtn.Click += new System.EventHandler(this.AddPointBtn_Click);
+            // 
+            // InputPointX
+            // 
+            this.InputPointX.Location = new System.Drawing.Point(697, 339);
+            this.InputPointX.Name = "InputPointX";
+            this.InputPointX.Size = new System.Drawing.Size(56, 20);
+            this.InputPointX.TabIndex = 46;
+            this.InputPointX.Text = "0";
+            // 
+            // InputPointY
+            // 
+            this.InputPointY.Location = new System.Drawing.Point(759, 338);
+            this.InputPointY.Name = "InputPointY";
+            this.InputPointY.Size = new System.Drawing.Size(47, 20);
+            this.InputPointY.TabIndex = 47;
+            this.InputPointY.Text = "0";
+            // 
+            // InputPointZ
+            // 
+            this.InputPointZ.Location = new System.Drawing.Point(812, 338);
+            this.InputPointZ.Name = "InputPointZ";
+            this.InputPointZ.Size = new System.Drawing.Size(54, 20);
+            this.InputPointZ.TabIndex = 48;
+            this.InputPointZ.Text = "0";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(719, 323);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(14, 13);
+            this.label5.TabIndex = 49;
+            this.label5.Text = "X";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(767, 322);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(14, 13);
+            this.label9.TabIndex = 50;
+            this.label9.Text = "Y";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(832, 322);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(14, 13);
+            this.label11.TabIndex = 51;
+            this.label11.Text = "Z";
+            // 
+            // DrawRotateModelBtn
+            // 
+            this.DrawRotateModelBtn.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.DrawRotateModelBtn.Location = new System.Drawing.Point(697, 396);
+            this.DrawRotateModelBtn.Name = "DrawRotateModelBtn";
+            this.DrawRotateModelBtn.Size = new System.Drawing.Size(170, 23);
+            this.DrawRotateModelBtn.TabIndex = 52;
+            this.DrawRotateModelBtn.Text = "Нарисовать фигуру вращения";
+            this.DrawRotateModelBtn.UseVisualStyleBackColor = true;
+            this.DrawRotateModelBtn.Click += new System.EventHandler(this.DrawRotateModelBtn_Click);
+            // 
+            // fileSystemWatcher1
+            // 
+            this.fileSystemWatcher1.EnableRaisingEvents = true;
+            this.fileSystemWatcher1.SynchronizingObject = this;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(874, 593);
+            this.Controls.Add(this.DrawRotateModelBtn);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.InputPointZ);
+            this.Controls.Add(this.InputPointY);
+            this.Controls.Add(this.InputPointX);
+            this.Controls.Add(this.AddPointBtn);
+            this.Controls.Add(this.SplitCountBox);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.RotateAxisSelector);
             this.Controls.Add(this.LoadBtn);
             this.Controls.Add(this.SaveBtn);
             this.Controls.Add(this.label10);
@@ -478,6 +621,7 @@ namespace lab6
             ((System.ComponentModel.ISupportInitialize)(this.trackBarOY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarOZ)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarL)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -520,6 +664,19 @@ namespace lab6
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button SaveBtn;
         private System.Windows.Forms.Button LoadBtn;
+        private System.Windows.Forms.ComboBox RotateAxisSelector;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox SplitCountBox;
+        private System.Windows.Forms.Button AddPointBtn;
+        private System.Windows.Forms.TextBox InputPointX;
+        private System.Windows.Forms.TextBox InputPointY;
+        private System.Windows.Forms.TextBox InputPointZ;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button DrawRotateModelBtn;
+        private System.IO.FileSystemWatcher fileSystemWatcher1;
     }
 }
 

@@ -31,10 +31,25 @@ namespace lab6
                 mass[i, j] = value;
             }
         }
+
+        public static Matrix getDefaultMatrix()
+        {
+            return new Matrix(new float[4, 4] {
+
+              {1, 0, 0, 0},
+
+              {0, 1, 0, 0},
+
+              {0, 0, 1, 0},
+
+              {0, 0, 0, 1},
+            });
+        }
+
         public static Matrix multiply(Matrix a, Matrix b)
         {
 
-            Matrix m =new  Matrix(new float[4,4] {
+            Matrix m = getDefaultMatrix();/*new  Matrix(new float[4,4] {
         
               {1, 0, 0, 0},
         
@@ -43,7 +58,7 @@ namespace lab6
               {0, 0, 1, 0},
         
               {0, 0, 0, 1},
-            });
+            });*/
 
             for (int i = 0; i < 4; i++)
             {
@@ -58,6 +73,31 @@ namespace lab6
 
             return m;
         }
+        public Matrix multiplyV2(Matrix a, Matrix b)
+        {
+            float[,] res = new float[a.mass.GetLength(0), b.mass.GetLength(1)];
+            for (int i = 0; i < a.mass.GetLength(0); i++)
+            {
+                for (int j = 0; j < b.mass.GetLength(1); j++)
+                {
+                    for (int k = 0; k < b.mass.GetLength(0); k++)
+                    {
+                        res[i, j] += a[i, k] * b[k, j];
+                    }
+                }
+            }
+            return new Matrix(res);
+        }
+
+        public static float[,] PointToColumn(Vector pnt)
+        {
+            return new float[,]{ { pnt.x}, 
+                                 { pnt.y},
+                                 { pnt.z},
+                                 { 1} 
+            };
+        }
+
         public static Matrix getView(Vector eye, Vector target, Vector up)
         {
             Vector vz = (eye - target).normalize();
@@ -112,7 +152,7 @@ namespace lab6
                 {0,0,0,1 }
             });
         }
-        public static Matrix getRotationX(int angle)
+        public static Matrix getRotationX(float angle)
         {
             double rad = (Math.PI / 180 * angle);
             float sin = (float)Math.Sin(rad);
@@ -185,7 +225,7 @@ namespace lab6
              });
             return matr;// matr1 * matr2;
         }
-        public static Matrix  getRotationY(int angle)
+        public static Matrix  getRotationY(float angle)
         {
             double rad = (Math.PI / 180 * angle);
             float sin = (float)Math.Sin(rad);
@@ -198,7 +238,7 @@ namespace lab6
              });
         }
 
-        public static Matrix getRotationZ(int angle)
+        public static Matrix getRotationZ(float angle)
         {
             double rad = Math.PI / 180 * angle;
             float sin = (float)Math.Sin(rad);
@@ -248,6 +288,23 @@ namespace lab6
 
             }
         }
+        public static List<Vector> getTransform(List<Vector> vertices, Matrix matrix)
+        {
+            List<Vector> result = new List<Vector>();
+            for (int i = 0; i < vertices.Count; i++)
+            {
+                result[i] = Matrix.multiplyVector(
+                  matrix,
+                  vertices[i]
+                );
+                if (vertices[i].w != 1)
+                {
+                    result[i].x = vertices[i].x / vertices[i].w * 250;
+                    result[i].y = vertices[i].y / vertices[i].w * 250;
+                }
+            }
+            return result;
+        }
         public static Matrix operator *(Matrix a, Matrix b)
         {
             return multiply(a, b);
@@ -260,6 +317,35 @@ namespace lab6
               m[2,0] * v.x + m[2,1] * v.y + m[2,2] * v.z + m[2,3] * v.w,
               m[3,0] * v.x + m[3,1] * v.y + m[3,2] * v.z + m[3,3] * v.w
             );
+        }
+
+        internal static Matrix getRotation(float angle, string axis)
+        {
+            //throw new NotImplementedException();
+            switch (axis)
+            {
+                case "Ox":
+                    return getRotationX(angle);
+                case "Oy":
+                    return getRotationY(angle);
+                case "Oz":
+                    return getRotationZ(angle);
+                default: return getDefaultMatrix();
+            }
+
+        }
+
+        internal static List<Vector> RotatePoints(List<Vector> generatrix, float angle, string axis)
+        {
+            Matrix m = getRotation(angle, axis);
+            //return getTransform(generatrix, m);
+            List<Vector> res = new List<Vector>();
+
+            foreach (Vector v in generatrix)
+            {
+                res.Add(multiplyVector(m, v));
+            }
+            return res;
         }
     }
 }

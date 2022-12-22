@@ -66,6 +66,7 @@
     <Compile Include="Matrix.cs" />
     <Compile Include="Octahedron.cs" />
     <Compile Include="Pyramid .cs" />
+    <Compile Include="RotateFigureBuilder.cs" />
     <Compile Include="Tetrahedron.cs" />
     <Compile Include="Vector.cs" />
     <Compile Include="Face.cs" />
