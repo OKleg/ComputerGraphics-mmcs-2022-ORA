@@ -52,7 +52,7 @@ namespace lab6
             }
 
         }*/
-        public RotateFigure(List<Vector> generatrix, int splits, string axis) : base()
+        /*public RotateFigure(List<Vector> generatrix, int splits, string axis) : base()
         {
             var ObrCount = generatrix.Count;
             float RotateAngle = (float)360.0 / splits;
@@ -87,9 +87,79 @@ namespace lab6
             foreach (var f in this.faces) //добавляем ребра
             {
                 this.edges.AddRange(f.GetEdges());
+            }*/
+
+        public RotateFigure(List<Vector> generatrix, int splits, string axis) : base() 
+        {
+            var ObrCount = generatrix.Count;
+            float RotateAngle = 360.0f / splits;
+
+            this.vertices.AddRange(generatrix);
+            bool ConusType = true;
+            for (int i = 1; i < splits; i++)
+            {
+                Matrix m = Matrix.getRotation(RotateAngle * i, axis);
+                var RotateGeneratrix = Matrix.RotatePoints(generatrix, RotateAngle * i, axis);
+
+                //если что то типо конуса, то тру
+                ConusType = (RotateGeneratrix[0].x == generatrix[0].x && RotateGeneratrix[0].y == generatrix[0].y && RotateGeneratrix[0].z == generatrix[0].z)?
+                    true : false;
+
+                /*if (RotateGeneratrix[0].x == generatrix[0].x && RotateGeneratrix[0].y == generatrix[0].y && RotateGeneratrix[0].z == generatrix[0].z)
+                    this.vertices.AddRange(RotateGeneratrix.Skip(1));
+                else this.vertices.AddRange(RotateGeneratrix);*/
+
+                if (ConusType)
+                    this.vertices.AddRange(RotateGeneratrix.Skip(1)); // пропускаем точку
+                else this.vertices.AddRange(RotateGeneratrix); // не пропускаем
+
+                if (ConusType)
+                {
+                    this.faces.Add(new Face(new List<int>
+                    {
+                        0, i, i+1
+                    }));
+                }
+                else
+                {
+                    this.faces.Add(new Face(new List<int>
+                    {
+                       //ObrCount * (i - 1), ObrCount * i, ObrCount * i+1,  ObrCount * (i - 1) + 1
+                       //ObrCount * (i-1)
+                       ObrCount * (i - 1), ObrCount * i, ObrCount * i + 1, ObrCount * (i - 1) + 1               
+                    }));
+                }
+            }
+            //последняя боковая 
+            if (ConusType)
+                this.faces.Add(new Face(new List<int> { 0, 1, splits }));
+            else 
+            {
+                this.faces.Add(new Face(new List<int> { 0, ObrCount* (splits-1), ObrCount * (splits - 1) +1, 1 })); 
+                /*this.faces.Add(new Face(new List<int>
+                {
+
+                }));*/
+            }
+
+            
+            if (ConusType)
+                //низ
+                this.faces.Add(new Face(Enumerable.Range(1,splits).Select(i => i * (ObrCount-1)).ToList()));
+            else
+            {
+                //верх
+                this.faces.Add(new Face(Enumerable.Range(0, splits).Select(i => i* ObrCount).ToList()));
+                //низ
+                this.faces.Add(new Face(Enumerable.Range(0, splits).Select(i => i * ObrCount + ObrCount-1).ToList()));
+            }
+
+            //ребра
+            foreach (var f in this.faces) //добавляем ребра
+            {
+                this.edges.AddRange(f.GetEdges());
             }
         }
+        
     }
-
-    
 }

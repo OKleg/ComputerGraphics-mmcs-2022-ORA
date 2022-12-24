@@ -490,6 +490,14 @@ namespace lab6
             (A.Enabled, B.Enabled, C.Enabled, tBoxl.Enabled, tBoxm.Enabled, tBoxn.Enabled)
                = (true, true, true, true, true, true);
             Draw(polyhedrons[SelectedItemBox]);
+            /*using (SaveFileDialog SvFileDialog = new SaveFileDialog())
+            {
+                if (SvFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string fname = SvFileDialog.FileName;
+                    File.WriteAllText(fname, JsonConvert.SerializeObject(RF, Formatting.Indented), Encoding.UTF8);
+                }
+            }*/
         }
     }
 }
