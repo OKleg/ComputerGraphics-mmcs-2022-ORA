@@ -490,6 +490,7 @@ namespace lab6
             (A.Enabled, B.Enabled, C.Enabled, tBoxl.Enabled, tBoxm.Enabled, tBoxn.Enabled)
                = (true, true, true, true, true, true);
             Draw(polyhedrons[SelectedItemBox]);
+            comboBox1.SelectedIndex= comboBox1.Items.Count-1;
             /*using (SaveFileDialog SvFileDialog = new SaveFileDialog())
             {
                 if (SvFileDialog.ShowDialog() == DialogResult.OK)
@@ -498,6 +499,13 @@ namespace lab6
                     File.WriteAllText(fname, JsonConvert.SerializeObject(RF, Formatting.Indented), Encoding.UTF8);
                 }
             }*/
+        }
+
+        private void ClearBtn_Click(object sender, EventArgs e)
+        {
+            g.Clear(pictureBox1.BackColor);
+            pictureBox1.Invalidate();
+            Generatrix.Clear();
         }
     }
 }
