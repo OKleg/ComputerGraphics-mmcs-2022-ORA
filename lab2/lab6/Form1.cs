@@ -429,7 +429,10 @@ namespace lab6
                 if (SvFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     string fname = SvFileDialog.FileName;
-                    File.WriteAllText(fname, JsonConvert.SerializeObject(polyhedrons[SelectedItemBox], Formatting.Indented), Encoding.UTF8);
+                    //var options = new JsonSerializerOptions { WriteIndented = true };
+                    //string jsonString = JsonSerializer.Serialize<Polyhedron>(polyhedrons[SelectedItemBox], Formatting.Indented);
+                    //File.WriteAllText(fname, JsonSerializer.Serialize(polyhedrons[SelectedItemBox]));
+                    File.WriteAllText(fname, JsonConvert.SerializeObject(polyhedrons[SelectedItemBox]));
                 }
             }
         }
@@ -442,7 +445,7 @@ namespace lab6
                     return;
                 string fname = OpFileDialog.FileName;
                 string fn = Path.GetFileName(fname);
-                Polyhedron tmp = JsonConvert.DeserializeObject<Polyhedron>(File.ReadAllText(fname, Encoding.UTF8));
+                Polyhedron tmp = JsonConvert.DeserializeObject<Polyhedron>(File.ReadAllText(fname));
                 polyhedrons.Add(fn, tmp);
                 SelectedItemBox = fn;
                 comboBox1.Items.Add(fn);
@@ -480,25 +483,27 @@ namespace lab6
             presCount += 1;
             int SplitRotateCount = int.Parse(SplitCountBox.Text);
             string RotateAxis = RotateAxisSelector.Text;
-
-            RotateFigure RF = new RotateFigure(Generatrix, SplitRotateCount, RotateAxis);
-            polyhedrons.Add("rotateF"+presCount.ToString(), RF);
-            comboBox1.Items.Add("rotateF" + presCount.ToString());
-            SelectedItemBox = "rotateF" + presCount.ToString();
-            (hx.Enabled, hy.Enabled, hz.Enabled, button4.Enabled)
-                = (true, true, true, true);
-            (A.Enabled, B.Enabled, C.Enabled, tBoxl.Enabled, tBoxm.Enabled, tBoxn.Enabled)
-               = (true, true, true, true, true, true);
-            Draw(polyhedrons[SelectedItemBox]);
-            comboBox1.SelectedIndex= comboBox1.Items.Count-1;
-            /*using (SaveFileDialog SvFileDialog = new SaveFileDialog())
+            if (Generatrix.Count > 1)
             {
-                if (SvFileDialog.ShowDialog() == DialogResult.OK)
+                RotateFigure RF = new RotateFigure(Generatrix, SplitRotateCount, RotateAxis);
+                polyhedrons.Add("rotateF" + presCount.ToString(), RF);
+                comboBox1.Items.Add("rotateF" + presCount.ToString());
+                SelectedItemBox = "rotateF" + presCount.ToString();
+                (hx.Enabled, hy.Enabled, hz.Enabled, button4.Enabled)
+                    = (true, true, true, true);
+                (A.Enabled, B.Enabled, C.Enabled, tBoxl.Enabled, tBoxm.Enabled, tBoxn.Enabled)
+                   = (true, true, true, true, true, true);
+                Draw(polyhedrons[SelectedItemBox]);
+                comboBox1.SelectedIndex = comboBox1.Items.Count - 1;
+                /*using (SaveFileDialog SvFileDialog = new SaveFileDialog())
                 {
-                    string fname = SvFileDialog.FileName;
-                    File.WriteAllText(fname, JsonConvert.SerializeObject(RF, Formatting.Indented), Encoding.UTF8);
-                }
-            }*/
+                    if (SvFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        string fname = SvFileDialog.FileName;
+                        File.WriteAllText(fname, JsonConvert.SerializeObject(RF, Formatting.Indented), Encoding.UTF8);
+                    }
+                }*/
+            }
         }
 
         private void ClearBtn_Click(object sender, EventArgs e)
