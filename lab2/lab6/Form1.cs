@@ -483,8 +483,8 @@ namespace lab6
 
             RotateFigure RF = new RotateFigure(Generatrix, SplitRotateCount, RotateAxis);
             polyhedrons.Add("rotateF"+presCount.ToString(), RF);
-            SelectedItemBox = "rotateF"+ presCount.ToString();
             comboBox1.Items.Add("rotateF" + presCount.ToString());
+            SelectedItemBox = "rotateF" + presCount.ToString();
             (hx.Enabled, hy.Enabled, hz.Enabled, button4.Enabled)
                 = (true, true, true, true);
             (A.Enabled, B.Enabled, C.Enabled, tBoxl.Enabled, tBoxm.Enabled, tBoxn.Enabled)

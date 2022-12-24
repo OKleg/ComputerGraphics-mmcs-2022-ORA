@@ -112,38 +112,68 @@ namespace lab6
                 if (ConusType)
                     this.vertices.AddRange(RotateGeneratrix.Skip(1)); // пропускаем точку
                 else this.vertices.AddRange(RotateGeneratrix); // не пропускаем
-
-                if (ConusType)
+                
+                for (int j = 0; j < generatrix.Count - 1; j++)
                 {
-                    this.faces.Add(new Face(new List<int>
+                    if (ConusType)
                     {
-                        0, i, i+1
-                    }));
-                }
-                else
-                {
-                    this.faces.Add(new Face(new List<int>
+                        if (j == 0)
+                        {
+                            this.faces.Add(new Face(new List<int>
+                            {
+                                0, 1 + (i-1)* (ObrCount-1), 1 + i* (ObrCount-1)
+                            }));
+                        }
+                        else
+                        {
+                            this.faces.Add(new Face(new List<int>
+                            {
+                                 j +(i-1) * (ObrCount-1), j+ i* (ObrCount-1),j+ i* (ObrCount-1) +1, j +(i-1) * (ObrCount-1)+1
+                            }));
+                        }
+                    }
+                    else
                     {
-                       //ObrCount * (i - 1), ObrCount * i, ObrCount * i+1,  ObrCount * (i - 1) + 1
-                       //ObrCount * (i-1)
-                       ObrCount * (i - 1), ObrCount * i, ObrCount * i + 1, ObrCount * (i - 1) + 1               
-                    }));
+                        this.faces.Add(new Face(new List<int>
+                        {
+                            //ObrCount * (i - 1), ObrCount * i, ObrCount * i+1,  ObrCount * (i - 1) + 1
+                            //ObrCount * (i-1)
+                            //ObrCount * (i - 1), ObrCount * i, ObrCount * i + 1, ObrCount * (i - 1) + 1
+                            j + ObrCount * (i - 1), j + ObrCount * i, j + ObrCount * i + 1, j + ObrCount * (i - 1) + 1
+                        }));
+                    }
                 }
             }
             //последняя боковая 
             if (ConusType)
-                this.faces.Add(new Face(new List<int> { 0, 1, splits }));
-            else 
             {
-                this.faces.Add(new Face(new List<int> { 0, ObrCount* (splits-1), ObrCount * (splits - 1) +1, 1 })); 
-                /*this.faces.Add(new Face(new List<int>
+                //this.faces.Add(new Face(new List<int> { 0, 1, splits }));
+                for (int j = 0; j < generatrix.Count - 1; j++)
                 {
-
-                }));*/
+                    if (j == 0)
+                    {
+                        this.faces.Add(new Face(new List<int> { 0, 1, (splits-1) * (ObrCount-1) +1 }));
+                    }
+                    else
+                    {
+                        this.faces.Add(new Face(new List<int>
+                        {
+                           j,j+(splits-1) * (ObrCount-1),j+(splits-1) * (ObrCount-1) +1, j+1
+                        }));
+                    }
+                }
+            }
+            else
+            {
+                //this.faces.Add(new Face(new List<int> { 0, ObrCount * (splits - 1), ObrCount * (splits - 1) + 1, 1 }));
+                for (int j = 0; j < generatrix.Count - 1; j++)
+                {
+                    this.faces.Add(new Face(new List<int> { j, j + (splits - 1) * ObrCount, j + (splits - 1) * ObrCount + 1, j + 1 }));
+                }
             }
 
             
-            if (ConusType)
+            /*if (ConusType)
                 //низ
                 this.faces.Add(new Face(Enumerable.Range(1,splits).Select(i => i * (ObrCount-1)).ToList()));
             else
@@ -152,7 +182,7 @@ namespace lab6
                 this.faces.Add(new Face(Enumerable.Range(0, splits).Select(i => i* ObrCount).ToList()));
                 //низ
                 this.faces.Add(new Face(Enumerable.Range(0, splits).Select(i => i * ObrCount + ObrCount-1).ToList()));
-            }
+            }*/
 
             //ребра
             foreach (var f in this.faces) //добавляем ребра
