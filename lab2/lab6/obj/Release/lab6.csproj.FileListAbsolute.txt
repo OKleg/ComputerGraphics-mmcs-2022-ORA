@@ -1,0 +1,22 @@
+C:\AOLEG\ComputerGraphic\CornRoom1\ComputerGraphics-mmcs-2022-ORA\lab2\lab6\bin\Release\lab6.exe.config
+C:\AOLEG\ComputerGraphic\CornRoom1\ComputerGraphics-mmcs-2022-ORA\lab2\lab6\bin\Release\lab6.exe
+C:\AOLEG\ComputerGraphic\CornRoom1\ComputerGraphics-mmcs-2022-ORA\lab2\lab6\bin\Release\lab6.pdb
+C:\AOLEG\ComputerGraphic\CornRoom1\ComputerGraphics-mmcs-2022-ORA\lab2\lab6\obj\Release\lab6.Form1.resources
+C:\AOLEG\ComputerGraphic\CornRoom1\ComputerGraphics-mmcs-2022-ORA\lab2\lab6\obj\Release\lab6.Form2.resources
+C:\AOLEG\ComputerGraphic\CornRoom1\ComputerGraphics-mmcs-2022-ORA\lab2\lab6\obj\Release\lab6.Properties.Resources.resources
+C:\AOLEG\ComputerGraphic\CornRoom1\ComputerGraphics-mmcs-2022-ORA\lab2\lab6\obj\Release\lab6.csproj.GenerateResource.cache
+C:\AOLEG\ComputerGraphic\CornRoom1\ComputerGraphics-mmcs-2022-ORA\lab2\lab6\obj\Release\lab6.csproj.CoreCompileInputs.cache
+C:\AOLEG\ComputerGraphic\CornRoom1\ComputerGraphics-mmcs-2022-ORA\lab2\lab6\obj\Release\lab6.exe
+C:\AOLEG\ComputerGraphic\CornRoom1\ComputerGraphics-mmcs-2022-ORA\lab2\lab6\obj\Release\lab6.pdb
+C:\AOLEG\ComputerGraphic\CornRoom1\ComputerGraphics-mmcs-2022-ORA\lab2\lab6\obj\Release\lab6.csproj.AssemblyReference.cache
+C:\AOLEG\ComputerGraphic\CornRoom1 — копия\ComputerGraphics-mmcs-2022-ORA\lab2\lab6\obj\Release\lab6.csproj.AssemblyReference.cache
+C:\AOLEG\ComputerGraphic\CornRoom1 — копия\ComputerGraphics-mmcs-2022-ORA\lab2\lab6\obj\Release\lab6.Form1.resources
+C:\AOLEG\ComputerGraphic\CornRoom1 — копия\ComputerGraphics-mmcs-2022-ORA\lab2\lab6\obj\Release\lab6.Form2.resources
+C:\AOLEG\ComputerGraphic\CornRoom1 — копия\ComputerGraphics-mmcs-2022-ORA\lab2\lab6\obj\Release\lab6.Properties.Resources.resources
+C:\AOLEG\ComputerGraphic\CornRoom1 — копия\ComputerGraphics-mmcs-2022-ORA\lab2\lab6\obj\Release\lab6.csproj.GenerateResource.cache
+C:\AOLEG\ComputerGraphic\CornRoom1 — копия\ComputerGraphics-mmcs-2022-ORA\lab2\lab6\obj\Release\lab6.csproj.CoreCompileInputs.cache
+C:\AOLEG\ComputerGraphic\CornRoom1 — копия\ComputerGraphics-mmcs-2022-ORA\lab2\lab6\obj\Release\lab6.exe
+C:\AOLEG\ComputerGraphic\CornRoom1 — копия\ComputerGraphics-mmcs-2022-ORA\lab2\lab6\obj\Release\lab6.pdb
+C:\AOLEG\ComputerGraphic\CornRoom1 — копия\ComputerGraphics-mmcs-2022-ORA\lab2\lab6\bin\Release\lab6.exe.config
+C:\AOLEG\ComputerGraphic\CornRoom1 — копия\ComputerGraphics-mmcs-2022-ORA\lab2\lab6\bin\Release\lab6.exe
+C:\AOLEG\ComputerGraphic\CornRoom1 — копия\ComputerGraphics-mmcs-2022-ORA\lab2\lab6\bin\Release\lab6.pdb

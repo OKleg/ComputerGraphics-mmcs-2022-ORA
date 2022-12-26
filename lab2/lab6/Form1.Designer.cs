@@ -62,6 +62,7 @@ namespace lab6
             this.trackBarL = new System.Windows.Forms.TrackBar();
             this.labelL = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarOX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarOY)).BeginInit();
@@ -408,11 +409,25 @@ namespace lab6
             this.label10.TabIndex = 38;
             this.label10.Text = "L";
             // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.button1.Font = new System.Drawing.Font("Ravie", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.ForeColor = System.Drawing.Color.Black;
+            this.button1.Location = new System.Drawing.Point(676, 228);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(191, 43);
+            this.button1.TabIndex = 39;
+            this.button1.Text = "Cornel Room";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(874, 593);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.labelL);
             this.Controls.Add(this.trackBarL);
@@ -445,6 +460,7 @@ namespace lab6
             this.Controls.Add(this.labelOY);
             this.Controls.Add(this.trackBarOX);
             this.Controls.Add(this.pictureBox1);
+            this.ForeColor = System.Drawing.Color.Black;
             this.Name = "Form1";
             this.Text = "3D";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -492,6 +508,7 @@ namespace lab6
         private System.Windows.Forms.TrackBar trackBarL;
         private System.Windows.Forms.Label labelL;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button button1;
     }
 }
 

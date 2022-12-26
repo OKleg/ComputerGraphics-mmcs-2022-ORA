@@ -21,11 +21,13 @@ namespace lab6
         Pen penX = new Pen(Color.IndianRed);
         Pen penY = new Pen(Color.LightGreen);
         Pen penZ = new Pen(Color.LightBlue);
+        Form2 f2;
 
 
         List<Polyhedron> polyhedrons;
         public Form1()
         {
+            
             InitializeComponent();
             pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             g = Graphics.FromImage(pictureBox1.Image);
@@ -49,30 +51,7 @@ namespace lab6
                         -1, -1000) * Matrix.getView(new Vector(0, 0, 100), new Vector(0, 0, -1), new Vector(0, -1, 0)));
             }
             else Matrix.Transform(sceneVertices, Matrix.getIsometricProjection());
-
-
-            //  Matrix matr = Matrix.getTranslation(pictureBox1.Width / 2, pictureBox1.Height / 2, 0);
-            //  Matrix.Transform(sceneVertices, matr);
-            /*  g.DrawLine(penX,
-                      *
-            sceneVertices[sceneVertices.Count - 1].x,
-                      sceneVertices[sceneVertices.Count - 1].y,
-                      sceneVertices[sceneVertices.Count - 1].x + 150,
-                      sceneVertices[sceneVertices.Count - 1].y);
-              g.DrawLine(penY,
-                      sceneVertices[sceneVertices.Count - 1].x,
-                      sceneVertices[sceneVertices.Count - 1].y,
-                      sceneVertices[sceneVertices.Count - 1].x,
-                      sceneVertices[sceneVertices.Count - 1].y - 150);
-              Vector zVector = new Vector(-1, 1, 0);
-              Vector zCoords = sceneVertices[sceneVertices.Count - 1] + (zVector.normalize() * 150);
-
-              g.DrawLine(penZ,
-                 sceneVertices[sceneVertices.Count - 1].x,
-                 sceneVertices[sceneVertices.Count - 1].y,
-                zCoords.x,
-                zCoords.y
-              );*/
+          
             foreach (var e in edges)
             {
                 if (e.p1 == 0 || e.p2 == 0)
@@ -152,9 +131,9 @@ namespace lab6
             List<Vector> sceneVertices = new List<Vector>(polyhedrons[polyhedrons.Count - 1].vertices);
             Matrix m = Matrix.getRotationX(trackBarOY.Value);
             float dx, dy, dz;
-           // SetZero(sceneVertices,out dx, out dy, out dz);
+            SetZero(sceneVertices,out dx, out dy, out dz);
             Matrix.Transform(sceneVertices, m);
-           // ReSetZero(sceneVertices, dx,  dy,  dz);
+            ReSetZero(sceneVertices, dx,  dy,  dz);
             Draw(new Polyhedron(sceneVertices, polyhedrons[polyhedrons.Count - 1].edges));
 
         }
@@ -164,9 +143,9 @@ namespace lab6
             List<Vector> sceneVertices = new List<Vector>(polyhedrons[polyhedrons.Count - 1].vertices);
             Matrix m = Matrix.getRotationY(trackBarOX.Value);
             float dx, dy, dz;
-          //  SetZero(sceneVertices, out dx, out dy, out dz);
+            SetZero(sceneVertices, out dx, out dy, out dz);
             Matrix.Transform(sceneVertices, m);
-           // ReSetZero(sceneVertices, dx, dy, dz);
+            ReSetZero(sceneVertices, dx, dy, dz);
             Draw(new Polyhedron(sceneVertices, polyhedrons[polyhedrons.Count - 1].edges));
         }
        
@@ -176,11 +155,12 @@ namespace lab6
             List<Vector> sceneVertices = new List<Vector>(polyhedrons[polyhedrons.Count - 1].vertices);
             Matrix m = Matrix.getRotationZ(trackBarOZ.Value);
             float dx, dy, dz;
-         //SetZero(sceneVertices, out dx, out dy, out dz);
+         SetZero(sceneVertices, out dx, out dy, out dz);
             Matrix.Transform(sceneVertices, m);
-         // ReSetZero(sceneVertices, dx, dy, dz);
+          ReSetZero(sceneVertices, dx, dy, dz);
             Draw(new Polyhedron(sceneVertices, polyhedrons[polyhedrons.Count - 1].edges));
         }  
+        
         private void trackBarL_Scroll(object sender, EventArgs e)
         {
             if (A.Text != "" && B.Text != "" && C.Text != "" &&
@@ -196,13 +176,6 @@ namespace lab6
                 float m = float.Parse(tBoxm.Text);
                 float n = float.Parse(tBoxn.Text);
 
-                /*Matrix mat1 = Matrix.getTranslation(-a, -b, -c);
-                Matrix mat2 = Matrix.getСonvergingLtoZ(l, m, n);
-                Matrix mat3 = Matrix.getRotationZ(trackBarL.Value);
-                Matrix mat4 = Matrix.getСonvergingLtoZ(-l, -m, -n);
-                Matrix mat5 = Matrix.getTranslation(a, b, c);*/
-
-                //Matrix.Transform(sceneVertices, mat1*mat2*mat3*mat4*mat5);
                 Vector v1 = new Vector(a, b, c);
                 Vector v2 = new Vector(l, m, n);
 
@@ -217,9 +190,9 @@ namespace lab6
               m.Rotate(polyhedrons[polyhedrons.Count - 1].vertices, trackBar2.Value, trackBar1.Value,  0);*/
             Matrix m = Matrix.getRotationX(trackBarOY.Value);
             float dx, dy, dz;
-         //SetZero(polyhedrons[polyhedrons.Count - 1].vertices, out dx, out dy, out dz);
+            SetZero(polyhedrons[polyhedrons.Count - 1].vertices, out dx, out dy, out dz);
             Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, m);
-         // ReSetZero(polyhedrons[polyhedrons.Count - 1].vertices, dx, dy, dz);
+            ReSetZero(polyhedrons[polyhedrons.Count - 1].vertices, dx, dy, dz);
 
             Draw(polyhedrons[polyhedrons.Count - 1]);
             trackBarOY.Value = 0;
@@ -231,9 +204,9 @@ namespace lab6
             // m.Rotate(polyhedrons[polyhedrons.Count - 1].vertices, trackBar2.Value, trackBar1.Value,  0);
             Matrix m = Matrix.getRotationY(trackBarOX.Value);
             float dx, dy, dz;
-         //SetZero(polyhedrons[polyhedrons.Count - 1].vertices, out dx, out dy, out dz);
+         SetZero(polyhedrons[polyhedrons.Count - 1].vertices, out dx, out dy, out dz);
             Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, m);
-         // ReSetZero(polyhedrons[polyhedrons.Count - 1].vertices, dx, dy, dz);
+          ReSetZero(polyhedrons[polyhedrons.Count - 1].vertices, dx, dy, dz);
 
             Draw(polyhedrons[polyhedrons.Count - 1]);
             trackBarOX.Value = 0;
@@ -243,9 +216,9 @@ namespace lab6
         {
             Matrix m = Matrix.getRotationZ(trackBarOZ.Value);
             float dx, dy, dz;
-         //SetZero(polyhedrons[polyhedrons.Count - 1].vertices, out dx, out dy, out dz);
+         SetZero(polyhedrons[polyhedrons.Count - 1].vertices, out dx, out dy, out dz);
             Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, m);
-         // ReSetZero(polyhedrons[polyhedrons.Count - 1].vertices, dx, dy, dz);
+          ReSetZero(polyhedrons[polyhedrons.Count - 1].vertices, dx, dy, dz);
 
             Draw(polyhedrons[polyhedrons.Count - 1]);
             trackBarOZ.Value = 0;
@@ -292,9 +265,9 @@ namespace lab6
         {
             Matrix m = Matrix.getScale(2,2,2);
             float dx, dy, dz;
-         //SetZero(polyhedrons[polyhedrons.Count - 1].vertices, out dx, out dy, out dz);
+          SetZero(polyhedrons[polyhedrons.Count - 1].vertices, out dx, out dy, out dz);
             Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, m);
-         // ReSetZero(polyhedrons[polyhedrons.Count - 1].vertices, dx, dy, dz);
+          ReSetZero(polyhedrons[polyhedrons.Count - 1].vertices, dx, dy, dz);
             Draw(polyhedrons[polyhedrons.Count - 1]);
         }
         
@@ -302,9 +275,9 @@ namespace lab6
         {
             Matrix m = Matrix.getScale(0.5f, 0.5f, 0.5f);
             float dx, dy, dz;
-         //SetZero(polyhedrons[polyhedrons.Count - 1].vertices, out dx, out dy, out dz);
+          SetZero(polyhedrons[polyhedrons.Count - 1].vertices, out dx, out dy, out dz);
             Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, m);
-         // ReSetZero(polyhedrons[polyhedrons.Count - 1].vertices, dx, dy, dz);
+           ReSetZero(polyhedrons[polyhedrons.Count - 1].vertices, dx, dy, dz);
             Draw(polyhedrons[polyhedrons.Count - 1]);
         }
 
@@ -358,6 +331,19 @@ namespace lab6
         {
             if (polyhedrons.Count >0) 
                 Draw(polyhedrons[polyhedrons.Count - 1]);
+        }
+        bool f2Open = false;
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            // this.Hide();
+            if (!f2Open)
+            {
+                f2 = new Form2();
+                f2Open = true;
+            }
+             
+            f2.Show();
+            f2.f1 = this;
         }
     }
 }

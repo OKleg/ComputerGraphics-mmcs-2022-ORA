@@ -248,9 +248,24 @@ namespace lab6
 
             }
         }
+        private static float[,] MultiplyMatrix(float[,] m1, float[,] m2)
+        {
+            float[,] res = new float[m1.GetLength(0), m2.GetLength(1)];
+            Parallel.For(0, m1.GetLength(0), (i) =>
+            {
+                for (int j = 0; j < m2.GetLength(1); j++)
+                {
+                    for (int k = 0; k < m2.GetLength(0); k++)
+                    {
+                        res[i, j] += m1[i, k] * m2[k, j];
+                    }
+                }
+            });
+            return res;
+        }
         public static Matrix operator *(Matrix a, Matrix b)
         {
-            return multiply(a, b);
+            return new Matrix(MultiplyMatrix(a.mass, b.mass));
         }
         public static Vector multiplyVector(Matrix m,Vector v)
         {

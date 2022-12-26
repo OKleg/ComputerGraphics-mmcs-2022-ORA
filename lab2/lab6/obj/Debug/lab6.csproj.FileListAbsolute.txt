@@ -8,3 +8,14 @@ C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\lab6\bin\Debug\lab6.pdb
 C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\lab6\obj\Debug\lab6.Form1.resources
 C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\lab6\obj\Debug\lab6.exe
 C:\AOLEG\ComputerGraphic\Новая папка (2)\lab2\lab6\obj\Debug\lab6.pdb
+C:\AOLEG\ComputerGraphic\CornRoom1\ComputerGraphics-mmcs-2022-ORA\lab2\lab6\bin\Debug\lab6.exe.config
+C:\AOLEG\ComputerGraphic\CornRoom1\ComputerGraphics-mmcs-2022-ORA\lab2\lab6\bin\Debug\lab6.exe
+C:\AOLEG\ComputerGraphic\CornRoom1\ComputerGraphics-mmcs-2022-ORA\lab2\lab6\bin\Debug\lab6.pdb
+C:\AOLEG\ComputerGraphic\CornRoom1\ComputerGraphics-mmcs-2022-ORA\lab2\lab6\obj\Debug\lab6.csproj.AssemblyReference.cache
+C:\AOLEG\ComputerGraphic\CornRoom1\ComputerGraphics-mmcs-2022-ORA\lab2\lab6\obj\Debug\lab6.Form1.resources
+C:\AOLEG\ComputerGraphic\CornRoom1\ComputerGraphics-mmcs-2022-ORA\lab2\lab6\obj\Debug\lab6.Properties.Resources.resources
+C:\AOLEG\ComputerGraphic\CornRoom1\ComputerGraphics-mmcs-2022-ORA\lab2\lab6\obj\Debug\lab6.csproj.GenerateResource.cache
+C:\AOLEG\ComputerGraphic\CornRoom1\ComputerGraphics-mmcs-2022-ORA\lab2\lab6\obj\Debug\lab6.csproj.CoreCompileInputs.cache
+C:\AOLEG\ComputerGraphic\CornRoom1\ComputerGraphics-mmcs-2022-ORA\lab2\lab6\obj\Debug\lab6.exe
+C:\AOLEG\ComputerGraphic\CornRoom1\ComputerGraphics-mmcs-2022-ORA\lab2\lab6\obj\Debug\lab6.pdb
+C:\AOLEG\ComputerGraphic\CornRoom1\ComputerGraphics-mmcs-2022-ORA\lab2\lab6\obj\Debug\lab6.Form2.resources
