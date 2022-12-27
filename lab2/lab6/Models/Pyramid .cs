@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.Generic; 
 
 namespace lab6
 {
     public class Pyramid : Polyhedron
-    {
-
+    { 
         public Pyramid() : base()
         {
 
@@ -23,8 +19,8 @@ namespace lab6
         };
             this.edges = new List<Edge>{
 
-                    new Edge(0, 1), 
-                    new Edge(0, 2), 
+                    new Edge(0, 1),
+                    new Edge(0, 2),
                     new Edge(0, 3),
                     new Edge(0, 4),
 
@@ -34,12 +30,12 @@ namespace lab6
                     new Edge(4, 1),
         };
             this.faces = new List<Face>(){
-                new Face(new List<int>() { 0, 1, 2, 3 }),
-                new Face(new List<int>() { 0, 1, 5, 4 }),
-                new Face(new List<int>() { 0, 3, 7, 4 }),
-                new Face(new List<int>() { 3, 2, 6, 7 }),
-                new Face(new List<int>() { 1, 5, 6, 2 }),
-                new Face(new List<int>() { 4, 7, 6, 5 })
+                new Face(new List<int>() { 0, 1, 2, 3 },this),
+                new Face(new List<int>() { 0, 1, 5, 4 },this),
+                new Face(new List<int>() { 0, 3, 7, 4 },this),
+                new Face(new List<int>() { 3, 2, 6, 7 },this),
+                new Face(new List<int>() { 1, 5, 6, 2 },this),
+                new Face(new List<int>() { 4, 7, 6, 5 },this)
             };
         }
     }

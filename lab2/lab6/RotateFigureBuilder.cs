@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms.VisualStyles;
 
 namespace lab6
 {
@@ -187,7 +182,7 @@ namespace lab6
             //ребра
             foreach (var f in this.faces) //добавляем ребра
             {
-                this.edges.AddRange(f.GetEdges());
+                this.edges.AddRange(f.getEdges());
             }
         }
         

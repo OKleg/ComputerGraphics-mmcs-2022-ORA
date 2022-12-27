@@ -18,15 +18,13 @@ namespace lab5
         Graphics g;
         Color color;
         Pen pen;
-        PaintEventArgs ev;
+        //PaintEventArgs ev;
         Point p;
         public Random rnd = new Random();
         //2
         List<Edge> edges = new List<Edge>();
         //3
         List<BezierPoint> bPoints = new List<BezierPoint>();
-       // List<Point> Points = new List<Point>();
-        double tb;
 
         public LinearGradientBrush SkyBrush { get; private set; }
         public LinearGradientBrush LandBrush {get; private set;}
