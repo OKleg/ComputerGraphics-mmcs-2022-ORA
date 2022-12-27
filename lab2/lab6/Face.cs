@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace lab6
 {
@@ -13,6 +11,7 @@ namespace lab6
         public List<int> points = new List<int>();
         public List<Edge> edges = new List<Edge>();
         public Pen pen = new Pen(Color.SlateGray);
+        public Material fMaterial = null;
         public Vector Normal;
 
         public Face(Polyhedron h = null)
@@ -39,7 +38,7 @@ namespace lab6
                 edges.Add(new Edge(points[i], points[i + 1]));
             }
         }
-        public List<Edge> GetEdges()
+        public List<Edge> getEdges()
         {
             return edges;
         }
@@ -70,7 +69,7 @@ namespace lab6
             return Vector.normalize(normal);
         }
 
-        public void CalculateSideNormal()
+        public void CalculateFaceNormal()
         {
             Normal = norm(this);
         }

@@ -260,69 +260,72 @@ namespace lab6
             }
             if (checkFrontWall.Checked)
             {
-                Polyhedron wall = new Cube(10f);
-                Matrix m = Matrix.getTranslation(0f, -9.9f, 0.0f);
-                Matrix.Transform(wall.vertices, m);
-                wall.SetPen(new Pen(Color.White));
-                wall.material = new Material(0.95f, 0f, 0.0f, 0.1f);
-                box.Add(wall);
+                /* Polyhedron wall = new Cube(10f);
+                 Matrix m = Matrix.getTranslation(0f, -9.9f, 0.0f);
+                 Matrix.Transform(wall.vertices, m);
+                 wall.SetPen(new Pen(Color.White));
+                 wall.material = new Material(0.95f, 0f, 0.0f, 0.1f);
+                 box.Add(wall);*/
+                room.faces[1].fMaterial = new Material(0.95f, 0f, 0.0f, 0.1f);
             }
            
             if (checkLeftWall.Checked)
             {
-                Polyhedron wall = new Cube(10f);
-                Matrix m = Matrix.getTranslation(0f, 0f, 9.9f);
-                Matrix.Transform(wall.vertices, m);
-                wall.SetPen(new Pen(Color.White));
-                wall.material = new Material(0.95f, 0f, 0.0f, 0.1f);
-                box.Add(wall);
+                /*  Polyhedron wall = new Cube(10f);
+                  Matrix m = Matrix.getTranslation(0f, 0f, 9.9f);
+                  Matrix.Transform(wall.vertices, m);
+                  wall.SetPen(new Pen(Color.White));
+                  wall.material = new Material(0.95f, 0f, 0.0f, 0.1f);
+                  box.Add(wall);*/
+                room.faces[2].fMaterial = new Material(0.95f, 0f, 0.0f, 0.1f);
             }
             if (checkRightWall.Checked)
             {
-                Polyhedron wall = new Cube(10f);
-                Matrix m = Matrix.getTranslation(0f, 0f, -9.9f);
-                Matrix.Transform(wall.vertices, m);
-                wall.SetPen(new Pen(Color.White));
-                wall.material = new Material(0.95f, 0f, 0.0f, 0.1f);
-                box.Add(wall);
+                /*  Polyhedron wall = new Cube(10f);
+                  Matrix m = Matrix.getTranslation(0f, 0f, -9.9f);
+                  Matrix.Transform(wall.vertices, m);
+                  wall.SetPen(new Pen(Color.White));
+                  wall.material = new Material(0.95f, 0f, 0.0f, 0.1f);
+                  box.Add(wall);*/
+                room.faces[2].fMaterial = new Material(0.95f, 0f, 0.0f, 0.1f);
             }
 
             if (checkBackWall.Checked)
             {
-                    Polyhedron wall1 = new Cube(10f);
-                    Polyhedron wall2 = new Cube(10f);
-                    Polyhedron wall3 = new Cube(10f);
-                    Polyhedron wall4 = new Cube(10f);
-                    Polyhedron wall5 = new Cube(10f);
-                    Matrix m1 = Matrix.getTranslation(0f, 0f, -9.9f);
-                    Matrix m2 = Matrix.getTranslation(0f, 0f, 9.9f);
-                    Matrix m3 = Matrix.getTranslation(-9.9f, 0f, 0f);
-                    Matrix m4 = Matrix.getTranslation(9.9f, 0f, 0f);
-                    Matrix m5 = Matrix.getTranslation(0f, -9.9f, 0f);
-                    Matrix.Transform(wall1.vertices, m1);
-                    Matrix.Transform(wall2.vertices, m2);
-                    Matrix.Transform(wall3.vertices, m3);
-                    Matrix.Transform(wall4.vertices, m4);
-                    Matrix.Transform(wall5.vertices, m5);
+                /* Polyhedron wall1 = new Cube(10f);
+                 Polyhedron wall2 = new Cube(10f);
+                 Polyhedron wall3 = new Cube(10f);
+                 Polyhedron wall4 = new Cube(10f);
+                 Polyhedron wall5 = new Cube(10f);
+                 Matrix m1 = Matrix.getTranslation(0f, 0f, -9.9f);
+                 Matrix m2 = Matrix.getTranslation(0f, 0f, 9.9f);
+                 Matrix m3 = Matrix.getTranslation(-9.9f, 0f, 0f);
+                 Matrix m4 = Matrix.getTranslation(9.9f, 0f, 0f);
+                 Matrix m5 = Matrix.getTranslation(0f, -9.9f, 0f);
+                 Matrix.Transform(wall1.vertices, m1);
+                 Matrix.Transform(wall2.vertices, m2);
+                 Matrix.Transform(wall3.vertices, m3);
+                 Matrix.Transform(wall4.vertices, m4);
+                 Matrix.Transform(wall5.vertices, m5);
 
-                    wall1.SetPen(new Pen(Color.Green));
-                    wall2.SetPen(new Pen(Color.OrangeRed));
-                    wall3.SetPen(new Pen(Color.LightGray));
-                    wall4.SetPen(new Pen(Color.LightGray));
-                    wall5.SetPen(new Pen(Color.LightGray));
-                    wall1.material = new Material(0.0f, 0, 0.2f, 0.8f);
-                    wall2.material = new Material(0.0f, 0, 0.2f, 0.8f);
-                    wall3.material = new Material(0.0f, 0, 0.2f, 0.8f);
-                    wall4.material = new Material(0.0f, 0, 0.2f, 0.8f);
-                    wall5.material = new Material(0.0f, 0, 0.2f, 0.8f);
+                 wall1.SetPen(new Pen(Color.Green));
+                 wall2.SetPen(new Pen(Color.OrangeRed));
+                 wall3.SetPen(new Pen(Color.LightGray));
+                 wall4.SetPen(new Pen(Color.LightGray));
+                 wall5.SetPen(new Pen(Color.LightGray));
+                 wall1.material = new Material(0.0f, 0, 0.2f, 0.8f);
+                 wall2.material = new Material(0.0f, 0, 0.2f, 0.8f);
+                 wall3.material = new Material(0.0f, 0, 0.2f, 0.8f);
+                 wall4.material = new Material(0.0f, 0, 0.2f, 0.8f);
+                 wall5.material = new Material(0.0f, 0, 0.2f, 0.8f);
 
-                    room.material = new Material(0.95f, 0f, 0.0f, 0.1f);
-                    box.Add(wall1);
-                    box.Add(wall2);
-                    box.Add(wall3);
-                    box.Add(wall4);
-                    box.Add(wall5);
-
+                 room.material = new Material(0.95f, 0f, 0.0f, 0.1f);*/
+                /*   box.Add(wall1);
+                   box.Add(wall2);
+                   box.Add(wall3);
+                   box.Add(wall4);
+                   box.Add(wall5);*/
+                room.faces[0].fMaterial = new Material(0.95f, 0f, 0.0f, 0.1f);
             }
 
 
@@ -399,7 +402,7 @@ namespace lab6
         {
             Ray r = new Ray(point, light);
             foreach (Polyhedron poly in box)
-                if (poly.isIntersection(r, out float insect, out Vector n))
+                if (poly.isIntersection(r, out float insect, out Vector n, out Face outFace))
                     //
                     if (insect < (light - point).length() && insect > Polyhedron.eps)
                         return false;
@@ -455,7 +458,7 @@ namespace lab6
         public Vector RayTrace(Ray r, int iters, float env)
         {
             if (iters <= 0)  return new Vector(0, 0, 0);
-            float intersectRayDist = 0;// позиция точки пересечения луча с объектом
+            float intersectRayDist = 0;// дистанция до точки пересечения луча с объектом
             Vector normal = null; //нормаль грани объекта
             Material material = new Material();
             Vector ColorPoint = new Vector(0, 0, 0);
@@ -463,20 +466,20 @@ namespace lab6
             bool refractPoly = false;
             foreach(Polyhedron poly in box) 
             {
-                if (poly.isIntersection(r, out float distance, out Vector norm))
+                if (poly.isIntersection(r, out float distance, out Vector norm, out Face outFace))
                 {     
                     // Выбираем ближайшую модель к началу луча
                     if (distance < intersectRayDist || intersectRayDist == 0)
                     {
                         intersectRayDist = distance;
                         normal = norm;
-                        material = new Material(poly.material);
+                        material = ((outFace == null) || (outFace.fMaterial == null)) ? new Material(poly.material) : outFace.fMaterial;
                     }
                 }
             }
 
             if (intersectRayDist == 0)//если не пересекается с фигурой
-                return new Vector(0, 0, 0);//Луч уходит в свободное пространство .Возвращаем значение по умолчанию
+                return new Vector();//Луч уходит в свободное пространство .Возвращаем значение по умолчанию
 
             //Если угол между направление луча и нормалью стороны острый
             

@@ -72,19 +72,13 @@ namespace lab3Affinis
         //===============================================================================
         private bool isPointInner(Point point)
         {
-            /*g.DrawEllipse(Pens.Red, point.X-2, point.Y - 2, 4, 4);
-            pictureBox1.Invalidate();*/
-            //int[] countIntersect = new int[4] { 0, 0, 0, 0 };
             int count = 0;
            
             if (p != null && p.Length > 2)
             {
                 Point p1 = p[p.Length - 1];
                 Point shine;
-
-                //for (int j = 0; j < 4; j++){
-                int x, y;
-                shine = new Point(point.X, 0); //fourWay(j, point.X, point.Y);
+                shine = new Point(point.X, 0); 
                 for (int i = 0; i < p.Length; i++)
                 {
                     Point p2 = p[i];
@@ -108,8 +102,6 @@ namespace lab3Affinis
                             )
                         {
                             count++;
-                            /*g.DrawEllipse(Pens.Red, Intersect.X - 2, Intersect.Y - 2, 4, 4);
-                            pictureBox1.Invalidate();*/
                         }
 
                         if ( Intersect == p1)
@@ -127,9 +119,6 @@ namespace lab3Affinis
         }
         private bool isPointInner(Point point, LinkedList<Point> p)
         {
-            /*g.DrawEllipse(Pens.Red, point.X-2, point.Y - 2, 4, 4);
-            pictureBox1.Invalidate();*/
-           // int[] countIntersect = new int[4] { 0, 0, 0, 0 };
             int count = 0;
            
             if (p != null && p.Count > 2)
@@ -137,10 +126,6 @@ namespace lab3Affinis
                 Point p1 = p.Last.Value;
                 Point shine = new Point(point.X, 0);
                 var node = p.First;
-                //for (int j = 0; j < 4; j++)  {
-                int x, y;
-                //shine = fourWay(j, point.X, point.Y);
-                //for (int i = 0; i < p.Count; i++){
                 while (node != null)
                 {
                     Point p2 = node.Value;
@@ -164,8 +149,6 @@ namespace lab3Affinis
                             )
                         {
                             count++;
-                            /*g.DrawEllipse(Pens.Red, Intersect.X - 2, Intersect.Y - 2, 4, 4);
-                            pictureBox1.Invalidate();*/
                         }
                         if (Intersect == p1)
                         {

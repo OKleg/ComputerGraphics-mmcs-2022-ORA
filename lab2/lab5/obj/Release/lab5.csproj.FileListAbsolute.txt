@@ -18,3 +18,12 @@ C:\AOLEG\ComputerGraphic\CornRoom1\ComputerGraphics-mmcs-2022-ORA\lab2\lab5\obj\
 C:\AOLEG\ComputerGraphic\CornRoom1\ComputerGraphics-mmcs-2022-ORA\lab2\lab5\obj\Release\lab5.csproj.CoreCompileInputs.cache
 C:\AOLEG\ComputerGraphic\CornRoom1\ComputerGraphics-mmcs-2022-ORA\lab2\lab5\obj\Release\lab5.exe
 C:\AOLEG\ComputerGraphic\CornRoom1\ComputerGraphics-mmcs-2022-ORA\lab2\lab5\obj\Release\lab5.pdb
+C:\AOLEG\ComputerGraphic\CornRoom1 — копия\ComputerGraphics-mmcs-2022-ORA\lab2\lab5\bin\Release\lab5.exe.config
+C:\AOLEG\ComputerGraphic\CornRoom1 — копия\ComputerGraphics-mmcs-2022-ORA\lab2\lab5\bin\Release\lab5.exe
+C:\AOLEG\ComputerGraphic\CornRoom1 — копия\ComputerGraphics-mmcs-2022-ORA\lab2\lab5\bin\Release\lab5.pdb
+C:\AOLEG\ComputerGraphic\CornRoom1 — копия\ComputerGraphics-mmcs-2022-ORA\lab2\lab5\obj\Release\lab5.Form1.resources
+C:\AOLEG\ComputerGraphic\CornRoom1 — копия\ComputerGraphics-mmcs-2022-ORA\lab2\lab5\obj\Release\lab5.Properties.Resources.resources
+C:\AOLEG\ComputerGraphic\CornRoom1 — копия\ComputerGraphics-mmcs-2022-ORA\lab2\lab5\obj\Release\lab5.csproj.GenerateResource.cache
+C:\AOLEG\ComputerGraphic\CornRoom1 — копия\ComputerGraphics-mmcs-2022-ORA\lab2\lab5\obj\Release\lab5.csproj.CoreCompileInputs.cache
+C:\AOLEG\ComputerGraphic\CornRoom1 — копия\ComputerGraphics-mmcs-2022-ORA\lab2\lab5\obj\Release\lab5.exe
+C:\AOLEG\ComputerGraphic\CornRoom1 — копия\ComputerGraphics-mmcs-2022-ORA\lab2\lab5\obj\Release\lab5.pdb

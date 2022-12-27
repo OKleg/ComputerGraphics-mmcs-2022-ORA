@@ -49,8 +49,9 @@ namespace lab6
             return false;
         }
 
-        public override bool isIntersection(Ray r, out float insect, out Vector normal)
+        public override bool isIntersection(Ray r, out float insect, out Vector normal, out Face outFace)
         {
+            outFace = null;
             if (RaySphereIntersection(r, vertices[0], radius, out insect) && (insect > eps))
             {
                 normal = (r.start + r.direction * insect) - vertices[0];

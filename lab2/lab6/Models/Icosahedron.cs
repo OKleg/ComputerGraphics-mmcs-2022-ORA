@@ -56,7 +56,7 @@ namespace lab6
 
             foreach (var f in this.faces)
             {
-                this.edges.AddRange(f.GetEdges());
+                this.edges.AddRange(f.getEdges());
             }
         }
         public Icosahedron(float ed) : base()
@@ -106,7 +106,7 @@ namespace lab6
 
             foreach (var f in this.faces)
             {
-                this.edges.AddRange(f.GetEdges());
+                this.edges.AddRange(f.getEdges());
             }
         }
 

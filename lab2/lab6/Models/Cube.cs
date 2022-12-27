@@ -34,7 +34,7 @@ namespace lab6
 
             foreach (var f in this.faces)
             {
-                this.edges.AddRange(f.GetEdges());
+                this.edges.AddRange(f.getEdges());
             }
         }
         public Cube(float edgSiz) : base()
@@ -62,7 +62,7 @@ namespace lab6
 
             foreach (var f in this.faces)
             {
-                this.edges.AddRange(f.GetEdges());
+                this.edges.AddRange(f.getEdges());
             }
         }
         public Cube(float W, float H) : base()
@@ -90,7 +90,7 @@ namespace lab6
 
             foreach (var f in this.faces)
             {
-                this.edges.AddRange(f.GetEdges());
+                this.edges.AddRange(f.getEdges());
             }
         }
     }
