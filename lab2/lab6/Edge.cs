@@ -1,11 +1,5 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms.VisualStyles;
-
 
 namespace lab6
 {
@@ -19,38 +13,20 @@ namespace lab6
             this.p1 = p1;
             this.p2 = p2;
         }
-        public bool Contains(int p)
+        public static Edge Contains(List<Edge> ed, int v1, int v2)
         {
-            return (p == p1 || p == p2);
+            foreach (var e in ed)
+            {
+                if ((v1 == e.p1 && v2 == e.p2) || (v2 == e.p1 && v1 == e.p2))
+                {
+                    return e;
+                }
+            }
+            return null;
         }
 
         public Edge()
         {
         }
-
-
-        /* public float MidX()
-         {
-             return (p1.x + p2.x) /2;
-         }
-
-         public float MidY()
-         {
-             return ((p1.y + p2.y) /2);
-         }
-         public float MidZ()
-         {
-             return ((p1.z + p2.z) / 2);
-         }
-         public Vector Mid()
-         {
-             return new Vector(this.MidX(), this.MidY(), this.MidZ());
-         }
-
-         public double Lenght() => Math.Sqrt((
-                       (p2.x - p1.x) * (p2.x - p1.x)
-                     + (p2.y - p1.y) * (p2.y - p1.y)
-                     + (p2.z - p1.z) * (p2.z - p1.z)));
-        */
     }
 }

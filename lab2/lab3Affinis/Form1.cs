@@ -81,9 +81,6 @@ namespace lab3Affinis
             {
                 Point p1 = p[p.Length - 1];
                 Point shine;
-
-                //for (int j = 0; j < 4; j++){
-                int x, y;
                 shine = new Point(point.X, 0); //fourWay(j, point.X, point.Y);
                 for (int i = 0; i < p.Length; i++)
                 {

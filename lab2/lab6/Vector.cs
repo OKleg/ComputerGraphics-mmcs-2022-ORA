@@ -10,7 +10,14 @@ namespace lab6
         public float y { get; set; }
         public float z { get; set; }
         public float w { get; set; }
-
+        public Vector()
+        {
+            x = 0;
+            y = 0;
+            z = 0;
+            w = 1;
+        }
+        public Vector(Vector start, Vector end) : this(end.x - start.x, end.y - start.y, end.z - start.z) { }
         public Vector(float X, float Y, float Z, float w = 1)
         {
             this.x = X;
@@ -18,7 +25,16 @@ namespace lab6
             this.z = Z;
             this.w = w;
         }
-        float getLength()
+        public Vector(Vector p)
+        {
+            if (p == null)
+                return;
+            x = p.x;
+            y = p.y;
+            z = p.z;
+            w = p.w;
+        }
+        public float length()
         {
             return (float)Math.Sqrt(
                 this.x * this.x + this.y * this.y + this.z * this.z
@@ -38,34 +54,22 @@ namespace lab6
             return hash;
         }
 
-        /* public Vector multiply(AffineMatrix m, Vector v)
-         {
-             return new Vector(
-               m[0, 0] * v.x + m[0, 1] * v.y + m[0, 2] * v.z + m[0, 3] * v.w,
-               m[1, 0] * v.x + m[1, 1] * v.y + m[1, 2] * v.z + m[1, 3] * v.w,
-               m[2, 0] * v.x + m[2, 1] * v.y + m[2, 2] * v.z + m[2, 3] * v.w,
-               m[3, 0] * v.x + m[3, 1] * v.y + m[3, 2] * v.z + m[3, 3] * v.w
-
-             );
-         }*/
-        /* public static Vector operator *(AffineMatrix m, Vector v)
-         {
-             return new Vector(
-               m[0, 0] * v.x + m[0, 1] * v.y + m[0, 2] * v.z + m[0, 3] * v.w,
-               m[1, 0] * v.x + m[1, 1] * v.y + m[1, 2] * v.z + m[1, 3] * v.w,
-               m[2, 0] * v.x + m[2, 1] * v.y + m[2, 2] * v.z + m[2, 3] * v.w,
-               m[3, 0] * v.x + m[3, 1] * v.y + m[3, 2] * v.z + m[3, 3] * v.w
-
-             );
-         }*/
+       
         public Vector normalize()
         {
-            float length = this.getLength();
+            float length = this.length();
 
             this.x /= length;
             this.y /= length;
             this.z /= length;
             return this;
+        }
+        public static Vector normalize(Vector p)
+        {
+            float z = (float)Math.Sqrt((float)(p.x * p.x + p.y * p.y + p.z * p.z));
+            if (z == 0)
+                return new Vector(p);
+            return new Vector(p.x / z, p.y / z, p.z / z);
         }
         public static void normalize(List<Vector> v)
         {
@@ -90,7 +94,12 @@ namespace lab6
               v1.z * v2.x - v1.x * v2.z,
               v1.x * v2.y - v1.y * v2.x
             );
-        }   
+        }
+        // Скалярное произведение векторов
+        public static float scalar(Vector p1, Vector p2)
+        {
+            return p1.x * p2.x + p1.y * p2.y + p1.z * p2.z;
+        }
         public static Vector operator +(Vector v1, Vector v2)
         {
             return new Vector(
@@ -101,48 +110,48 @@ namespace lab6
         }
         public static Vector operator -(Vector v1, Vector v2)
         {
-            return new Vector(
-                        v1.x - v2.x,
-                        v1.y - v2.y,
-                        v1.z - v2.z
-                        );
+            return new Vector( v1.x - v2.x, v1.y - v2.y, v1.z - v2.z );
         }
+        /*  public static Vector operator *(Vector v1, Vector v2)
+          {
+              return new Vector(
+                          v1.x * v2.x,
+                          v1.y * v2.y,
+                          v1.z * v2.z
+                          );
+          }*/
         public static Vector operator *(Vector v1, Vector v2)
         {
-            return new Vector(
-                        v1.x * v2.x,
-                        v1.y * v2.y,
-                        v1.z * v2.z
-                        );
+            return cross(v1, v2);
         }
         public static Vector operator *(Vector v1, float i)
         {
-            return new Vector(
-                        v1.x * i,
-                        v1.y * i,
-                        v1.z * i
-                        );
+            return new Vector( v1.x * i, v1.y * i,  v1.z * i );
         }
         public static Vector operator /(Vector v1, float i)
         {
-            return new Vector(
-                        v1.x / i,
-                        v1.y / i,
-                        v1.z / i
-                        );
+            return new Vector(   v1.x / i, v1.y / i, v1.z / i );
         }
        
-        public static Vector operator *( int i,Vector v1)
+        public static Vector operator *( float i,Vector v1) 
         {
-            return new Vector(
-                        v1.x * i,
-                        v1.y * i,
-                        v1.z * i
-                        );
+            return new Vector( v1.x * i,  v1.y * i,   v1.z * i  );
         }
 
-
-         public static float MidX(Vector v1, Vector v2)
+        public static float distance(Vector p1, Vector p2)
+        {
+            return (float)Math.Sqrt(Math.Pow(p2.x - p1.x, 2) + Math.Pow(p2.y - p1.y, 2) + Math.Pow(p2.z - p1.z, 2));
+        }
+        public static Vector VectorOnLine(Vector origin, Vector direction, float distance)
+        {
+            return new Vector(origin.x + direction.x * distance, origin.y + direction.y * distance, origin.z + direction.z * distance);
+        }
+        public static Vector getVectorProjection(Vector origin, Vector direction, Vector projected)
+        {
+            float parameter = (float)((direction.x * (projected.x - origin.x) + direction.y * (projected.y - origin.y) + direction.z * (projected.z - origin.z)) / (Math.Pow(direction.x, 2) + Math.Pow(direction.y, 2) + Math.Pow(direction.z, 2)));
+            return VectorOnLine(origin, direction, parameter);
+        }
+        public static float MidX(Vector v1, Vector v2)
          {
              return (v1.x + v2.x) /2;
          }

@@ -53,8 +53,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AffineMatrix.cs" />
-    <Compile Include="Cube.cs" />
-    <Compile Include="Dodecahedron.cs" />
+    <Compile Include="Models\Cube.cs" />
+    <Compile Include="Models\Dodecahedron.cs" />
     <Compile Include="Edge.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -62,12 +62,15 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Icosahedron.cs" />
+    <Compile Include="Models\Icosahedron.cs" />
     <Compile Include="Matrix.cs" />
-    <Compile Include="Octahedron.cs" />
-    <Compile Include="Pyramid .cs" />
+    <Compile Include="Models\Octahedron.cs" />
+    <Compile Include="Models\Pyramid .cs" />
+    <Compile Include="RayTrace\Light.cs" />
+    <Compile Include="RayTrace\Material.cs" />
+    <Compile Include="RayTrace\Ray.cs" />
     <Compile Include="RotateFigureBuilder.cs" />
-    <Compile Include="Tetrahedron.cs" />
+    <Compile Include="Models\Tetrahedron.cs" />
     <Compile Include="Vector.cs" />
     <Compile Include="Face.cs" />
     <Compile Include="Polyhedron.cs" />
@@ -99,5 +102,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

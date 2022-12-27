@@ -27,7 +27,10 @@ namespace lab6
         List<Vector> Generatrix;
         int presCount;
 
-        Dictionary<String,Polyhedron> polyhedrons;
+        Vector cameraPos = new Vector(0, 0, 100);
+        Vector cameraDirection = new Vector(0, 0, -1);
+
+        Dictionary<String, Polyhedron> polyhedrons;
         public Form1()
         {
             InitializeComponent();
@@ -35,16 +38,25 @@ namespace lab6
             g = Graphics.FromImage(pictureBox1.Image);
             color = Color.Black;
             pen = new Pen(color);
-            polyhedrons = new Dictionary<String,Polyhedron>();
+            polyhedrons = new Dictionary<String, Polyhedron>();
             SelectedItemBox = comboBox1.SelectedItem.ToString();
             Generatrix = new List<Vector>(); // образующая
             presCount = 0;
         }
+        private bool isVisible(Vector v1, Vector v2, Vector v3)
+        {
+            Vector t1 = v1 - v2;
+            Vector t2 = v2 - v3;
+            Vector normal = Vector.cross(t2, t1).normalize();
+            float res = Vector.scalar(cameraDirection, normal);
+            return res > 0; 
+        }
+        
         private void Draw(Polyhedron polyhedron)
         {
             g.Clear(Color.White);
-            List<Edge> edges = polyhedron.edges;
-            //AffineMatrix m = new AffineMatrix();
+            
+            List<Face> faces = polyhedron.faces;
             List<Vector> sceneVertices = new List<Vector>(polyhedron.vertices);
 
             if (comboBox4.SelectedIndex == 0)
@@ -52,50 +64,34 @@ namespace lab6
                 Matrix.Transform(sceneVertices,
                     Matrix.getPerspectiveProjection(
                         90, pictureBox1.Width / pictureBox1.Height,
-                        -1, -1000) * Matrix.getView(new Vector(0, 0, 100), new Vector(0, 0, -1), new Vector(0, -1, 0)));
+                        -1, -1000) * Matrix.getView(cameraPos, cameraDirection, new Vector(0, -1, 0)));
             }
             else Matrix.Transform(sceneVertices, Matrix.getIsometricProjection());
-
-            //  Matrix matr = Matrix.getTranslation(pictureBox1.Width / 2, pictureBox1.Height / 2, 0);
-            //  Matrix.Transform(sceneVertices, matr);
-            /*  g.DrawLine(penX,
-                      *
-            sceneVertices[sceneVertices.Count - 1].x,
-                      sceneVertices[sceneVertices.Count - 1].y,
-                      sceneVertices[sceneVertices.Count - 1].x + 150,
-                      sceneVertices[sceneVertices.Count - 1].y);
-              g.DrawLine(penY,
-                      sceneVertices[sceneVertices.Count - 1].x,
-                      sceneVertices[sceneVertices.Count - 1].y,
-                      sceneVertices[sceneVertices.Count - 1].x,
-                      sceneVertices[sceneVertices.Count - 1].y - 150);
-              Vector zVector = new Vector(-1, 1, 0);
-              Vector zCoords = sceneVertices[sceneVertices.Count - 1] + (zVector.normalize() * 150);
-
-              g.DrawLine(penZ,
-                 sceneVertices[sceneVertices.Count - 1].x,
-                 sceneVertices[sceneVertices.Count - 1].y,
-                zCoords.x,
-                zCoords.y
-              );*/
-            foreach (var e in edges)
+            foreach (var face in faces)
             {
-                if (e.p1 == 0 || e.p2 == 0)
+                if (isVisible(face.getPoint(0), face.getPoint(1), face.getPoint(face.points.Count-1)))
                 {
-                    pen = new Pen(Color.Red);
+                    foreach (var e in face.edges)
+                    {
+                        if (e.p1 == 0 || e.p2 == 0)
+                        {
+                            pen = new Pen(Color.Red);
+                        }
+                        else if (e.p1 == 6 || e.p2 == 6)
+                        {
+                            pen = new Pen(Color.Blue);
+                        }
+                        else pen = new Pen(color);
+                        g.DrawLine(pen,
+                             sceneVertices[e.p1].x + pictureBox1.Width / 2,
+                             sceneVertices[e.p1].y + pictureBox1.Height / 2,
+                             sceneVertices[e.p2].x + pictureBox1.Width / 2,
+                             sceneVertices[e.p2].y + pictureBox1.Height / 2);
+                        pictureBox1.Invalidate();
+                    }
                 }
-                else if (e.p1 == 6 || e.p2 == 6)
-                {
-                    pen = new Pen(Color.Blue);
-                }
-                else   pen = new Pen(color); 
-                g.DrawLine(pen,
-                     sceneVertices[e.p1].x + pictureBox1.Width / 2,
-                     sceneVertices[e.p1].y + pictureBox1.Height / 2,
-                     sceneVertices[e.p2].x + pictureBox1.Width / 2,
-                     sceneVertices[e.p2].y + pictureBox1.Height / 2);
+                pictureBox1.Invalidate();
             }
-           
             pictureBox1.Invalidate();
         }
        private void SetZero(List<Vector> v, out float dx,out float  dy,out float dz)
@@ -125,7 +121,7 @@ namespace lab6
             {
                 *//*polyhedrons.Add(new Cube());
 
-                Draw(polyhedrons[polyhedrons.Count - 1]);*//*
+                Draw(polyhedrons[SelectedItemBox]);*//*
                 if (!polyhedrons.ContainsKey(comboBox1.SelectedItem.ToString()))
                 {
                     polyhedrons.Add(new Cube());
@@ -134,33 +130,33 @@ namespace lab6
             else if (comboBox1.SelectedItem.ToString() == "Тетраэдр")
             {
                 polyhedrons.Add(new Tetrahedron());
-                Draw(polyhedrons[polyhedrons.Count - 1]);
+                Draw(polyhedrons[SelectedItemBox]);
             }
             else if (comboBox1.SelectedItem.ToString() == "Пирамида")
             {
                 polyhedrons.Add(new Pyramid());
-                Draw(polyhedrons[polyhedrons.Count - 1]);
+                Draw(polyhedrons[SelectedItemBox]);
             }
             else if (comboBox1.SelectedItem.ToString() == "Октаэдр")
             {
                 polyhedrons.Add(new Octahedron());
-                Draw(polyhedrons[polyhedrons.Count - 1]);
+                Draw(polyhedrons[SelectedItemBox]);
             }
             
             else if (comboBox1.SelectedItem.ToString() == "Додекаэдр*")
             {
                 polyhedrons.Add(new Dodecahedron());
-                Draw(polyhedrons[polyhedrons.Count - 1]);
+                Draw(polyhedrons[SelectedItemBox]);
             }
             else if (comboBox1.SelectedItem.ToString() == "Икосаэдр*")
             {
                 polyhedrons.Add(new Icosahedron());
-                Draw(polyhedrons[polyhedrons.Count - 1]);
+                Draw(polyhedrons[SelectedItemBox]);
             }*/
            /* else
             {
                 polyhedrons.Add(new Polyhedron());
-                Draw(polyhedrons[polyhedrons.Count - 1]);
+                Draw(polyhedrons[SelectedItemBox]);
             }*/
 
         }
@@ -214,11 +210,23 @@ namespace lab6
             List<Vector> sceneVertices = new List<Vector>(polyhedrons[SelectedItemBox].vertices);
             Matrix m = Matrix.getRotationX(trackBarOY.Value);
             float dx, dy, dz;
-           // SetZero(sceneVertices,out dx, out dy, out dz);
+            SetZero(sceneVertices,out dx, out dy, out dz);
             Matrix.Transform(sceneVertices, m);
-           // ReSetZero(sceneVertices, dx,  dy,  dz);
+            ReSetZero(sceneVertices, dx,  dy,  dz);
             Draw(new Polyhedron(sceneVertices, polyhedrons[SelectedItemBox].edges));
 
+        }
+        private void trackBarOX_MouseUp(object sender, MouseEventArgs e)
+        {
+            Matrix m = Matrix.getRotationX(trackBarOY.Value);
+            float dx, dy, dz;
+            SetZero(polyhedrons[SelectedItemBox].vertices, out dx, out dy, out dz);
+            Matrix.Transform(polyhedrons[SelectedItemBox].vertices, m);
+            ReSetZero(polyhedrons[SelectedItemBox].vertices, dx, dy, dz);
+
+            Draw(polyhedrons[SelectedItemBox]);
+            trackBarOY.Value = 0;
+            labelOX.Text = trackBarOY.Value.ToString();
         }
          private void trackBarOY_Scroll(object sender, EventArgs e)
         {
@@ -226,9 +234,9 @@ namespace lab6
             List<Vector> sceneVertices = new List<Vector>(polyhedrons[SelectedItemBox].vertices);
             Matrix m = Matrix.getRotationY(trackBarOX.Value);
             float dx, dy, dz;
-          //  SetZero(sceneVertices, out dx, out dy, out dz);
+            SetZero(sceneVertices, out dx, out dy, out dz);
             Matrix.Transform(sceneVertices, m);
-           // ReSetZero(sceneVertices, dx, dy, dz);
+            ReSetZero(sceneVertices, dx, dy, dz);
             Draw(new Polyhedron(sceneVertices, polyhedrons[SelectedItemBox].edges));
         }
        
@@ -238,9 +246,9 @@ namespace lab6
             List<Vector> sceneVertices = new List<Vector>(polyhedrons[SelectedItemBox].vertices);
             Matrix m = Matrix.getRotationZ(trackBarOZ.Value);
             float dx, dy, dz;
-         //SetZero(sceneVertices, out dx, out dy, out dz);
+            SetZero(sceneVertices, out dx, out dy, out dz);
             Matrix.Transform(sceneVertices, m);
-         // ReSetZero(sceneVertices, dx, dy, dz);
+            ReSetZero(sceneVertices, dx, dy, dz);
             Draw(new Polyhedron(sceneVertices, polyhedrons[SelectedItemBox].edges));
         }  
         private void trackBarL_Scroll(object sender, EventArgs e)
@@ -273,29 +281,16 @@ namespace lab6
             }
         }
 
-        private void trackBarOX_MouseUp(object sender, MouseEventArgs e)
-        {
-            /*  AffineMatrix m = new AffineMatrix();
-              m.Rotate(polyhedrons[SelectedItemBox].vertices, trackBar2.Value, trackBar1.Value,  0);*/
-            Matrix m = Matrix.getRotationX(trackBarOY.Value);
-            float dx, dy, dz;
-         //SetZero(polyhedrons[polyhedrons.Count - 1].vertices, out dx, out dy, out dz);
-            Matrix.Transform(polyhedrons[SelectedItemBox].vertices, m);
-         // ReSetZero(polyhedrons[polyhedrons.Count - 1].vertices, dx, dy, dz);
-
-            Draw(polyhedrons[SelectedItemBox]);
-            trackBarOY.Value = 0;
-            labelOX.Text = trackBarOY.Value.ToString();
-        }
+       
         private void trackBarOY_MouseUp(object sender, MouseEventArgs e)
         {
             // AffineMatrix m = new AffineMatrix();
-            // m.Rotate(polyhedrons[polyhedrons.Count - 1].vertices, trackBar2.Value, trackBar1.Value,  0);
+            // m.Rotate(polyhedrons[SelectedItemBox].vertices, trackBar2.Value, trackBar1.Value,  0);
             Matrix m = Matrix.getRotationY(trackBarOX.Value);
             float dx, dy, dz;
-         //SetZero(polyhedrons[polyhedrons.Count - 1].vertices, out dx, out dy, out dz);
+            SetZero(polyhedrons[SelectedItemBox].vertices, out dx, out dy, out dz);
             Matrix.Transform(polyhedrons[SelectedItemBox].vertices, m);
-         // ReSetZero(polyhedrons[polyhedrons.Count - 1].vertices, dx, dy, dz);
+            ReSetZero(polyhedrons[SelectedItemBox].vertices, dx, dy, dz);
 
             Draw(polyhedrons[SelectedItemBox]);
             trackBarOX.Value = 0;
@@ -305,9 +300,9 @@ namespace lab6
         {
             Matrix m = Matrix.getRotationZ(trackBarOZ.Value);
             float dx, dy, dz;
-         //SetZero(polyhedrons[polyhedrons.Count - 1].vertices, out dx, out dy, out dz);
+            SetZero(polyhedrons[SelectedItemBox].vertices, out dx, out dy, out dz);
             Matrix.Transform(polyhedrons[SelectedItemBox].vertices, m);
-            // ReSetZero(polyhedrons[polyhedrons.Count - 1].vertices, dx, dy, dz);
+            ReSetZero(polyhedrons[SelectedItemBox].vertices, dx, dy, dz);
 
             Draw(polyhedrons[SelectedItemBox]);
             trackBarOZ.Value = 0;
@@ -332,7 +327,7 @@ namespace lab6
                 Matrix mat4 = Matrix.getСonvergingLtoZ(-l, -m, -n);
                 Matrix mat5 = Matrix.getTranslation(a, b, c);
 
-                // Matrix.Transform(polyhedrons[polyhedrons.Count - 1].vertices, mat1 * mat2 * mat3 * mat4 * mat5);
+                // Matrix.Transform(polyhedrons[SelectedItemBox].vertices, mat1 * mat2 * mat3 * mat4 * mat5);
                 Vector v1 = new Vector(a, b, c);
                 Vector v2 = new Vector(l, m, n);
                 Matrix.Transform(polyhedrons[SelectedItemBox].vertices, Matrix.getRotateL(v1,v2, trackBarL.Value));
@@ -354,9 +349,9 @@ namespace lab6
         {
             Matrix m = Matrix.getScale(2,2,2);
             float dx, dy, dz;
-         //SetZero(polyhedrons[polyhedrons.Count - 1].vertices, out dx, out dy, out dz);
+         //SetZero(polyhedrons[SelectedItemBox].vertices, out dx, out dy, out dz);
             Matrix.Transform(polyhedrons[SelectedItemBox].vertices, m);
-         // ReSetZero(polyhedrons[polyhedrons.Count - 1].vertices, dx, dy, dz);
+         // ReSetZero(polyhedrons[SelectedItemBox].vertices, dx, dy, dz);
             Draw(polyhedrons[SelectedItemBox]);
         }
         
@@ -364,9 +359,9 @@ namespace lab6
         {
             Matrix m = Matrix.getScale(0.5f, 0.5f, 0.5f);
             float dx, dy, dz;
-         //SetZero(polyhedrons[polyhedrons.Count - 1].vertices, out dx, out dy, out dz);
+         //SetZero(polyhedrons[SelectedItemBox].vertices, out dx, out dy, out dz);
             Matrix.Transform(polyhedrons[SelectedItemBox].vertices, m);
-         // ReSetZero(polyhedrons[polyhedrons.Count - 1].vertices, dx, dy, dz);
+         // ReSetZero(polyhedrons[SelectedItemBox].vertices, dx, dy, dz);
             Draw(polyhedrons[SelectedItemBox]);
         }
 
@@ -377,8 +372,8 @@ namespace lab6
             if (hx.Text!="" && hy.Text != "" && hz.Text != "" )
             {
                 /* AffineMatrix m = new AffineMatrix();
-                 m.Translation(polyhedrons[polyhedrons.Count - 1].vertices,int.Parse(hx.Text), int.Parse(hy.Text), int.Parse(hz.Text));
-              */ //  Draw(polyhedrons[polyhedrons.Count - 1]);
+                 m.Translation(polyhedrons[SelectedItemBox].vertices,int.Parse(hx.Text), int.Parse(hy.Text), int.Parse(hz.Text));
+              */ //  Draw(polyhedrons[SelectedItemBox]);
                 Matrix m = Matrix.getTranslation(-int.Parse(hx.Text), int.Parse(hy.Text), int.Parse(hz.Text));
                 Matrix.Transform(polyhedrons[SelectedItemBox].vertices, m);
                 Draw(polyhedrons[SelectedItemBox]);
