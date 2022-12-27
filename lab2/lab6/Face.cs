@@ -68,8 +68,13 @@ namespace lab6
         {
             Normal = norm(this);
         }
-        static public Vector FindCentroid(List<Vector> points)
+        static public Vector FindCentroid(Face face)
         {
+            List<Vector> points = new List<Vector>();
+            for (int i = 0; i < face.points.Count-1; i++)
+            {
+                points.Add(face.getPoint(i)); 
+            }
             if (points.Count > 1)
             {
                 Vector res = new Vector((float)Math.Round(points.Average(p => p.x)), (float)Math.Round(points.Average(p => p.y)), (float)Math.Round(points.Average(p => p.z)));

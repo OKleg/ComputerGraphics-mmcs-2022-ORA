@@ -34,7 +34,7 @@ namespace lab6
             z = p.z;
             w = p.w;
         }
-        float length()
+        public float length()
         {
             return (float)Math.Sqrt(
                 this.x * this.x + this.y * this.y + this.z * this.z
@@ -99,10 +99,6 @@ namespace lab6
         public static float scalar(Vector p1, Vector p2)
         {
             return p1.x * p2.x + p1.y * p2.y + p1.z * p2.z;
-        }
-        public static bool isVisible(Vector view, Vector normal)
-        {
-            return Vector.scalar(view, normal) > 0;
         }
         public static Vector operator +(Vector v1, Vector v2)
         {

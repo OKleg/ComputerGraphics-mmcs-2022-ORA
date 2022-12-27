@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace lab6
 {
     public class Edge
@@ -11,9 +13,16 @@ namespace lab6
             this.p1 = p1;
             this.p2 = p2;
         }
-        public bool Contains(int p)
+        public static Edge Contains(List<Edge> ed, int v1, int v2)
         {
-            return (p == p1 || p == p2);
+            foreach (var e in ed)
+            {
+                if ((v1 == e.p1 && v2 == e.p2) || (v2 == e.p1 && v1 == e.p2))
+                {
+                    return e;
+                }
+            }
+            return null;
         }
 
         public Edge()
