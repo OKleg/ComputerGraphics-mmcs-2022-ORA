@@ -80,12 +80,16 @@ namespace lab6
             this.ClearBtn = new System.Windows.Forms.Button();
             this.LeftGo = new System.Windows.Forms.Button();
             this.RightGo = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.radioEmpty = new System.Windows.Forms.RadioButton();
+            this.radioGuro = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarOX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarOY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarOZ)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarL)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -597,11 +601,45 @@ namespace lab6
             this.RightGo.UseVisualStyleBackColor = true;
             this.RightGo.Click += new System.EventHandler(this.RightGo_Click);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.radioGuro);
+            this.groupBox1.Controls.Add(this.radioEmpty);
+            this.groupBox1.Location = new System.Drawing.Point(759, 425);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(103, 88);
+            this.groupBox1.TabIndex = 56;
+            this.groupBox1.TabStop = false;
+            // 
+            // radioEmpty
+            // 
+            this.radioEmpty.AutoSize = true;
+            this.radioEmpty.Checked = true;
+            this.radioEmpty.Location = new System.Drawing.Point(6, 19);
+            this.radioEmpty.Name = "radioEmpty";
+            this.radioEmpty.Size = new System.Drawing.Size(54, 17);
+            this.radioEmpty.TabIndex = 0;
+            this.radioEmpty.TabStop = true;
+            this.radioEmpty.Text = "Empty";
+            this.radioEmpty.UseVisualStyleBackColor = true;
+            // 
+            // radioGuro
+            // 
+            this.radioGuro.AutoSize = true;
+            this.radioGuro.Location = new System.Drawing.Point(3, 39);
+            this.radioGuro.Name = "radioGuro";
+            this.radioGuro.Size = new System.Drawing.Size(48, 17);
+            this.radioGuro.TabIndex = 1;
+            this.radioGuro.TabStop = true;
+            this.radioGuro.Text = "Guro";
+            this.radioGuro.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(874, 593);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.RightGo);
             this.Controls.Add(this.LeftGo);
             this.Controls.Add(this.ClearBtn);
@@ -659,6 +697,8 @@ namespace lab6
             ((System.ComponentModel.ISupportInitialize)(this.trackBarOZ)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarL)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -717,6 +757,9 @@ namespace lab6
         private System.Windows.Forms.Button ClearBtn;
         private System.Windows.Forms.Button RightGo;
         private System.Windows.Forms.Button LeftGo;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.RadioButton radioGuro;
+        private System.Windows.Forms.RadioButton radioEmpty;
     }
 }
 

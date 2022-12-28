@@ -112,7 +112,9 @@ namespace lab6
         }
         public static Vector operator -(Vector v1, Vector v2)
         {
-            return new Vector( v1.x - v2.x, v1.y - v2.y, v1.z - v2.z );
+            //if (v1 != null && v2 != null) 
+                return new Vector( v1.x - v2.x, v1.y - v2.y, v1.z - v2.z );
+           // else new Vector(0, 0, 0);
         }
         /*  public static Vector operator *(Vector v1, Vector v2)
           {

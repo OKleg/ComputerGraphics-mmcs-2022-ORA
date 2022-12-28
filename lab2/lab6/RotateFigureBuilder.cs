@@ -26,15 +26,15 @@ namespace lab6
                 res.AddRange(RotateGeneratrix);
                 for (int j = 0; j < generatrix.Count-1; j++) // соединяем точки прошлого вращения и текущего
                 {
-                    //Faces.Add(new Face(new List<int> { (i - 1) + j, (i - 1) + j + 1, j + i* ObrCount, j + i * ObrCount + 1 }));
-                    Faces.Add(new Face(new List<int> {j + ObrCount* (i-1), j + ObrCount * i, j + ObrCount * i +1, j + ObrCount * (i - 1) +1 }));
+                    //Faces.Add(new Face(new List<int> { (i - 1) + j, (i - 1) + j + 1, j + i* ObrCount, j + i * ObrCount + 1 },this));
+                    Faces.Add(new Face(new List<int> {j + ObrCount* (i-1), j + ObrCount * i, j + ObrCount * i +1, j + ObrCount * (i - 1) +1 },this));
                 }              
 
             }
             //осталось соеденить 0ое разбиение с последним и сделать низ с верхом
             for (int j = 0; j < generatrix.Count - 1; j++) 
             {
-                Faces.Add(new Face(new List<int> { j,j + (splits-1) * ObrCount, j + (splits - 1) * ObrCount +1, j+1 }));
+                Faces.Add(new Face(new List<int> { j,j + (splits-1) * ObrCount, j + (splits - 1) * ObrCount +1, j+1 },this));
             }
             //верх
             Faces.Add(new Face(Enumerable.Range(0, res.Count).Where(i => i % ObrCount == 0).ToList()));
@@ -64,15 +64,15 @@ namespace lab6
                 this.vertices.AddRange(RotateGeneratrix);
                 for (int j = 0; j < generatrix.Count - 1; j++) // соединяем точки прошлого вращения и текущего
                 {
-                    //Faces.Add(new Face(new List<int> { (i - 1) + j, (i - 1) + j + 1, j + i* ObrCount, j + i * ObrCount + 1 }));
-                    this.faces.Add(new Face(new List<int> { j + ObrCount * (i - 1), j + ObrCount * i, j + ObrCount * i + 1, j + ObrCount * (i - 1) + 1 }));
+                    //Faces.Add(new Face(new List<int> { (i - 1) + j, (i - 1) + j + 1, j + i* ObrCount, j + i * ObrCount + 1 },this));
+                    this.faces.Add(new Face(new List<int> { j + ObrCount * (i - 1), j + ObrCount * i, j + ObrCount * i + 1, j + ObrCount * (i - 1) + 1 },this));
                 }
             }
 
             //осталось соеденить 0ое разбиение с последним и сделать низ с верхом
             for (int j = 0; j < generatrix.Count - 1; j++)
             {
-                this.faces.Add(new Face(new List<int> { j, j + (splits - 1) * ObrCount, j + (splits - 1) * ObrCount + 1, j + 1 }));
+                this.faces.Add(new Face(new List<int> { j, j + (splits - 1) * ObrCount, j + (splits - 1) * ObrCount + 1, j + 1 },this));
             }
             //верх
             this.faces.Add(new Face(Enumerable.Range(0, this.vertices.Count).Where(i => i % ObrCount == 0).ToList()));
@@ -117,14 +117,14 @@ namespace lab6
                             this.faces.Add(new Face(new List<int>
                             {
                                 0, 1 + (i-1)* (ObrCount-1), 1 + i* (ObrCount-1)
-                            }));
+                            },this));
                         }
                         else
                         {
                             this.faces.Add(new Face(new List<int>
                             {
                                  j +(i-1) * (ObrCount-1), j+ i* (ObrCount-1),j+ i* (ObrCount-1) +1, j +(i-1) * (ObrCount-1)+1
-                            }));
+                            }, this));
                         }
                     }
                     else
@@ -135,35 +135,35 @@ namespace lab6
                             //ObrCount * (i-1)
                             //ObrCount * (i - 1), ObrCount * i, ObrCount * i + 1, ObrCount * (i - 1) + 1
                             j + ObrCount * (i - 1), j + ObrCount * i, j + ObrCount * i + 1, j + ObrCount * (i - 1) + 1
-                        }));
+                        },this));
                     }
                 }
             }
             //последняя боковая 
             if (ConusType)
             {
-                //this.faces.Add(new Face(new List<int> { 0, 1, splits }));
+                //this.faces.Add(new Face(new List<int> { 0, 1, splits },this));
                 for (int j = 0; j < generatrix.Count - 1; j++)
                 {
                     if (j == 0)
                     {
-                        this.faces.Add(new Face(new List<int> { 0, 1, (splits-1) * (ObrCount-1) +1 }));
+                        this.faces.Add(new Face(new List<int> { 0, 1, (splits-1) * (ObrCount-1) +1 },this));
                     }
                     else
                     {
                         this.faces.Add(new Face(new List<int>
                         {
                            j,j+(splits-1) * (ObrCount-1),j+(splits-1) * (ObrCount-1) +1, j+1
-                        }));
+                        },this));
                     }
                 }
             }
             else
             {
-                //this.faces.Add(new Face(new List<int> { 0, ObrCount * (splits - 1), ObrCount * (splits - 1) + 1, 1 }));
+                //this.faces.Add(new Face(new List<int> { 0, ObrCount * (splits - 1), ObrCount * (splits - 1) + 1, 1 },this));
                 for (int j = 0; j < generatrix.Count - 1; j++)
                 {
-                    this.faces.Add(new Face(new List<int> { j, j + (splits - 1) * ObrCount, j + (splits - 1) * ObrCount + 1, j + 1 }));
+                    this.faces.Add(new Face(new List<int> { j, j + (splits - 1) * ObrCount, j + (splits - 1) * ObrCount + 1, j + 1 },this));
                 }
             }
 

@@ -8,7 +8,7 @@ namespace lab6
         public float ambient;       // коэффициент фонового освещения
         public float diffuse;       // коэффициент диффузного освещения
         public float environment;   // коэффициент преломления среды
-        public Vector color= new Vector(0,0,0);       
+        public Vector color= new Vector(0,1,0);       
 
         public Material(float refl, float refr, float amb, float dif, float env = 1)
         {

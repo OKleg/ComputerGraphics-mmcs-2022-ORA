@@ -16,7 +16,12 @@ using Newtonsoft.Json;
 namespace lab6
 {
     public partial class Form1 : Form
-    {
+    { 
+        Vector cameraPos = new Vector(0, 0, 100);
+        Vector cameraDirection = new Vector(0, 0, -1);
+        Vector LightPos = new Vector(0,-100,100);
+        Vector LightColor = new Vector(1, 1, 1);
+
         Graphics g;
         Color color = Color.Black;
         Pen pen = new Pen(Color.Black);
@@ -27,14 +32,21 @@ namespace lab6
         List<Vector> Generatrix;
         int presCount;
 
-        Vector cameraPos = new Vector(0, 0, 100);
-        Vector cameraDirection = new Vector(0, 0, -1);
+       
 
         Dictionary<String, Polyhedron> polyhedrons;
         public Form1()
         {
             InitializeComponent();
-            pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+
+            h = pictureBox1.Height;
+            w = pictureBox1.Width;
+            pictureBox1.Image = new Bitmap(w, h);
+            camera = new Vector();
+            leftUpCorn = new Vector();
+            rightUpCorn = new Vector();
+            leftDownCorn = new Vector();
+            rightDownCorn = new Vector();
             g = Graphics.FromImage(pictureBox1.Image);
             color = Color.Black;
             pen = new Pen(color);
@@ -127,8 +139,10 @@ namespace lab6
                 else
                     dict.Add(p1.Y, new GradientLeftRight(p1.X, p1.X, clr, clr));
                 step++;
-
-                bmp.SetPixel(p1.X, p1.Y, clr);
+                if (p1.X>0 && p1.Y > 0 && p1.X < pictureBox1.Width && p1.Y<pictureBox1.Height )
+                { 
+                    bmp.SetPixel(p1.X, p1.Y, clr);
+                }
                 pictureBox1.Invalidate();
                 e2 = err;
                 if (e2 > -dx)
@@ -186,7 +200,11 @@ namespace lab6
             {
                 Color clr;
                 clr = Color.FromArgb(clr1.R + (clr2.R - clr1.R) * step / steps, clr1.G + (clr2.G - clr1.G) * step / steps, clr1.B + (clr2.B - clr1.B) * step / steps);
-                bmp.SetPixel(p1.X, p1.Y, clr);
+                if (p1.X > 0 && p1.Y > 0 && p1.X < pictureBox1.Width && p1.Y < pictureBox1.Height)
+                {
+                    bmp.SetPixel(p1.X, p1.Y, clr);
+                }
+
                 pictureBox1.Invalidate();
                 e2 = err;
                 if (e2 > -dx)
@@ -219,74 +237,54 @@ namespace lab6
             }
         }
 
-        private void MyDrawLine(Pen pen, Vector P0, Vector P1)
-        {
-            color = pen.Color;
-            var bmp = (pictureBox1.Image as Bitmap);
-            var a = (P1.y - P0.y) / (P1.x - P0.x);
-            var b = P0.y - a * P0.x;
-            for (var x = P0.x; x < P1.x; x += Polyhedron.eps)
+
+        public virtual void DrawTriangles(Face face)//Polyhedron poly)
+        { 
+            Light l1 = new Light(LightPos, LightColor);
+            Point p0 = new Point((int)face.getPoint(0).x + pictureBox1.Width / 2, (int)face.getPoint(0).y + pictureBox1.Height / 2);
+            Point p1 = new Point((int)face.getPoint(1).x + pictureBox1.Width / 2, (int)face.getPoint(1).y + pictureBox1.Height / 2);
+            Point p2 = new Point((int)face.getPoint(2).x + pictureBox1.Width / 2, (int)face.getPoint(2).y + pictureBox1.Height / 2);
+
+            Vector l0c = l1.Shade(face.getPoint(0), face.Normal, face.fMaterial.color, face.fMaterial.diffuse);// face.getPoint(0).color;
+            Vector l1c = l1.Shade(face.getPoint(1), face.Normal, face.fMaterial.color, face.fMaterial.diffuse);
+            Vector l2c = l1.Shade(face.getPoint(2), face.Normal, face.fMaterial.color, face.fMaterial.diffuse); 
+
+            Color c0 = Color.FromArgb((int)(255 * l0c.x), (int)(255 * l0c.y), (int)(255 * l0c.z));
+            Color c1 = Color.FromArgb((int)(255 * l1c.x), (int)(255 * l1c.y), (int)(255 * l1c.z));
+            Color c2 = Color.FromArgb((int)(255 * l2c.x), (int)(255 * l2c.y), (int)(255 * l2c.z));
+
+            //треугольная грань
+            if (face.points.Count == 3)
             {
-                var y = a * x + b;
-                bmp.SetPixel((int)x, (int)y, color);
+                RastrTriangle(p0, p1, p2, c0, c1, c2);
             }
-        }
-        private void MyDrawLine(Pen pen,float x0, float x1, float y0, float y1, Bitmap bmp)
-        {
-            color = pen.Color;
-            
-            float a = (y1 - y0) / (x1 - x0);
-            float b = y0 - a * x0;
-            for (var x = x0; x < x1; x += Polyhedron.eps)
+
+            //четырехугольная грань
+            else if (face.points.Count == 4)
             {
-                float y = a * x + b;
-                bmp.SetPixel((int)x, (int)y, color);
-
-            };
-        }
-        public virtual void DrawTriangles(Face face)
-        {
-               Point p0 = new Point((int)face.getPoint(0).x, (int)face.getPoint(0).y);
-                Point p1 = new Point((int)face.getPoint(1).x, (int)face.getPoint(1).y);
-                Point p2 = new Point((int)face.getPoint(2).x, (int)face.getPoint(2).y);
-               
-               
-                Color c0 = face.getPoint(0).color;
-                Color c1 = face.getPoint(1).color;
-                Color c2 = face.getPoint(2).color;
-               
-                //треугольная грань
-                if (face.points.Count == 3)
-                {
-             
-
-                RastrTriangle( p0, p1, p2,c0,c1,c2);
-                }
-
-                //четырехугольная грань
-                else if (face.points.Count == 4)
-                {
-                Point p3 = new Point((int)face.getPoint(3).x, (int)face.getPoint(3).y);
-                Color c3 = face.getPoint(3).color;
-                RastrTriangle(p0, p1, p3,c0,c1,c3);
+                Vector l3c = l1.Shade(face.getPoint(3), face.Normal, face.fMaterial.color, face.fMaterial.diffuse);
+                Point p3 = new Point((int)face.getPoint(3).x + pictureBox1.Width / 2, (int)face.getPoint(3).y + pictureBox1.Height / 2);
+                Color c3 = Color.FromArgb((int)(255 * l3c.x), (int)(255 * l3c.y), (int)(255 * l3c.z));
+                RastrTriangle(p0, p1, p3, c0, c1, c3);
                 RastrTriangle(p1, p2, p3, c1, c2, c3);
-                }
-                //четырехугольная грань
-                else if (face.points.Count == 5)
-                { 
-                Point p4 = new Point((int)face.getPoint(4).x, (int)face.getPoint(4).y);
-                Color c4 = face.getPoint(4).color;
-                Point p3 = new Point((int)face.getPoint(3).x, (int)face.getPoint(3).y);
-                Color c3 = face.getPoint(3).color;
-                RastrTriangle(  p0, p1, p3, c0,   c1,   c3);
-                RastrTriangle(  p1, p2, p3, c1,   c2,   c3);
-                RastrTriangle(  p0, p3, p4, c0,   c3,   c4);
-                } 
+            }
+            //четырехугольная грань
+            else if (face.points.Count == 5)
+            {
+                Vector l3c = l1.Shade(face.getPoint(3), face.Normal, face.fMaterial.color, face.fMaterial.diffuse);
+                Vector l4c = l1.Shade(face.getPoint(4), face.Normal, face.fMaterial.color, face.fMaterial.diffuse);
+                Point p4 = new Point((int)face.getPoint(4).x + pictureBox1.Width / 2, (int)face.getPoint(4).y + pictureBox1.Height / 2);
+                Color c4 = Color.FromArgb((int)(255 * l4c.x), (int)(255 * l4c.y), (int)(255 * l4c.z));
+                Point p3 = new Point((int)face.getPoint(3).x + pictureBox1.Width / 2, (int)face.getPoint(3).y + pictureBox1.Height / 2);
+                Color c3 = Color.FromArgb((int)(255 * l3c.x), (int)(255 * l3c.y), (int)(255 * l3c.z));
+                RastrTriangle(p0, p1, p3, c0, c1, c3);
+                RastrTriangle(p1, p2, p3, c1, c2, c3);
+                RastrTriangle(p0, p3, p4, c0, c3, c4);
+            } 
         }
         private void Draw(Polyhedron polyhedron)
         {
             g.Clear(Color.White);
-            var bmp = (pictureBox1.Image as Bitmap);
             List<Face> faces = polyhedron.faces;
             List<Vector> sceneVertices = new List<Vector>(polyhedron.vertices);
           
@@ -300,8 +298,7 @@ namespace lab6
             else Matrix.Transform(sceneVertices, Matrix.getIsometricProjection());
             foreach (var face in faces)
             {
-                if (isVisible(face.getPoint(0), face.getPoint(1), face.getPoint(face.points.Count-1)))
-                {
+                if (isVisible(face.getPoint(0), face.getPoint(1), face.getPoint(2)))  {
                     foreach (var e in face.edges)
                     {
                         if (e.p1 == 0 || e.p2 == 0)
@@ -313,20 +310,25 @@ namespace lab6
                             pen = new Pen(Color.Blue);
                         }
                         else pen = new Pen(color);
-                        g.DrawLine(
-                             //// MyDrawLine(
+                        if (radioEmpty.Checked)
+                        {
+                            g.DrawLine(
                               pen,
                              sceneVertices[e.p1].x + pictureBox1.Width / 2,
                              sceneVertices[e.p1].y + pictureBox1.Height / 2,
                              sceneVertices[e.p2].x + pictureBox1.Width / 2,
                              sceneVertices[e.p2].y + pictureBox1.Height / 2
-                             //// , bmp
                              );
-
-                        // DrawTriangles(face);
+                        }
+                        if (radioGuro.Checked)
+                        {
+                            DrawTriangles(face);
+                        }
+                       
                     }
                 }
             }
+            //DrawTriangles(new Polyhedron(sceneVertices, polyhedron.edges));
             pictureBox1.Invalidate();
         }
        private void SetZero(List<Vector> v, out float dx,out float  dy,out float dz)
@@ -754,5 +756,16 @@ namespace lab6
             cameraPos = cameraPos + new Vector(0, 0 , 0);
             Draw(polyhedrons[SelectedItemBox]);
         }
+       
+        /////////////////////////////////////////////////////////////////////////////////////////////
+       
+        public List<Light> lights = new List<Light>();   // список источников света
+        public Color[,] pixelsColor;                    // цвета пикселей для отображения на pictureBox
+        public Vector[,] coordsPictBox;
+        public Vector camera, leftUpCorn, rightUpCorn, leftDownCorn, rightDownCorn;
+        public int h, w;
+
+       
+
     }
 }

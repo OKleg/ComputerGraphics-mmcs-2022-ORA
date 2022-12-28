@@ -11,7 +11,7 @@ namespace lab6
         public List<Edge> edges = new List<Edge>();
         public List<int> points = new List<int>();
         public Pen pen = new Pen(Color.SlateGray);
-        public Material fMaterial = null;
+        public Material fMaterial = new Material(0.0f, 0.0f, 0.01f, 0.7f);
         public Vector Normal;
         Color color = Color.Gray;
 
@@ -21,7 +21,7 @@ namespace lab6
             this.points = points;
             if (this.points.Count() < 3)
                 Normal = new Vector(0, 0, 0);
-            else
+            else if (h!=null)
             {
                 Vector U = this.getPoint(1) - this.getPoint(0);
                 Vector V = this.getPoint(this.points.Count - 1) - this.getPoint(0);
