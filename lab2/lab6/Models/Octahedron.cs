@@ -21,14 +21,14 @@ namespace lab6
             vertices.Add(new Vector(0, 0, 0));
 
             this.faces = new List<Face>(){
-                new Face(new List<int>() { 2, 1, 0 },this),
-                new Face(new List<int>() { 3, 2, 0 },this),
-                new Face(new List<int>() { 4, 3, 0 },this),
-                new Face(new List<int>() { 4, 1, 0 },this),
-                new Face(new List<int>() { 5, 2, 1 },this),
-                new Face(new List<int>() { 5, 3, 2 },this),
-                new Face(new List<int>() { 5, 4, 3 },this),
-                new Face(new List<int>() { 5, 4, 1 },this)
+                new Face(new List<int>() { 0, 1, 2 },this),
+                new Face(new List<int>() { 0, 2, 3 },this),
+                new Face(new List<int>() { 0, 3, 4 },this),
+                new Face(new List<int>() { 0, 4, 1 },this),
+                new Face(new List<int>() { 1, 5, 2 },this),
+                new Face(new List<int>() { 2, 5, 3 },this),
+                new Face(new List<int>() { 3, 5, 4 },this),
+                new Face(new List<int>() { 4, 5, 1 },this)
             };
 
             foreach (var f in this.faces)

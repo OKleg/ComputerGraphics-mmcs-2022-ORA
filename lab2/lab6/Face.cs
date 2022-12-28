@@ -77,7 +77,7 @@ namespace lab6
             }
             if (points.Count > 1)
             {
-                Vector res = new Vector((float)Math.Round(points.Average(p => p.x)), (float)Math.Round(points.Average(p => p.y)), (float)Math.Round(points.Average(p => p.z)));
+                Vector res = new Vector((points.Average(p => p.x)), (points.Average(p => p.y)), (points.Average(p => p.z)));
                 return res;
             }
             else return new Vector(0, 0, 0);
