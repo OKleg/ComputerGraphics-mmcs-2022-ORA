@@ -78,6 +78,8 @@ namespace lab6
             this.DrawRotateModelBtn = new System.Windows.Forms.Button();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.ClearBtn = new System.Windows.Forms.Button();
+            this.LeftGo = new System.Windows.Forms.Button();
+            this.RightGo = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarOX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarOY)).BeginInit();
@@ -575,11 +577,33 @@ namespace lab6
             this.ClearBtn.UseVisualStyleBackColor = true;
             this.ClearBtn.Click += new System.EventHandler(this.ClearBtn_Click);
             // 
+            // LeftGo
+            // 
+            this.LeftGo.Location = new System.Drawing.Point(649, 464);
+            this.LeftGo.Name = "LeftGo";
+            this.LeftGo.Size = new System.Drawing.Size(42, 23);
+            this.LeftGo.TabIndex = 54;
+            this.LeftGo.Text = "<";
+            this.LeftGo.UseVisualStyleBackColor = true;
+            this.LeftGo.Click += new System.EventHandler(this.LeftGo_Click);
+            // 
+            // RightGo
+            // 
+            this.RightGo.Location = new System.Drawing.Point(711, 464);
+            this.RightGo.Name = "RightGo";
+            this.RightGo.Size = new System.Drawing.Size(42, 23);
+            this.RightGo.TabIndex = 55;
+            this.RightGo.Text = ">";
+            this.RightGo.UseVisualStyleBackColor = true;
+            this.RightGo.Click += new System.EventHandler(this.RightGo_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(874, 593);
+            this.Controls.Add(this.RightGo);
+            this.Controls.Add(this.LeftGo);
             this.Controls.Add(this.ClearBtn);
             this.Controls.Add(this.DrawRotateModelBtn);
             this.Controls.Add(this.label11);
@@ -691,6 +715,8 @@ namespace lab6
         private System.Windows.Forms.Button DrawRotateModelBtn;
         private System.IO.FileSystemWatcher fileSystemWatcher1;
         private System.Windows.Forms.Button ClearBtn;
+        private System.Windows.Forms.Button RightGo;
+        private System.Windows.Forms.Button LeftGo;
     }
 }
 

@@ -12,7 +12,7 @@ namespace lab6
         public List<Edge> edges = new List<Edge>();
         public Material material = new Material();
         public Vector center;
-        public Color color;
+        public Color color = Color.Gray;
         public Polyhedron(List<Vector> vertices, List<Edge> edges)
         {
             this.edges = edges;

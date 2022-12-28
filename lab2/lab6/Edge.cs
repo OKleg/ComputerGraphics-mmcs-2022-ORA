@@ -7,11 +7,12 @@ namespace lab6
     {
         public int p1;
         public int p2;
-
-        public Edge(int p1, int p2)
+        Face host;
+        public Edge(int p1, int p2, Face h = null)
         {
             this.p1 = p1;
             this.p2 = p2;
+            host = h;
         }
         public static Edge Contains(List<Edge> ed, int v1, int v2)
         {

@@ -66,9 +66,9 @@
     <Compile Include="Matrix.cs" />
     <Compile Include="Models\Octahedron.cs" />
     <Compile Include="Models\Pyramid .cs" />
-    <Compile Include="RayTrace\Light.cs" />
-    <Compile Include="RayTrace\Material.cs" />
-    <Compile Include="RayTrace\Ray.cs" />
+    <Compile Include="Light\Light.cs" />
+    <Compile Include="Light\Material.cs" />
+    <Compile Include="Light\Ray.cs" />
     <Compile Include="RotateFigureBuilder.cs" />
     <Compile Include="Models\Tetrahedron.cs" />
     <Compile Include="Vector.cs" />

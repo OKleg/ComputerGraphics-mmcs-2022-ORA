@@ -13,6 +13,7 @@ namespace lab6
         public Pen pen = new Pen(Color.SlateGray);
         public Material fMaterial = null;
         public Vector Normal;
+        Color color = Color.Gray;
 
         public Face(List<int> points, Polyhedron h = null)
         {
@@ -28,10 +29,10 @@ namespace lab6
                 Normal = Vector.normalize(normal);
             }
             edges = new List<Edge>();
-            edges.Add(new Edge(points[0], points[points.Count - 1]));
+            edges.Add(new Edge(points[0], points[points.Count - 1],this));
             for (int i = 0; i < points.Count - 1; i++)
             {
-                edges.Add(new Edge(points[i], points[i + 1]));
+                edges.Add(new Edge(points[i], points[i + 1],this));
             }
         }
         public Face(Face s)

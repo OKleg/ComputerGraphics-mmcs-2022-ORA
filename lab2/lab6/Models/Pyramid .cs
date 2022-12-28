@@ -17,18 +17,7 @@ namespace lab6
                   new Vector(50, -50, 50), // 4 вершина
                   new Vector(0, 0, 0) // center
         };
-            this.edges = new List<Edge>{
-
-                    new Edge(0, 1),
-                    new Edge(0, 2),
-                    new Edge(0, 3),
-                    new Edge(0, 4),
-
-                    new Edge(1, 2),
-                    new Edge(2, 3),
-                    new Edge(3, 4),
-                    new Edge(4, 1),
-        };
+           
             this.faces = new List<Face>(){
                 new Face(new List<int>() { 0, 1, 2, 3 },this),
                 new Face(new List<int>() { 0, 1, 5, 4 },this),
@@ -37,6 +26,10 @@ namespace lab6
                 new Face(new List<int>() { 1, 5, 6, 2 },this),
                 new Face(new List<int>() { 4, 7, 6, 5 },this)
             };
+            foreach (var f in this.faces)
+            {
+                this.edges.AddRange(f.getEdges());
+            }
         }
     }
 }

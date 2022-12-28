@@ -52,11 +52,241 @@ namespace lab6
             float res = Vector.scalar(eye, normal);
             return res > 0; 
         }
-        
+        //----------/ BresenhamLineGradientForEdge ==== GradientLeftRight \---------------
+        private class GradientLeftRight
+        {
+            public int left_x;
+            public int right_x;
+            public Color left_Color;
+            public Color right_Color;
+
+            public GradientLeftRight(int left_x, int right_x, Color left_Color, Color right_Color)
+            {
+                this.left_x = left_x;
+                this.right_x = right_x;
+                this.left_Color = left_Color;
+                this.right_Color = right_Color;
+            }
+        }
+
+        private void BresenhamLineGradientForEdge(Point p1, Point p2, Color clr1, Color clr2, Dictionary<int, GradientLeftRight> dict)
+        {
+            if (p1 == p2) return;
+            var bmp = (pictureBox1.Image as Bitmap);
+            //Color color = Color.Black;          
+            //delta
+            int dx = Math.Abs(p2.X - p1.X);
+            int dy = Math.Abs(p2.Y - p1.Y);
+
+            //signs, to where go
+            int sx = p1.X < p2.X ? 1 : -1;
+            int sy = p1.Y < p2.Y ? 1 : -1;
+
+            int err = (dx > dy ? dx : -dy) / 2;
+            int e2;
+
+            Point pt = p1;
+
+            //Count steps
+            int steps = 0;
+            while (pt.X != p2.X || pt.Y != p2.Y)
+            {
+                steps++;
+                e2 = err;
+                if (e2 > -dx)
+                {
+                    err -= dy;
+                    pt.X += sx;
+                }
+                if (e2 < dy)
+                {
+                    err += dx;
+                    pt.Y += sy;
+                }
+            }
+
+            int step = 0;
+            while (p1.X != p2.X || p1.Y != p2.Y)
+            {
+                Color clr;
+                clr = Color.FromArgb(clr1.R + (clr2.R - clr1.R) * step / steps, clr1.G + (clr2.G - clr1.G) * step / steps, clr1.B + (clr2.B - clr1.B) * step / steps);
+                if (dict.ContainsKey(p1.Y))
+                {
+                    if (dict[p1.Y].left_x > p1.X)
+                    {
+                        dict[p1.Y].left_x = p1.X;
+                        dict[p1.Y].left_Color = clr;
+                    }
+                    if (dict[p1.Y].right_x < p1.X)
+                    {
+                        dict[p1.Y].right_x = p1.X;
+                        dict[p1.Y].right_Color = clr;
+                    }
+
+                }
+                else
+                    dict.Add(p1.Y, new GradientLeftRight(p1.X, p1.X, clr, clr));
+                step++;
+
+                bmp.SetPixel(p1.X, p1.Y, clr);
+                pictureBox1.Invalidate();
+                e2 = err;
+                if (e2 > -dx)
+                {
+                    err -= dy;
+                    p1.X += sx;
+                }
+                if (e2 < dy)
+                {
+                    err += dx;
+                    p1.Y += sy;
+                }
+            }
+        }
+        //-------------\=====================================================/-----------------
+        private void BresenhamLineGradient(Point p1, Point p2, Color clr1, Color clr2)
+        {
+            if (p1 == p2)
+                return;
+            var bmp = (pictureBox1.Image as Bitmap);
+            //Color color = Color.Black;          
+            //delta
+            int dx = Math.Abs(p2.X - p1.X);
+            int dy = Math.Abs(p2.Y - p1.Y);
+
+            //signs, to where go
+            int sx = p1.X < p2.X ? 1 : -1;
+            int sy = p1.Y < p2.Y ? 1 : -1;
+
+            int err = (dx > dy ? dx : -dy) / 2;
+            int e2;
+
+            Point pt = p1;
+
+            //Count steps
+            int steps = 0;
+            while (pt.X != p2.X || pt.Y != p2.Y)
+            {
+                steps++;
+                e2 = err;
+                if (e2 > -dx)
+                {
+                    err -= dy;
+                    pt.X += sx;
+                }
+                if (e2 < dy)
+                {
+                    err += dx;
+                    pt.Y += sy;
+                }
+            }
+
+            int step = 0;
+            while (p1.X != p2.X || p1.Y != p2.Y)
+            {
+                Color clr;
+                clr = Color.FromArgb(clr1.R + (clr2.R - clr1.R) * step / steps, clr1.G + (clr2.G - clr1.G) * step / steps, clr1.B + (clr2.B - clr1.B) * step / steps);
+                bmp.SetPixel(p1.X, p1.Y, clr);
+                pictureBox1.Invalidate();
+                e2 = err;
+                if (e2 > -dx)
+                {
+                    err -= dy;
+                    p1.X += sx;
+                }
+                if (e2 < dy)
+                {
+                    err += dx;
+                    p1.Y += sy;
+                }
+
+                step++;
+            }
+        }
+        private void RastrTriangle(Point p1, Point p2, Point p3, Color c1, Color c2, Color c3)
+        {
+            Dictionary<int, GradientLeftRight> dict = new Dictionary<int, GradientLeftRight>();
+            BresenhamLineGradientForEdge(p1, p2, c1, c2, dict);
+            BresenhamLineGradientForEdge(p1, p3, c1, c3, dict);
+            BresenhamLineGradientForEdge(p2, p3, c2, c3, dict);
+
+            foreach (var t in dict)
+            {
+                int y = t.Key;
+                Point pt1 = new Point(t.Value.left_x, y);
+                Point pt2 = new Point(t.Value.right_x, y);
+                BresenhamLineGradient(pt1, pt2, t.Value.left_Color, t.Value.right_Color);
+            }
+        }
+
+        private void MyDrawLine(Pen pen, Vector P0, Vector P1)
+        {
+            color = pen.Color;
+            var bmp = (pictureBox1.Image as Bitmap);
+            var a = (P1.y - P0.y) / (P1.x - P0.x);
+            var b = P0.y - a * P0.x;
+            for (var x = P0.x; x < P1.x; x += Polyhedron.eps)
+            {
+                var y = a * x + b;
+                bmp.SetPixel((int)x, (int)y, color);
+            }
+        }
+        private void MyDrawLine(Pen pen,float x0, float x1, float y0, float y1, Bitmap bmp)
+        {
+            color = pen.Color;
+            
+            float a = (y1 - y0) / (x1 - x0);
+            float b = y0 - a * x0;
+            for (var x = x0; x < x1; x += Polyhedron.eps)
+            {
+                float y = a * x + b;
+                bmp.SetPixel((int)x, (int)y, color);
+
+            };
+        }
+        public virtual void DrawTriangles(Face face)
+        {
+               Point p0 = new Point((int)face.getPoint(0).x, (int)face.getPoint(0).y);
+                Point p1 = new Point((int)face.getPoint(1).x, (int)face.getPoint(1).y);
+                Point p2 = new Point((int)face.getPoint(2).x, (int)face.getPoint(2).y);
+               
+               
+                Color c0 = face.getPoint(0).color;
+                Color c1 = face.getPoint(1).color;
+                Color c2 = face.getPoint(2).color;
+               
+                //треугольная грань
+                if (face.points.Count == 3)
+                {
+             
+
+                RastrTriangle( p0, p1, p2,c0,c1,c2);
+                }
+
+                //четырехугольная грань
+                else if (face.points.Count == 4)
+                {
+                Point p3 = new Point((int)face.getPoint(3).x, (int)face.getPoint(3).y);
+                Color c3 = face.getPoint(3).color;
+                RastrTriangle(p0, p1, p3,c0,c1,c3);
+                RastrTriangle(p1, p2, p3, c1, c2, c3);
+                }
+                //четырехугольная грань
+                else if (face.points.Count == 5)
+                { 
+                Point p4 = new Point((int)face.getPoint(4).x, (int)face.getPoint(4).y);
+                Color c4 = face.getPoint(4).color;
+                Point p3 = new Point((int)face.getPoint(3).x, (int)face.getPoint(3).y);
+                Color c3 = face.getPoint(3).color;
+                RastrTriangle(  p0, p1, p3, c0,   c1,   c3);
+                RastrTriangle(  p1, p2, p3, c1,   c2,   c3);
+                RastrTriangle(  p0, p3, p4, c0,   c3,   c4);
+                } 
+        }
         private void Draw(Polyhedron polyhedron)
         {
             g.Clear(Color.White);
-            
+            var bmp = (pictureBox1.Image as Bitmap);
             List<Face> faces = polyhedron.faces;
             List<Vector> sceneVertices = new List<Vector>(polyhedron.vertices);
           
@@ -83,16 +313,19 @@ namespace lab6
                             pen = new Pen(Color.Blue);
                         }
                         else pen = new Pen(color);
-                        g.DrawLine(pen,
+                        g.DrawLine(
+                             //// MyDrawLine(
+                              pen,
                              sceneVertices[e.p1].x + pictureBox1.Width / 2,
                              sceneVertices[e.p1].y + pictureBox1.Height / 2,
                              sceneVertices[e.p2].x + pictureBox1.Width / 2,
-                             sceneVertices[e.p2].y + pictureBox1.Height / 2);
-                        pictureBox1.Invalidate();
-                        
+                             sceneVertices[e.p2].y + pictureBox1.Height / 2
+                             //// , bmp
+                             );
+
+                        // DrawTriangles(face);
                     }
                 }
-                pictureBox1.Invalidate();
             }
             pictureBox1.Invalidate();
         }
@@ -508,6 +741,18 @@ namespace lab6
             g.Clear(pictureBox1.BackColor);
             pictureBox1.Invalidate();
             Generatrix.Clear();
+        }
+
+        private void LeftGo_Click(object sender, EventArgs e)
+        {
+            cameraPos = cameraPos +  new Vector(0,0, 0);
+            Draw(polyhedrons[SelectedItemBox]);
+        }
+
+        private void RightGo_Click(object sender, EventArgs e)
+        {
+            cameraPos = cameraPos + new Vector(0, 0 , 0);
+            Draw(polyhedrons[SelectedItemBox]);
         }
     }
 }

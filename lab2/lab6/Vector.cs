@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace lab6
 {
@@ -10,6 +11,7 @@ namespace lab6
         public float y { get; set; }
         public float z { get; set; }
         public float w { get; set; }
+        public Color color = Color.Gray;
         public Vector()
         {
             x = 0;
