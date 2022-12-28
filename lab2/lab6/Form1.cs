@@ -763,7 +763,28 @@ namespace lab6
         public Color[,] pixelsColor;                    // цвета пикселей для отображения на pictureBox
         public Vector[,] coordsPictBox;
         public Vector camera, leftUpCorn, rightUpCorn, leftDownCorn, rightDownCorn;
-        public int h, w;
+
+		private void button1_Click_1(object sender, EventArgs e)
+		{
+			Matrix mat = new Matrix(new float[,] { { cameraPos.x, cameraPos.y , cameraPos.z, 1} });
+			mat = mat * Matrix.getRotationZ(5);
+			cameraPos.x = mat[0, 0];
+			cameraPos.y = mat[0, 1];
+			cameraPos.z = mat[0, 2];
+			cameraDirection = new Vector(0, 0, 0) - cameraPos;
+			cameraPos = cameraPos.normalize();
+
+
+			List<Vector> sceneVertices = new List<Vector>(polyhedrons[SelectedItemBox].vertices);
+			Matrix m = Matrix.getRotationY(trackBarOX.Value);
+			float dx, dy, dz;
+			SetZero(sceneVertices, out dx, out dy, out dz);
+			Matrix.Transform(sceneVertices, m);
+			ReSetZero(sceneVertices, dx, dy, dz);
+			Draw(new Polyhedron(sceneVertices, polyhedrons[SelectedItemBox].edges));
+		}
+
+		public int h, w;
 
        
 

@@ -39,34 +39,24 @@ namespace lab6
             });
         }
 
-        public static Matrix multiply(Matrix a, Matrix b)
-        {
+		public static Matrix multiply(Matrix a, Matrix b)
+		{
 
-            Matrix m = getDefaultMatrix();/*new  Matrix(new float[4,4] {
-        
-              {1, 0, 0, 0},
-        
-              {0, 1, 0, 0},
-        
-              {0, 0, 1, 0},
-        
-              {0, 0, 0, 1},
-            });*/
+			float[,] res = new float[a.mass.GetLength(0), b.mass.GetLength(1)];
+			for (int i = 0; i < a.mass.GetLength(0); i++)
+			{
+				for (int j = 0; j < b.mass.GetLength(1); j++)
+				{
+					for (int k = 0; k < b.mass.GetLength(0); k++)
+					{
+						res[i, j] += a[i, k] * b[k, j];
+					}
+				}
+			}
+			return new Matrix(res);
+		}
 
-            for (int i = 0; i < 4; i++)
-            {
-                for (int j = 0; j < 4; j++)
-                {
-                    m[i,j] = a[i,0] * b[0,j] +
-                      a[i,1] * b[1,j] +
-                      a[i,2] * b[2,j] +
-                      a[i,3] * b[3,j];
-                }
-            }
-
-            return m;
-        }
-        public Matrix multiplyV2(Matrix a, Matrix b)
+		public Matrix multiplyV2(Matrix a, Matrix b)
         {
             float[,] res = new float[a.mass.GetLength(0), b.mass.GetLength(1)];
             for (int i = 0; i < a.mass.GetLength(0); i++)
