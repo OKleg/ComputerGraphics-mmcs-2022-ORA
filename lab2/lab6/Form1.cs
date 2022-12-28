@@ -45,10 +45,11 @@ namespace lab6
         }
         private bool isVisible(Vector v1, Vector v2, Vector v3)
         {
+            var eye = v1 - cameraPos;
             Vector t1 = v1 - v2;
-            Vector t2 = v2 - v3;
-            Vector normal = Vector.cross(t2, t1).normalize();
-            float res = Vector.scalar(cameraDirection, normal);
+            Vector t2 = v3 - v2;
+            Vector normal = Vector.cross(t1, t2).normalize();
+            float res = Vector.scalar(eye, normal);
             return res > 0; 
         }
         
@@ -58,7 +59,7 @@ namespace lab6
             
             List<Face> faces = polyhedron.faces;
             List<Vector> sceneVertices = new List<Vector>(polyhedron.vertices);
-
+          
             if (comboBox4.SelectedIndex == 0)
             {
                 Matrix.Transform(sceneVertices,
@@ -88,6 +89,7 @@ namespace lab6
                              sceneVertices[e.p2].x + pictureBox1.Width / 2,
                              sceneVertices[e.p2].y + pictureBox1.Height / 2);
                         pictureBox1.Invalidate();
+                        
                     }
                 }
                 pictureBox1.Invalidate();
