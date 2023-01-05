@@ -28,6 +28,10 @@ namespace lab6
             foreach (var f in this.faces)
             {
                 this.edges.AddRange(f.getEdges());
+                foreach (int v in f.points)
+                {
+                    this.vertices[v].hosts.Add(f);
+                }
             }
         }
     }

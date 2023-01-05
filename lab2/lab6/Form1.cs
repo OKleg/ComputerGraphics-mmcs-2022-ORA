@@ -19,7 +19,7 @@ namespace lab6
     { 
         Vector cameraPos = new Vector(0, 0, 100);
         Vector cameraDirection = new Vector(0, 0, -1);
-        Vector LightPos = new Vector(0,-100,100);
+        Vector LightPos = new Vector(0, 0,100);
         Vector LightColor = new Vector(1, 1, 1);
 
         Graphics g;
@@ -241,17 +241,17 @@ namespace lab6
         public virtual void DrawTriangles(Face face)//Polyhedron poly)
         { 
             Light l1 = new Light(LightPos, LightColor);
-            Point p0 = new Point((int)face.getPoint(0).x + pictureBox1.Width / 2, (int)face.getPoint(0).y + pictureBox1.Height / 2);
-            Point p1 = new Point((int)face.getPoint(1).x + pictureBox1.Width / 2, (int)face.getPoint(1).y + pictureBox1.Height / 2);
-            Point p2 = new Point((int)face.getPoint(2).x + pictureBox1.Width / 2, (int)face.getPoint(2).y + pictureBox1.Height / 2);
+            Point p0 = new Point((int)face.getPoint(0).x + pictureBox1.Width / 2, -1*(int)face.getPoint(0).y + pictureBox1.Height / 2);
+            Point p1 = new Point((int)face.getPoint(1).x + pictureBox1.Width / 2, -1 * (int)face.getPoint(1).y + pictureBox1.Height / 2);
+            Point p2 = new Point((int)face.getPoint(2).x + pictureBox1.Width / 2, -1 * (int)face.getPoint(2).y + pictureBox1.Height / 2);
 
             Vector l0c = l1.Shade(face.getPoint(0), face.getPoint(0).Normal(), face.fMaterial.color, face.fMaterial.diffuse);// face.getPoint(0).color;
             Vector l1c = l1.Shade(face.getPoint(1), face.getPoint(1).Normal(), face.fMaterial.color, face.fMaterial.diffuse);
             Vector l2c = l1.Shade(face.getPoint(2), face.getPoint(2).Normal(), face.fMaterial.color, face.fMaterial.diffuse); 
 
-            Color c0 = Color.FromArgb((int)(255 * l0c.x), (int)(255 * l0c.y), (int)(255 * l0c.z));
-            Color c1 = Color.FromArgb((int)(255 * l1c.x), (int)(255 * l1c.y), (int)(255 * l1c.z));
-            Color c2 = Color.FromArgb((int)(255 * l2c.x), (int)(255 * l2c.y), (int)(255 * l2c.z));
+            Color c0 = Color.FromArgb((int)(255 * l0c.x / 100), (int)(255 * l0c.y/100), (int)(255 * l0c.z / 100));
+            Color c1 = Color.FromArgb((int)(255 * l1c.x / 100), (int)(255 * l1c.y/100), (int)(255 * l1c.z / 100));
+            Color c2 = Color.FromArgb((int)(255 * l2c.x / 100), (int)(255 * l2c.y/100), (int)(255 * l2c.z / 100));
 
             //треугольная грань
             if (face.points.Count == 3)
@@ -263,8 +263,8 @@ namespace lab6
             else if (face.points.Count == 4)
             {
                 Vector l3c = l1.Shade(face.getPoint(3), face.getPoint(3).Normal(), face.fMaterial.color, face.fMaterial.diffuse);
-                Point p3 = new Point((int)face.getPoint(3).x + pictureBox1.Width / 2, (int)face.getPoint(3).y + pictureBox1.Height / 2);
-                Color c3 = Color.FromArgb((int)(255 * l3c.x), (int)(255 * l3c.y), (int)(255 * l3c.z));
+                Point p3 = new Point((int)face.getPoint(3).x + pictureBox1.Width / 2, -1 * (int)face.getPoint(3).y + pictureBox1.Height / 2);
+                Color c3 = Color.FromArgb((int)(255 * l3c.x / 100), (int)(255 * l3c.y/100), (int)(255 * l3c.z / 100));
                 RastrTriangle(p0, p1, p3, c0, c1, c3);
                 RastrTriangle(p1, p2, p3, c1, c2, c3);
             }
@@ -273,10 +273,10 @@ namespace lab6
             {
                 Vector l3c = l1.Shade(face.getPoint(3), face.getPoint(3).Normal(), face.fMaterial.color, face.fMaterial.diffuse);
                 Vector l4c = l1.Shade(face.getPoint(4), face.getPoint(4).Normal(), face.fMaterial.color, face.fMaterial.diffuse);
-                Point p4 = new Point((int)face.getPoint(4).x + pictureBox1.Width / 2, (int)face.getPoint(4).y + pictureBox1.Height / 2);
-                Color c4 = Color.FromArgb((int)(255 * l4c.x), (int)(255 * l4c.y), (int)(255 * l4c.z));
-                Point p3 = new Point((int)face.getPoint(3).x + pictureBox1.Width / 2, (int)face.getPoint(3).y + pictureBox1.Height / 2);
-                Color c3 = Color.FromArgb((int)(255 * l3c.x), (int)(255 * l3c.y), (int)(255 * l3c.z));
+                Point p4 = new Point((int)face.getPoint(4).x + pictureBox1.Width / 2, -1 * (int)face.getPoint(4).y + pictureBox1.Height / 2);
+                Color c4 = Color.FromArgb((int)(255 * l4c.x / 100), (int)(255 * l4c.y / 100), (int)(255 * l4c.z / 100));
+                Point p3 = new Point((int)face.getPoint(3).x + pictureBox1.Width / 2, -1 * (int)face.getPoint(3).y + pictureBox1.Height / 2);
+                Color c3 = Color.FromArgb((int)(255 * l3c.x / 100), (int)(255 * l3c.y / 100), (int)(255 * l3c.z / 100));
                 RastrTriangle(p0, p1, p3, c0, c1, c3);
                 RastrTriangle(p1, p2, p3, c1, c2, c3);
                 RastrTriangle(p0, p3, p4, c0, c3, c4);
@@ -312,6 +312,20 @@ namespace lab6
                              sceneVertices[e.p1].y + pictureBox1.Height / 2,
                              sceneVertices[e.p2].x + pictureBox1.Width / 2,
                              sceneVertices[e.p2].y + pictureBox1.Height / 2
+                             );
+                            g.DrawLine(
+                              Pens.Cyan,
+                             0 + pictureBox1.Width / 2,
+                             0 + pictureBox1.Height / 2,
+                             sceneVertices[e.p1].Normal().x + pictureBox1.Width / 2,
+                             sceneVertices[e.p1].Normal().y + pictureBox1.Height / 2
+                             );
+                            g.DrawLine(
+                              Pens.Cyan,
+                             0 + pictureBox1.Width / 2,
+                             0 + pictureBox1.Height / 2,
+                             sceneVertices[e.p2].Normal().x + pictureBox1.Width / 2,
+                             sceneVertices[e.p2].Normal().y + pictureBox1.Height / 2
                              );
                         }
                         if (radioGuro.Checked)

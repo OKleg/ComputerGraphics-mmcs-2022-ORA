@@ -45,15 +45,18 @@ namespace lab6
             Vector norm = new Vector();
             if (hosts.Count==0)
             {
-                return norm;
+                var res = this-norm.normalize();
+                return res;
             }
             norm = hosts[0].Normal;
             for (int i = 1; i <hosts.Count; i++)
             {
                 norm = norm * hosts[i].Normal;
             }
-            return norm*-1;
+            norm.normalize();
+            return norm;
         }
+       
         public float length()
         {
             return (float)Math.Sqrt(
@@ -74,14 +77,16 @@ namespace lab6
             return hash;
         }
 
-       
+
         public Vector normalize()
         {
             float length = this.length();
-
-            this.x /= length;
-            this.y /= length;
-            this.z /= length;
+            if (length!=0)
+            {
+                this.x /= length;
+                this.y /= length;
+                this.z /= length;
+            }
             return this;
         }
         public static Vector normalize(Vector p)
