@@ -7,11 +7,15 @@ namespace lab6
     public class Vector
     {
 
-        public float x { get; set; }
+      
+    public float x { get; set; }
         public float y { get; set; }
         public float z { get; set; }
         public float w { get; set; }
+
         public Color color = Color.Gray;
+
+        public List<Face> hosts = new List<Face>();
         public Vector()
         {
             x = 0;
@@ -35,6 +39,20 @@ namespace lab6
             y = p.y;
             z = p.z;
             w = p.w;
+        }
+        public Vector Normal()
+        {
+            Vector norm = new Vector();
+            if (hosts.Count==0)
+            {
+                return norm;
+            }
+            norm = hosts[0].Normal;
+            for (int i = 1; i <hosts.Count; i++)
+            {
+                norm = norm * hosts[i].Normal;
+            }
+            return norm*-1;
         }
         public float length()
         {

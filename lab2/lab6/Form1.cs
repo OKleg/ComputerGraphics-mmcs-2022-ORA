@@ -245,9 +245,9 @@ namespace lab6
             Point p1 = new Point((int)face.getPoint(1).x + pictureBox1.Width / 2, (int)face.getPoint(1).y + pictureBox1.Height / 2);
             Point p2 = new Point((int)face.getPoint(2).x + pictureBox1.Width / 2, (int)face.getPoint(2).y + pictureBox1.Height / 2);
 
-            Vector l0c = l1.Shade(face.getPoint(0), face.Normal, face.fMaterial.color, face.fMaterial.diffuse);// face.getPoint(0).color;
-            Vector l1c = l1.Shade(face.getPoint(1), face.Normal, face.fMaterial.color, face.fMaterial.diffuse);
-            Vector l2c = l1.Shade(face.getPoint(2), face.Normal, face.fMaterial.color, face.fMaterial.diffuse); 
+            Vector l0c = l1.Shade(face.getPoint(0), face.getPoint(0).Normal(), face.fMaterial.color, face.fMaterial.diffuse);// face.getPoint(0).color;
+            Vector l1c = l1.Shade(face.getPoint(1), face.getPoint(1).Normal(), face.fMaterial.color, face.fMaterial.diffuse);
+            Vector l2c = l1.Shade(face.getPoint(2), face.getPoint(2).Normal(), face.fMaterial.color, face.fMaterial.diffuse); 
 
             Color c0 = Color.FromArgb((int)(255 * l0c.x), (int)(255 * l0c.y), (int)(255 * l0c.z));
             Color c1 = Color.FromArgb((int)(255 * l1c.x), (int)(255 * l1c.y), (int)(255 * l1c.z));
@@ -262,7 +262,7 @@ namespace lab6
             //четырехугольная грань
             else if (face.points.Count == 4)
             {
-                Vector l3c = l1.Shade(face.getPoint(3), face.Normal, face.fMaterial.color, face.fMaterial.diffuse);
+                Vector l3c = l1.Shade(face.getPoint(3), face.getPoint(3).Normal(), face.fMaterial.color, face.fMaterial.diffuse);
                 Point p3 = new Point((int)face.getPoint(3).x + pictureBox1.Width / 2, (int)face.getPoint(3).y + pictureBox1.Height / 2);
                 Color c3 = Color.FromArgb((int)(255 * l3c.x), (int)(255 * l3c.y), (int)(255 * l3c.z));
                 RastrTriangle(p0, p1, p3, c0, c1, c3);
@@ -271,8 +271,8 @@ namespace lab6
             //четырехугольная грань
             else if (face.points.Count == 5)
             {
-                Vector l3c = l1.Shade(face.getPoint(3), face.Normal, face.fMaterial.color, face.fMaterial.diffuse);
-                Vector l4c = l1.Shade(face.getPoint(4), face.Normal, face.fMaterial.color, face.fMaterial.diffuse);
+                Vector l3c = l1.Shade(face.getPoint(3), face.getPoint(3).Normal(), face.fMaterial.color, face.fMaterial.diffuse);
+                Vector l4c = l1.Shade(face.getPoint(4), face.getPoint(4).Normal(), face.fMaterial.color, face.fMaterial.diffuse);
                 Point p4 = new Point((int)face.getPoint(4).x + pictureBox1.Width / 2, (int)face.getPoint(4).y + pictureBox1.Height / 2);
                 Color c4 = Color.FromArgb((int)(255 * l4c.x), (int)(255 * l4c.y), (int)(255 * l4c.z));
                 Point p3 = new Point((int)face.getPoint(3).x + pictureBox1.Width / 2, (int)face.getPoint(3).y + pictureBox1.Height / 2);
@@ -301,14 +301,8 @@ namespace lab6
                 if (isVisible(face.getPoint(0), face.getPoint(1), face.getPoint(2)))  {
                     foreach (var e in face.edges)
                     {
-                        if (e.p1 == 0 || e.p2 == 0)
-                        {
-                            pen = new Pen(Color.Red);
-                        }
-                        else if (e.p1 == 6 || e.p2 == 6)
-                        {
-                            pen = new Pen(Color.Blue);
-                        }
+                        if (e.p1 == 0 || e.p2 == 0) pen = new Pen(Color.Red);
+                        else if (e.p1 == 6 || e.p2 == 6) pen = new Pen(Color.Blue);
                         else pen = new Pen(color);
                         if (radioEmpty.Checked)
                         {
@@ -322,6 +316,7 @@ namespace lab6
                         }
                         if (radioGuro.Checked)
                         {
+                           
                             DrawTriangles(face);
                         }
                        
@@ -584,7 +579,7 @@ namespace lab6
         //Scale
         private void button1_Click(object sender, EventArgs e)
         {
-            Matrix m = Matrix.getScale(2,2,2);
+            Matrix m = Matrix.getScale(1.5f,1.5f,1.5f);
             float dx, dy, dz;
          //SetZero(polyhedrons[SelectedItemBox].vertices, out dx, out dy, out dz);
             Matrix.Transform(polyhedrons[SelectedItemBox].vertices, m);
@@ -616,9 +611,18 @@ namespace lab6
                 Draw(polyhedrons[SelectedItemBox]);
             }
         }
-
-        //Отражение
-        private void button3_Click(object sender, EventArgs e)
+        private void Mirror()
+        {
+            Matrix m = Matrix.getScale(1, 1, -1);
+            Matrix.Transform(polyhedrons[SelectedItemBox].vertices, m);
+             m = Matrix.getScale(-1, 1, 1);
+            Matrix.Transform(polyhedrons[SelectedItemBox].vertices, m);
+            m = Matrix.getScale(1, -1, 1);
+            Matrix.Transform(polyhedrons[SelectedItemBox].vertices, m);
+            Draw(polyhedrons[SelectedItemBox]);
+        }
+            //Отражение
+            private void button3_Click(object sender, EventArgs e)
         {
             if (comboBox5.SelectedItem != null)
             {
