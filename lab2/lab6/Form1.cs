@@ -19,7 +19,7 @@ namespace lab6
     { 
         Vector cameraPos = new Vector(0, 0, 100);
         Vector cameraDirection = new Vector(0, 0, -1);
-        Vector LightPos = new Vector(0, 0,100);
+        Vector LightPos = new Vector(0, 0, 0);
         Vector LightColor = new Vector(1, 1, 1);
 
         Graphics g;

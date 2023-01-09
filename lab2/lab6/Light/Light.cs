@@ -21,7 +21,7 @@ namespace lab6
         {
             Vector dir = Vector.normalize(center - inPoint);// направление луча 
            //если угол между нормалью и направлением луча больше 90 градусов,то диффузное  освещение равно 0
-            Vector diff = diffuse_coef * ColorL * Math.Max(Vector.scalar(normal, dir), 0);
+            Vector diff = diffuse_coef * ColorL * Math.Max(-Vector.scalar(normal, dir), 0);
             return new Vector(diff.x * material_color.x, diff.y * material_color.y, diff.z * material_color.z);
         }
     }
