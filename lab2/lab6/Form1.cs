@@ -17,9 +17,9 @@ namespace lab6
 {
     public partial class Form1 : Form
     { 
-        Vector cameraPos = new Vector(0, 0, 100);
+        Vector cameraPos = new Vector(0, 0, 10);
         Vector cameraDirection = new Vector(0, 0, -1);
-        Vector LightPos = new Vector(0, 0, 0);
+        Vector LightPos = new Vector(0, 30, 10);
         Vector LightColor = new Vector(1, 1, 1);
 
         Graphics g;
@@ -288,6 +288,7 @@ namespace lab6
             List<Face> faces = polyhedron.faces;
             List<Vector> sceneVertices = new List<Vector>(polyhedron.vertices);
           
+			//У НАС ЕСТЬ КАМЕРА!!!
             if (comboBox4.SelectedIndex == 0)
             {
                 Matrix.Transform(sceneVertices,
