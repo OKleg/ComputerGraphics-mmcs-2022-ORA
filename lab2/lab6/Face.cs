@@ -11,9 +11,9 @@ namespace lab6
         public List<Edge> edges = new List<Edge>();
         public List<int> points = new List<int>();
         public Pen pen = new Pen(Color.SlateGray);
-        public Material fMaterial = new Material(0.0f, 0.0f, 0.01f, 0.7f);
+        public Material fMaterial = new Material(0.0f, 0.0f, 0.5f, 1f);
         public Vector Normal;
-        Color color = Color.Gray;
+        Color color = Color.Green;
 
         public Face(List<int> points, Polyhedron h = null)
         {

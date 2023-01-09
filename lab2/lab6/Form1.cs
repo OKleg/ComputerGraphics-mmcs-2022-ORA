@@ -24,7 +24,7 @@ namespace lab6
 
         Graphics g;
         Color color = Color.Black;
-        Pen pen = new Pen(Color.Black);
+        Pen pen = new Pen(Color.Green);
         Pen penX = new Pen(Color.IndianRed);
         Pen penY = new Pen(Color.LightGreen);
         Pen penZ = new Pen(Color.LightBlue);
